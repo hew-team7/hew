@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*=====初期化=====*/
+*{
+	margin:0px;
+	padding:0px;
+}
+li{
+	list-style-type: none;
+	list-style-position: outside;
+}
+a{
+	text-decoration:none; 
+}
+
+#header{
+    background-color: green;
+}
+#header img{
+    padding: 10px;
+    width: 150px;
+    height: 80px;
+}
+#main a{
+    padding: 10px;
+}
+#left,#right{
+    text-align: center;
+}
+#left{
+    background-color: hotpink;
+    float: left;
+}
+#right{
+    background-color: khaki;
+}
+#end{
+    background-color: lightcoral;
+    padding: 3px;
+    clear: both;
+}
