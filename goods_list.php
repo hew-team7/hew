@@ -9,7 +9,6 @@ INNER JOIN shop_product sp ON sp.id = ssp.product_id
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
 WHERE ssp.id = 1;";
 
-echo $sql;
 $result = mysqli_query($cn,$sql);
 $row = mysqli_fetch_assoc($result);
 mysqli_close($cn);
