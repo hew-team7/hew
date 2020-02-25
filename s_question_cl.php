@@ -11,5 +11,6 @@
 	<p>送信完了しました。</p>
 	<p><a href="./map.php">戻る</a></p>
 	
+	
 </body>
 </html>
