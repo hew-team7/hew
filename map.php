@@ -45,7 +45,7 @@ $lat[$i] = $geo[1];
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>map</title>
+  <title></title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 　<script src="js/leaflet.sprite.js"></script>
@@ -88,6 +88,6 @@ $lat[$i] = $geo[1];
   </script>
 </head>
 <body onload="init()">
-  <div id="mapcontainer" style="margin: auto;height: 500px;"></div>
+  <div id="mapcontainer" style="height: 100%;widht: 80%;"></div>
 </body>
 </html>
