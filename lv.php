@@ -1,9 +1,5 @@
 <?php
-
-const HOST = 'localhost';
-const DB_NAME = 'hew_07';
-const DB_USER = 'root';
-const DB_PASS = '';
+require_once "config.php";
 session_start();
 $_SESSION['user_id'] = 'hirao0817';
 

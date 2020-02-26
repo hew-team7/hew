@@ -22,6 +22,12 @@ mysqli_close($cn);
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" type="text/css" href="css/goods_list.css">
+  <!-- BootstrapのCSS読み込み -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery読み込み -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- BootstrapのJS読み込み -->
+  <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
