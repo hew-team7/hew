@@ -12,7 +12,7 @@ $(function(){
         $('#right1').css('top', 3*H/10 + 'px');
         $('#left1').css('top', 6*H/10 + 'px');
         $('#right1,#left1').css('width','300px');
-        $('#right1,#left1').css('height','175px');
+        $('#right1,#left1').css('height','230px');
         $('.p').css('padding-top','30px');
     }else {
         // PC用処理
@@ -25,8 +25,8 @@ $(function(){
         $('#left').css('height', H + 'px');// 算出した差分をヘッダーエリアの高さに指定
         $('#right').css('height', H + 'px');// 算出した差分をヘッダーエリアの高さに指定
         $('#right1,#left1').css('top', H/3 + 'px');
-        $('#right1,#left1').css('width','240px');
-        $('#right1,#left1').css('height','125px');
+        $('#right1,#left1').css('width','300px');
+        $('#right1,#left1').css('height','200px');
 
         $('#header img').css('padding', '10px');
     }
