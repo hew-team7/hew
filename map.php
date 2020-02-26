@@ -72,7 +72,7 @@ $lat[$i] = $geo[1];
               var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
               L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>]).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
             <?php } ?>
-            mapcontainer.style.width = '100%';
+            
         },
         // error callback
         function(position) {
@@ -88,6 +88,7 @@ $lat[$i] = $geo[1];
   </script>
 </head>
 <body onload="init()">
-  <div id="mapcontainer" style="margin: auto;height: 500px;"></div>
+  <div id="navi"></div>
+  <div id="mapcontainer" style="width: 80%;height: 100%;"></div>
 </body>
 </html>
