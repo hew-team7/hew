@@ -1,5 +1,5 @@
 <?php
-
+$product_id = $_GET['product_id'];
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
@@ -7,9 +7,8 @@ $sql = "SELECT sp.detail,price_cut,quantity,expiration_date,ssp.shop_id,sl.name 
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
-WHERE ssp.id = 1;";
+WHERE ssp.id = $product_id;";
 
-echo $sql;
 $result = mysqli_query($cn,$sql);
 $row = mysqli_fetch_assoc($result);
 mysqli_close($cn);

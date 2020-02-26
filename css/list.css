@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+
+/*=====初期化=====*/
+*{
+	margin:0px;
+	padding:0px;
+}
+li{
+	list-style-type: none;
+	list-style-position: outside;
+}
+a{
+	text-decoration:none; 
+}
+
+
+/*=====背景画像=====*/
+body{
+    background-position: center center;
+}
+
+/*=====画面デザイン=====*/
+#main{
+    grid-area:ma;
+}
+#main h1{
+	font-size: 1.2em;
+	margin-top: 30px;
+	margin-left: 25px;
+}
+#main h2{
+    margin: 20px;
+    margin-left: 300px;
+}
+#main .Product1{
+    width: 840px;
+    margin: 5px;
+    margin:20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+#main .product{
+    font-size: 0.85em;
+    border: solid 1px gray;
+    height: 240px;
+    width: 180px;
+    margin: 5px; 
+    margin-bottom: 20px;
+}
+#main .product img{
+    width: 170px;
+    height: 180px;
+    border: solid 1px gray;
+}
+#main .product p{
+    font-size: 0.85em;
+    margin: 5px; 
+}
+#main p{
+	margin-left: 355px;
+	margin-bottom: 30px;
+}
+
+.paging {
+  text-align: center;
+  margin: 0 auto;
+}
+
