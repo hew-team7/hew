@@ -1,9 +1,5 @@
 <?php
-
-const HOST = 'localhost';
-const DB_NAME = 'hew_07';
-const DB_USER = 'root';
-const DB_PASS = '';
+require_once "config.php";
 session_start();
 $_SESSION['shop_id'] = 'heiwado';
 
@@ -60,7 +56,13 @@ $row = get_spl(HOST,DB_USER,DB_PASS,DB_NAME,$_SESSION['shop_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ショップ情報確認</title>
+	<title>ショップ情報確認</title>
+	<!-- BootstrapのCSS読み込み -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 	<h2>ショップ情報確認</h2>

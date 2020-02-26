@@ -1,9 +1,5 @@
 <?php
-
-const HOST = 'localhost';
-const DB_NAME = 'hew_07';
-const DB_USER = 'root';
-const DB_PASS = '';
+require_once "config.php";
 session_start();
 $_SESSION['shop_id'] = 'heiwado';
 $hfilename = './images/plofile/s_header/'.$_SESSION['shop_id'];
@@ -163,7 +159,13 @@ function get_spl($host,$db_user,$db_pass,$db_name,$shop_id){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>店舗プロフィール編集</title>
+	<title>店舗プロフィール編集</title>
+	<!-- BootstrapのCSS読み込み -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 	<h2>店舗プロフィール編集</h2>
