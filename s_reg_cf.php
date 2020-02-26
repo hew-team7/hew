@@ -70,8 +70,6 @@ if (isset($_POST['ok'])) {
     $mid = sprintf('%05d', $mid); //** 5桁に合わせる */
   }
 
-  var_dump($nid = strval($nmonth) . strval($nyear) . strval($mid));
-
   $sql3 = "INSERT INTO shop_list(id, name, postal_code, address1, address2, tel ,mail, detail, registration_date) VALUES('$nid', '$name', '$code', '$paddr', '$addr', '$tel', '$mail', '$detail', '".date('Y-m-d H:i:s')."');";
   mysqli_query($cn,$sql3);
   $sql2 = "INSERT INTO shop_login(id, shop_id, pass) VALUES('$nid', '$id', '$pass');";
@@ -95,13 +93,7 @@ if (isset($_POST['ng'])) {
 <head>
   <meta charset="UTF-8">
   <title>会員登録画面 - 確認</title>
-  <link rel="stylesheet" type="text/css" href="./css/">
-  <!-- BootstrapのCSS読み込み -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- jQuery読み込み -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- BootstrapのJS読み込み -->
-  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./css/"">
 </head>
 
 <body>
