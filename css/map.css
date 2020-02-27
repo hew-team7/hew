@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*=====初期化=====*/
+*{
+	margin:0px;
+	padding:0px;
+}
+li{
+	list-style-type: none;
+	list-style-position: outside;
+}
+a{
+    text-decoration:none;
+    color: black; 
+}
+
+
+#header{
+    background-color: rgba(255, 250, 240, 0.7);
+    padding:10px 0;
+    margin-top: -20px;
+}
+#header img{
+    width: 150px;
+    height: 80px;
+}
+#navi{
+    width: 15%;
+    float: left;
+    background: linear-gradient(#fffaf0, #d1aa8c);
+}
+#navi li{
+    border-top: gray solid 1px;
+    border-left: gray solid 1px;
+    border-right: gray solid 1px;
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#navi #last{
+    border-bottom: solid gray 1px;
+}
+
+
+#end{
+    height: 20px;
+    border-top: grey solid 0.5px;
+    background-color: #d1aa8c;
+    text-align: right;
+    padding: 5px 5px;
+    clear: both;
+    font-size: 0.75em;
+}
