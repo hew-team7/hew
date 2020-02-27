@@ -47,6 +47,9 @@ $lat[$i] = $geo[1];
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
+  <link rel="stylesheet" type="text/css" href="css/map.css">
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/map.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 　<script src="js/leaflet.sprite.js"></script>
   <script>
@@ -81,13 +84,25 @@ $lat[$i] = $geo[1];
         　 mapcontainer.appendChild(textNode);
         }
       )
-    }      
-      
-      
+    }  
+    
     }
   </script>
 </head>
 <body onload="init()">
-  <div id="mapcontainer" style="height: 100%;widht: 80%;"></div>
+  <div id="header">
+    <p><a href="index.php"><img src=""></a></p>
+  </div>
+  <div id="navi">
+    <ul>
+      <a href=""><li>マイページ</li></a>
+      <a href=""><li>お気に入り</li></a>
+      <a href=""><li id="last">履歴</li></a>
+    </ul>
+  </div>
+  <div id="mapcontainer" style="width: 85%;"></div>
+  <div id="end">
+    <p>HEW 7team</p>
+  </div>
 </body>
 </html>
