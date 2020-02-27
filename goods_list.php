@@ -19,7 +19,10 @@ mysqli_close($cn);
 
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title><?php echo $row['p_name'];?></title>
+  <link rel="stylesheet" type="text/css" href="css/goods_list.css">
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/map.js"></script>
   <link rel="stylesheet" type="text/css" href="css/goods_list.css">
   <!-- BootstrapのCSS読み込み -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -36,17 +39,13 @@ mysqli_close($cn);
     <div id="header">
       <p><a href="index.php"><img src=""></a></p>
     </div>
-    <div id="header1">
-    <?php
-      if (isset($_SESSION['user_id'])) { ?>
-        <p id="right"><a href="mypage.php">マイページ</a></p>
-      <?php } else { ?>
-        <p id="right"><a href="login.php">ログイン</a></p>
-      <?php }
-      //session_destroy();
-      ?>
+    <div id="navi">
+      <ul>
+        <a href=""><li>マイページ</li></a>
+        <a href=""><li>お気に入り</li></a>
+        <a href=""><li id="last">履歴</li></a>
+      </ul>
     </div>
-
 
     
 
@@ -58,7 +57,7 @@ mysqli_close($cn);
       <div id="right">
         <table>
           <tr>
-            <th style="width: 400px" align="left">出品者：<a href="search.php?id=<?php echo $row['shop_id']; ?>"><?php echo $row['shop_name']; ?></a></th>
+            <th style="width: 400px" align="left">出品者： <?php echo $row['shop_name']; ?></th>
           </tr>
           <tr>
             <th align="left">商品名：<?php echo $row['p_name']; ?></th>
@@ -78,45 +77,18 @@ mysqli_close($cn);
 
       <form action="" method="post">
         <input class="buy" type="submit" name="submit" id="submit" value="購入する">
+        <input type="image" src="images/はーと.png" name="heart" class="ico">
+        <input type="image" src="images/60009001106.jpg" name="report"  class="ico" id="ico_n">
       </form>
 
 
-      <div id="come">
-        <input type="image" src="img/はーと.png" name="heart" width="50" class="ico">
-        <input type="image" src="img/60009001106.jpg" name="report" width="50" class="ico none">
-
-
-
-        <form action="" method="post">
-          <textarea cols="100" rows="8" name="comment"></textarea>
-          <input type="submit" name="submit1" value="コメントをする" id="submit1">
-        </form>
-      </div>
-
-      <h2>出品者の他商品</h2>
-      <div class="Product">
-        <?php if (empty($member_products)) : ?>
-          <p style="margin-bottom: 50px">他に出品されている商品は存在しません</p>
-        <?php else : ?>
-          <?php foreach ($member_products as $member_product) { ?>
-            <div class="product">
-              <a href="product.php?id=<?php echo $member_product['id']; ?>">
-                <p><img src="img/product_<?php echo $member_product['id']; ?>_1.jpg"></p>
-                <p><?php echo $member_product['name']; ?></p>
-                <p>￥<?php echo $member_product['price']; ?></p>
-              </a>
-            </div>
-          <?php
-          }
-          mysqli_close($cn); ?>
-          <div id="detail"><a href="search.php?id=<?php echo $row['member_id'] ?>">>>詳細</a></div>
-        <?php endif ?>
-      </div>
+      
+      
 
     </div>
 
     <div id="end">
-      <p>××××××××××××××××××××××××××××</p>
+      <p>HEW 7team</p>
     </div>
 
   </div>
