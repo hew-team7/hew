@@ -78,7 +78,7 @@ $lat[$i] = $geo[1];
             //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
             <?php for($i=0; $i<$cnt; $i++){?>
               var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
-              L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>]).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
+              L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('red')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
             <?php } ?>
             
         },

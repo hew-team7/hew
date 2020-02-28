@@ -72,20 +72,24 @@ $cnt = count($table_array);
         })
     </script>
 <div id="main">
-　<h1><?php echo $table_array[0]["shop_name"]?>の商品</h1>
-  <div class="PRODUCTS">
-    <div class="Product1">
-    　<?php for($i=0;$i<$cnt;$i++){ ?>
-        <div class="product">
-          <a href="goods_list.php?product_id=<?php echo $table_array[$i]["id"]; ?>">
-            <p><img src="./img/product_<?php echo $table_array[$i]["id"]; ?>.jpg"></p>
-            <p><?php echo $table_array[$i]["product_name"] ?></p>
-            <p>￥<?php echo $table_array[$i]['list_price'] ?>　<span style="color: red">→ ￥<?php echo $table_array[$i]["price_cut"]; ?></p>
-          </a>
+　<?php if($cnt!=0){ ?>
+    <h1>商品</h1>
+      <div class="PRODUCTS">
+        <div class="Product1">
+        　<?php for($i=0;$i<$cnt;$i++){ ?>
+            <div class="product">
+              <a href="goods_list.php?product_id=<?php echo $table_array[$i]["id"]; ?>">
+                <p><img src="./img/product_<?php echo $table_array[$i]["id"]; ?>.jpg"></p>
+                <p><?php echo $table_array[$i]["product_name"] ?></p>
+                <p>￥<?php echo $table_array[$i]['list_price'] ?>　<span style="color: red">→ ￥<?php echo $table_array[$i]["price_cut"]; ?></p>
+              </a>
+            </div>
+          <?php } ?>  
         </div>
-      <?php } ?>  
-    </div>
-  </div>
+      </div>
+  <?php }else{ ?>
+       <p id="p1">掲載されている商品ありません。</p>
+  <?php } ?>
 </div>
 <div id="end">
   <p>HEW 7team</p>
