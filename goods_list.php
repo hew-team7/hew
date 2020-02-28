@@ -39,13 +39,40 @@ mysqli_close($cn);
     <div id="header">
       <p><a href="index.php"><img src=""></a></p>
     </div>
-    <div id="navi">
-      <ul>
-        <a href=""><li>マイページ</li></a>
-        <a href=""><li>お気に入り</li></a>
-        <a href=""><li id="last">履歴</li></a>
-      </ul>
+    <div class="drawer drawer--rght">
+    <div class="zdo_drawer_menu right">
+      <div class="zdo_drawer_bg"></div>
+          <button type="button" class="zdo_drawer_button">
+          <span class="zdo_drawer_bar zdo_drawer_bar1"></span>
+          <span class="zdo_drawer_bar zdo_drawer_bar2"></span>
+          <span class="zdo_drawer_bar zdo_drawer_bar3"></span>
+          <span class="zdo_drawer_menu_text zdo_drawer_text">MENU</span>
+          <span class="zdo_drawer_close zdo_drawer_text">CLOSE</span>
+        </button>
+      <nav class="zdo_drawer_nav_wrapper">
+        <ul class="zdo_drawer_nav">
+          <a href=""><li>マイページ</li></a>
+          <a href=""><li>お気に入り</li></a>
+          <a href=""><li id="last">履歴</li></a>
+        </ul>
+      </nav>
     </div>
+    </div>
+
+    <script>
+      $(function () {
+        $('.zdo_drawer_button').click(function () {
+          $(this).toggleClass('active');
+          $('.zdo_drawer_bg').fadeToggle();
+          $('nav').toggleClass('open');
+        })
+        $('.zdo_drawer_bg').click(function () {
+          $(this).fadeOut();
+          $('.zdo_drawer_button').removeClass('active');
+          $('nav').removeClass('open');
+          });
+        })
+    </script>
 
     
 
