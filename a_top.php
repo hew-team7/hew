@@ -16,14 +16,14 @@ for ($i = 0; $i < 7; $i++) {
   $trow[] = $date;
   $klists[] = $trow;
   if($i == 0){
-    $today = $trow['klist'];
+    $btoday = $trow['klist'];
   }
   if($i == 1){
-    $yesterday = $trow['klist'];
-    if($today == 0){
+    $byesterday = $trow['klist'];
+    if($btoday == 0){
       $brate = 0;
     }
-    $brate = $today / $yesterday * 100;
+    $brate = $btoday / $byesterday * 100;
   }
 }
 $klists = array_reverse($klists);
@@ -42,6 +42,16 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $drow[] = $date;
   $slists[] = $drow;
+  if($i == 0){
+    $stoday = $drow['slist'];
+  }
+  if($i == 1){
+    $syesterday = $drow['slist'];
+    if($stoday == 0){
+      $srate = 0;
+    }
+    $srate = $stoday / $syesterday * 100;
+  }
 }
 $slists = array_reverse($slists);
 
@@ -247,9 +257,10 @@ $llists = array_reverse($llists);
                   <div class="stats">
                     <?php if($brate >= 100): ?>
                       <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $brate; ?>%　</span>
-                       増加しています(昨日:<?php echo $yesterday;?>人)
+                        増加しています(昨日:<?php echo $byesterday; ?>人)
                     <?php elseif($brate < 100): ?>
-                      <span class="text-danger"><i class="material-icons">assessment</i><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?> </span>          
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?>%　</span>
+                        減少しています(昨日:<?php echo $byesterday; ?>人)
                     <?php endif ?>
                   </div>
                 </div>
@@ -268,7 +279,13 @@ $llists = array_reverse($llists);
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Last 24 Hours
+                    <?php if($srate >= 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $srate; ?>%　</span>
+                        増加しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $srate; ?>%　</span>
+                        減少しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
@@ -286,7 +303,13 @@ $llists = array_reverse($llists);
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Tracked from Github
+                    <?php if($srate >= 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $srate; ?>%　</span>
+                        増加しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $srate; ?>%　</span>
+                        減少しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
