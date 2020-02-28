@@ -47,11 +47,10 @@ $lat[$i] = $geo[1];
   <meta charset="UTF-8">
   <title>map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
-  <link rel="stylesheet" type="text/css" href="css/map.css">
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/map.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 　<script src="js/leaflet.sprite.js"></script>
+
   <script>
 
     function init() {
@@ -101,6 +100,9 @@ $lat[$i] = $geo[1];
     </ul>
   </div>
   <div id="mapcontainer" style="width: 85%;"></div>
+  
+
+
   <div id="end">
     <p>HEW 7team</p>
   </div>
