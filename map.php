@@ -48,6 +48,11 @@ $lat[$i] = $geo[1];
   <title>map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
   <link rel="stylesheet" type="text/css" href="css/map.css">
+  <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.1/css/drawer.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.1.3/iscroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.1/js/drawer.min.js"></script>
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/map.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
@@ -93,14 +98,41 @@ $lat[$i] = $geo[1];
   <div id="header">
     <p><a href="index.php"><img src=""></a></p>
   </div>
-  <div id="navi">
-    <ul>
-      <a href=""><li>マイページ</li></a>
-      <a href=""><li>お気に入り</li></a>
-      <a href=""><li id="last">履歴</li></a>
-    </ul>
-  </div>
-  <div id="mapcontainer" style="width: 85%;"></div>
+  <div class="drawer drawer--rght">
+    <div class="zdo_drawer_menu right">
+      <div class="zdo_drawer_bg"></div>
+          <button type="button" class="zdo_drawer_button">
+          <span class="zdo_drawer_bar zdo_drawer_bar1"></span>
+          <span class="zdo_drawer_bar zdo_drawer_bar2"></span>
+          <span class="zdo_drawer_bar zdo_drawer_bar3"></span>
+          <span class="zdo_drawer_menu_text zdo_drawer_text">MENU</span>
+          <span class="zdo_drawer_close zdo_drawer_text">CLOSE</span>
+        </button>
+      <nav class="zdo_drawer_nav_wrapper">
+        <ul class="zdo_drawer_nav">
+          <a href=""><li>マイページ</li></a>
+          <a href=""><li>お気に入り</li></a>
+          <a href=""><li id="last">履歴</li></a>
+        </ul>
+      </nav>
+    </div>
+    </div>
+
+    <script>
+      $(function () {
+        $('.zdo_drawer_button').click(function () {
+          $(this).toggleClass('active');
+          $('.zdo_drawer_bg').fadeToggle();
+          $('nav').toggleClass('open');
+        })
+        $('.zdo_drawer_bg').click(function () {
+          $(this).fadeOut();
+          $('.zdo_drawer_button').removeClass('active');
+          $('nav').removeClass('open');
+          });
+        })
+    </script>
+  <div id="mapcontainer" style="width: 100%;"></div>
   <div id="end">
     <p>HEW 7team</p>
   </div>
