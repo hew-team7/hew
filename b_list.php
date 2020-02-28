@@ -2,19 +2,19 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT * FROM shop_list WHERE delete_time IS NULL;";
+$sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE buyer_list.delete_date IS NULL;";
 $result = mysqli_query($cn, $sql);
-$slists = array();
+$blists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
-  $slists[] = $rows;
+  $blists[] = $rows;
 }
-array_multisort(array_map("strtotime", array_column($slists, "registration_date")), SORT_DESC, $slists);
+array_multisort(array_map("strtotime", array_column($blists, "registration_date")), SORT_DESC, $blists);
 
 if(isset($_POST['search'])){
   if(!($_POST['add1'] == "")){
     $add1 = $_POST['add1'];
     $add1 = '%' . $add1 . '%';
-    $sql = "SELECT * FROM shop_list WHERE delete_time IS NULL AND address1 LIKE '$add1'";
+    $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE delete_date IS NULL AND address1 LIKE '$add1'";
   }
   if(!($_POST['add2'] == "")){
     $add2 = $_POST['add2'];
@@ -22,9 +22,9 @@ if(isset($_POST['search'])){
     $sql .= " AND address1 LIKE '$add2';";
   }
   $result = mysqli_query($cn, $sql);
-  $slists = array();
+  $blists = array();
   while ($rows = mysqli_fetch_assoc($result)) {
-    $slists[] = $rows;
+    $blists[] = $rows;
   }
 }
 ?>
@@ -76,7 +76,7 @@ if(isset($_POST['search'])){
               <p>TOP</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./b_list.php">
               <i class="material-icons">person</i>
               <p>購入者一覧</p>
@@ -94,7 +94,7 @@ if(isset($_POST['search'])){
               <p>売れ残り商品一覧</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="./s_list.php">
               <i class="material-icons">store_mall_directory</i>
               <p>店舗一覧</p>
@@ -115,7 +115,7 @@ if(isset($_POST['search'])){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
+            <a class="navbar-brand" href="javascript:;">購入者一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -183,11 +183,11 @@ if(isset($_POST['search'])){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">店舗一覧</h4>
-                  <p class="card-category"> 登録されている店舗一覧</p>
+                  <h4 class="card-title ">購入者一覧</h4>
+                  <p class="card-category"> 登録されている購入者一覧</p>
                 </div>
                 <div class="card-body">
-                  <form action="./s_list.php" method="POST" class="navbar-form">
+                  <form action="./b_list.php" method="POST" class="navbar-form">
                     <div class="row a">
                       <h5 class="card-title aa">都道府県・市町村で絞る</h5>
                       <div class="col-md-3">
@@ -218,20 +218,22 @@ if(isset($_POST['search'])){
                     <table class="table">
                       <thead class=" text-primary">
                         <th>ID</th>
-                        <th>店舗名</th>
-                        <th>電話番号</th>
+                        <th>ユーザーID</th>
                         <th>住所</th>
+                        <th>ポイント</th>
+                        <th>ランク</th>
                         <th>登録日</th>
                         <th>詳細</th>
                       </thead>
                       <tbody>
-                        <?php foreach ($slists as $slist) : ?>
+                        <?php foreach ($blists as $blist) : ?>
                           <tr>
-                            <td><?php echo $slist['id']; ?></td>
-                            <td><?php echo $slist['name']; ?></td>
-                            <td><?php echo $slist['tel']; ?></td>
-                            <td><?php echo $slist['address1'] . $slist['address2']; ?></td>
-                            <td class="text-primary"><?php echo $slist['registration_date']; ?></td>
+                            <td><?php echo $blist['id']; ?></td>
+                            <td><?php echo $blist['user_id']; ?></td>
+                            <td><?php echo $blist['address1'] . $blist['address2']; ?></td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td class="text-primary"><?php echo $blist['registration_date']; ?></td>
                             <td>詳細</td>
                           </tr>
                         <?php endforeach ?>
