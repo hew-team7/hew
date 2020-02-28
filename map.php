@@ -56,6 +56,7 @@ $lat[$i] = $geo[1];
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 　<script src="js/leaflet.sprite.js"></script>
+  <script src="js/map.js"></script>
   <script>
 
     function init() {
