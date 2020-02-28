@@ -5,5 +5,6 @@ $(function(){
     $('#mapcontainer').css('height', H + 'px');// 算出した差分をヘッダーエリアの高さに指定  
     $('#navi').css('height', H + 'px');
     $('#main').css('height', H + 'px');
+    
    
 });
