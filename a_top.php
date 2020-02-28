@@ -15,6 +15,16 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $trow[] = $date;
   $klists[] = $trow;
+  if($i == 0){
+    $today = $trow['klist'];
+  }
+  if($i == 1){
+    $yesterday = $trow['klist'];
+    if($today == 0){
+      $brate = 0;
+    }
+    $brate = $today / $yesterday * 100;
+  }
 }
 $klists = array_reverse($klists);
 
@@ -97,8 +107,8 @@ $llists = array_reverse($llists);
 </head>
 
 <body>
-  <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
+  <div class="wrapper">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="images/sidebar-1.jpg">
       <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -112,7 +122,7 @@ $llists = array_reverse($llists);
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="#0">
+            <a class="nav-link" href="./a_top.php">
               <i class="material-icons">dashboard</i>
               <p>TOP</p>
             </a>
@@ -136,7 +146,7 @@ $llists = array_reverse($llists);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./s_list.php">
               <i class="material-icons">store_mall_directory</i>
               <p>店舗一覧</p>
             </a>
@@ -235,7 +245,12 @@ $llists = array_reverse($llists);
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i>
+                    <?php if($brate >= 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $brate; ?>%　</span>
+                       増加しています(昨日:<?php echo $yesterday;?>人)
+                    <?php elseif($brate < 100): ?>
+                      <span class="text-danger"><i class="material-icons">assessment</i><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?> </span>          
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
@@ -410,7 +425,7 @@ $llists = array_reverse($llists);
           <div class="col-md-4">
             <div class="card card-chart">
               <div class="card-header card-header-danger">
-              <div class="ct-chart ct-perfect-six"></div>
+                <div class="ct-chart ct-perfect-six"></div>
                 <?php
                 echo "<script type='text/javascript'>";
                 echo "var chart = new Chartist.Line('.ct-perfect-six', {";
@@ -462,244 +477,323 @@ $llists = array_reverse($llists);
             </div>
           </div>
         </div>
-      </div>
 
-
-      <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div class="copyright float-right">
-            &copy;
-            <script>
-              document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="card">
+              <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                  <div class="nav-tabs-wrapper">
+                    <span class="nav-tabs-title">Tasks:</span>
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#profile" data-toggle="tab">
+                          <i class="material-icons">alarm</i> 通知
+                          <div class="ripple-container"></div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="profile">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value="" checked>
+                                <span class="form-check-sign">
+                                  <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                          </td>
+                          <td>Sign contract for "What are conference organizers afraid of?"</td>
+                          <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                              <i class="material-icons">edit</i>
+                            </button>
+                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                              <i class="material-icons">close</i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- your footer here -->
+
+          <div class="col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Employees Stats</h4>
+                  <p class="card-category">New employees on 15th September, 2016</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-warning">
+                      <th>RANKING</th>
+                      <th>USER_ID</th>
+                      <th>POINT</th>
+                      <th>RANK</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Dakota Rice</td>
+                        <td>$36,738</td>
+                        <td>Niger</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </footer>
+
+        <footer class="footer">
+          <div class="container-fluid">
+            <nav class="float-left">
+              <ul>
+                <li>
+                  <a href="https://www.creative-tim.com">
+                    Creative Tim
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright float-right">
+              &copy;
+              <script>
+                document.write(new Date().getFullYear())
+              </script>, made with <i class="material-icons">favorite</i> by
+              <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            </div>
+            <!-- your footer here -->
+          </div>
+        </footer>
+      </div>
     </div>
-  </div>
 
-  <!--   Core JS Files   -->
-  <script src="js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="js/core/popper.min.js" type="text/javascript"></script>
-  <script src="js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-  <script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--   Core JS Files   -->
+    <script src="js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="js/core/popper.min.js" type="text/javascript"></script>
+    <script src="js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
-  <!-- Plugin for the momentJs  -->
-  <script src="js/plugins/moment.min.js"></script>
-  <!--  Plugin for Sweet Alert -->
-  <script src="js/plugins/sweetalert2.js"></script>
-  <!-- Forms Validations Plugin -->
-  <script src="js/plugins/jquery.validate.min.js"></script>
-  <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-  <script src="js/plugins/jquery.bootstrap-wizard.js"></script>
-  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-  <script src="js/plugins/bootstrap-selectpicker.js"></script>
-  <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-  <script src="js/plugins/bootstrap-datetimepicker.min.js"></script>
-  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-  <script src="js/plugins/jquery.dataTables.min.js"></script>
-  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-  <script src="js/plugins/bootstrap-tagsinput.js"></script>
-  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-  <script src="js/plugins/jasny-bootstrap.min.js"></script>
-  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-  <script src="js/plugins/fullcalendar.min.js"></script>
-  <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-  <script src="js/plugins/jquery-jvectormap.js"></script>
-  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="js/plugins/nouislider.min.js"></script>
-  <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-  <!-- Library for adding dinamically elements -->
-  <script src="js/plugins/arrive.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
-  <!--  Notifications Plugin    -->
-  <script src="js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
+    <!-- Plugin for the momentJs  -->
+    <script src="js/plugins/moment.min.js"></script>
+    <!--  Plugin for Sweet Alert -->
+    <script src="js/plugins/sweetalert2.js"></script>
+    <!-- Forms Validations Plugin -->
+    <script src="js/plugins/jquery.validate.min.js"></script>
+    <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+    <script src="js/plugins/jquery.bootstrap-wizard.js"></script>
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="js/plugins/bootstrap-selectpicker.js"></script>
+    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="js/plugins/bootstrap-datetimepicker.min.js"></script>
+    <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
+    <script src="js/plugins/jquery.dataTables.min.js"></script>
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="js/plugins/bootstrap-tagsinput.js"></script>
+    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="js/plugins/jasny-bootstrap.min.js"></script>
+    <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+    <script src="js/plugins/fullcalendar.min.js"></script>
+    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+    <script src="js/plugins/jquery-jvectormap.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="js/plugins/nouislider.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <!-- Library for adding dinamically elements -->
+    <script src="js/plugins/arrive.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
+    <!--  Notifications Plugin    -->
+    <script src="js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+    <script>
+      $(document).ready(function() {
+        $().ready(function() {
+          $sidebar = $('.sidebar');
 
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
+          $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-        $full_page = $('.full-page');
+          $full_page = $('.full-page');
 
-        $sidebar_responsive = $('body > .navbar-collapse');
+          $sidebar_responsive = $('body > .navbar-collapse');
 
-        window_width = $(window).width();
+          window_width = $(window).width();
 
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+          fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-            $('.fixed-plugin .dropdown').addClass('open');
-          }
-
-        }
-
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
+          if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+            if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+              $('.fixed-plugin .dropdown').addClass('open');
             }
-          }
-        });
 
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
           }
 
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
+          $('.fixed-plugin a').click(function(event) {
+            // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+            if ($(this).hasClass('switch-trigger')) {
+              if (event.stopPropagation) {
+                event.stopPropagation();
+              } else if (window.event) {
+                window.event.cancelBubble = true;
+              }
+            }
+          });
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
+          $('.fixed-plugin .active-color span').click(function() {
+            $full_page_background = $('.full-page-background');
 
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
 
-          var new_color = $(this).data('background-color');
+            var new_color = $(this).data('color');
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
+            if ($sidebar.length != 0) {
+              $sidebar.attr('data-color', new_color);
+            }
 
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
+            if ($full_page.length != 0) {
+              $full_page.attr('filter-color', new_color);
+            }
 
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
+            if ($sidebar_responsive.length != 0) {
+              $sidebar_responsive.attr('data-color', new_color);
+            }
+          });
+
+          $('.fixed-plugin .background-color .badge').click(function() {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+
+            var new_color = $(this).data('background-color');
+
+            if ($sidebar.length != 0) {
+              $sidebar.attr('data-background-color', new_color);
+            }
+          });
+
+          $('.fixed-plugin .img-holder').click(function() {
+            $full_page_background = $('.full-page-background');
+
+            $(this).parent('li').siblings().removeClass('active');
+            $(this).parent('li').addClass('active');
 
 
-          var new_image = $(this).find("img").attr('src');
+            var new_image = $(this).find("img").attr('src');
 
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
+            if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+              $sidebar_img_container.fadeOut('fast', function() {
+                $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                $sidebar_img_container.fadeIn('fast');
+              });
+            }
+
+            if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+              var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+
+              $full_page_background.fadeOut('fast', function() {
+                $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                $full_page_background.fadeIn('fast');
+              });
+            }
+
+            if ($('.switch-sidebar-image input:checked').length == 0) {
+              var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+              var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+
               $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
-            });
-          }
-
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $full_page_background.fadeOut('fast', function() {
               $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
-            });
-          }
-
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
-
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
-
-          $input = $(this);
-
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
             }
 
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
+            if ($sidebar_responsive.length != 0) {
+              $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+            }
+          });
+
+          $('.switch-sidebar-image input').change(function() {
+            $full_page_background = $('.full-page-background');
+
+            $input = $(this);
+
+            if ($input.is(':checked')) {
+              if ($sidebar_img_container.length != 0) {
+                $sidebar_img_container.fadeIn('fast');
+                $sidebar.attr('data-image', '#');
+              }
+
+              if ($full_page_background.length != 0) {
+                $full_page_background.fadeIn('fast');
+                $full_page.attr('data-image', '#');
+              }
+
+              background_image = true;
+            } else {
+              if ($sidebar_img_container.length != 0) {
+                $sidebar.removeAttr('data-image');
+                $sidebar_img_container.fadeOut('fast');
+              }
+
+              if ($full_page_background.length != 0) {
+                $full_page.removeAttr('data-image', '#');
+                $full_page_background.fadeOut('fast');
+              }
+
+              background_image = false;
+            }
+          });
+
+          $('.switch-sidebar-mini input').change(function() {
+            $body = $('body');
+
+            $input = $(this);
+
+            if (md.misc.sidebar_mini_active == true) {
+              $('body').removeClass('sidebar-mini');
+              md.misc.sidebar_mini_active = false;
+
+              $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+
+            } else {
+
+              $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+
+              setTimeout(function() {
+                $('body').addClass('sidebar-mini');
+
+                md.misc.sidebar_mini_active = true;
+              }, 300);
             }
 
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
+            // we simulate the window Resize so the charts will get updated in realtime.
+            var simulateWindowResize = setInterval(function() {
+              window.dispatchEvent(new Event('resize'));
+            }, 180);
 
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
-
-            background_image = false;
-          }
-        });
-
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
-
-          $input = $(this);
-
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-          } else {
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
-
+            // we stop the simulation of Window Resize after the animations are completed
             setTimeout(function() {
-              $('body').addClass('sidebar-mini');
+              clearInterval(simulateWindowResize);
+            }, 1000);
 
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-
+          });
         });
       });
-    });
-  </script>
+    </script>
 </body>
 
 </html>

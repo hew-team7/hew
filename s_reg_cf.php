@@ -44,7 +44,7 @@ if (isset($_POST['ok'])) {
   $code = strval($fcode) . strval($lcode);
   $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
   mysqli_set_charset($cn, 'utf8');
-  $sql1 = "SELECT id FROM shop_login;";
+  $sql1 = "SELECT id FROM shop_login ORDER BY id ASC;";
   $rsl = mysqli_query($cn, $sql1);
   $kid = "";
   $dmonth = "";
@@ -69,6 +69,8 @@ if (isset($_POST['ok'])) {
     $mid++; //** これまでの会員に＋１ */
     $mid = sprintf('%05d', $mid); //** 5桁に合わせる */
   }
+
+  $nid = strval($nmonth) . strval($nyear) . strval($mid);
 
   $sql3 = "INSERT INTO shop_list(id, name, postal_code, address1, address2, tel ,mail, detail, registration_date) VALUES('$nid', '$name', '$code', '$paddr', '$addr', '$tel', '$mail', '$detail', '".date('Y-m-d H:i:s')."');";
   mysqli_query($cn,$sql3);
