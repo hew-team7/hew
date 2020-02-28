@@ -5,7 +5,6 @@
 * {
     margin: 0px;
     padding: 0px;
-    color:#4F4F4F;
 }
 
 body{
@@ -17,37 +16,10 @@ li {
     list-style-position: outside;
 }
 
-
-#list{
-  display: flex;
-  margin-bottom: 10px;
+.aa{
+  height: 30px;
+  padding-top:20px;
 }
-.regist{
-  display: flex;
-  width: 270px;
-  background-color: #fff;
-  margin-right: 10px;
-  height: 90px;
-}
-.mj{
-  height: 90px;
-  margin-left: 10px;
-}
-p{
-  margin-bottom: 0px;
-}
-.regist > img{
-  background-color: #F7BE81;
-  padding: 20px;
-}
-
-.product{
-  display: flex;
-  width: 270px;
-  background-color: #fff;
-  height: 90px;
-}
-.product > img{
-  background-color: #A9F5A9;
-  padding: 20px;
+.a{
+  margin: 10px 0 30px 100px;
 }

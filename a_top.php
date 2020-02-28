@@ -128,7 +128,7 @@ $llists = array_reverse($llists);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./b_list.php">
               <i class="material-icons">person</i>
               <p>購入者一覧</p>
             </a>
