@@ -54,15 +54,9 @@ $lat[$i] = $geo[1];
   <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.1.3/iscroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.1/js/drawer.min.js"></script>
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/map.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
 　<script src="js/leaflet.sprite.js"></script>
-	<!-- BootstrapのCSS読み込み -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- BootstrapのJS読み込み -->
-    <script src="js/bootstrap.min.js"></script>
+  <script src="js/map.js"></script>
   <script>
 
     function init() {
