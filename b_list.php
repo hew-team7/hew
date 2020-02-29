@@ -101,7 +101,7 @@ if(isset($_POST['search'])){
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="./r_list.php">
               <i class="material-icons">content_paste</i>
               <p>ランキング</p>
             </a>
