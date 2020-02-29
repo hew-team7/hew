@@ -14,9 +14,11 @@ for ($i = 0; $i < 7; $i++) {
   $trow = mysqli_fetch_assoc($tresult);
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $trow[] = $date;
+  $date = date('Y/n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $klists[] = $trow;
   if($i == 0){
     $btoday = $trow['klist'];
+    $ndate = $date;
   }
   if($i == 1){
     $byesterday = $trow['klist'];
@@ -27,6 +29,9 @@ for ($i = 0; $i < 7; $i++) {
     }else{
       $brate = $btoday / $byesterday * 100;
     }
+  }
+  if($i == 6){
+    $ldate = $date;
   }
 }
 $klists = array_reverse($klists);
@@ -123,6 +128,19 @@ for ($i = 0; $i < 7; $i++) {
   }
 }
 $llists = array_reverse($llists);
+
+// ランキング(ポイント)
+$n = date('Y-m');
+$n = '%' . $n . '%';
+$sql = "SELECT buyer_login.user_id,SUM(get_point) AS get_point,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id WHERE date LIKE '$n' GROUP BY user_id;";
+$result = mysqli_query($cn, $sql);
+while ($rows = mysqli_fetch_assoc($result)) {
+  $points[] = $rows;
+}
+foreach($points as $id => $data){
+  $row[$id] = $data["get_point"];
+}
+array_multisort($row, SORT_DESC, $points);
 
 ?>
 
@@ -273,7 +291,6 @@ $llists = array_reverse($llists);
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-          <p>今日の
           <!-- your content here -->
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -286,7 +303,7 @@ $llists = array_reverse($llists);
                   <h3 class="card-title"><?php echo $btoday; ?>
                     <small>人</small>
                   </h3>
-                  <h4 class="card-title">(合計：<?php echo $brow['bcnt']; ?>人)</h4>
+                  <h4 class="card-title">(合計：<?php echo $brow['bcnt']; ?><small>人</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -317,7 +334,7 @@ $llists = array_reverse($llists);
                   <h3 class="card-title"><?php echo $stoday; ?>
                     <small>店舗</small>
                   </h3>
-                  <h4 class="card-title">(合計：<?php echo $srow['scnt']; ?>店舗)</h4>
+                  <h4 class="card-title">(合計：<?php echo $srow['scnt']; ?><small>店舗</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -348,7 +365,7 @@ $llists = array_reverse($llists);
                   <h3 class="card-title"><?php echo $ptoday; ?>
                     <small>点</small>
                   </h3>
-                  <h4 class="card-title">(合計：<?php echo $prow['pcnt']; ?>点)</h4>
+                  <h4 class="card-title">(合計：<?php echo $prow['pcnt']; ?><small>点</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -379,7 +396,7 @@ $llists = array_reverse($llists);
                   <h3 class="card-title"><?php echo $ltoday; ?>
                     <small>点</small>
                   </h3>
-                  <h4 class="card-title">(合計：<?php echo $rrow['rcnt']; ?>点)</h4>
+                  <h4 class="card-title">(合計：<?php echo $rrow['rcnt']; ?><small>点</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -449,13 +466,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">会員数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">
-                  <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -504,12 +515,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">店舗数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -558,12 +564,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">商品数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -624,24 +625,43 @@ $llists = array_reverse($llists);
           <div class="col-lg-6 col-md-12">
               <div class="card">
                 <div class="card-header card-header-warning">
-                  <h4 class="card-title">Employees Stats</h4>
-                  <p class="card-category">New employees on 15th September, 2016</p>
+                  <h4 class="card-title">今月のポイントランキング</h4>
+                  <p class="card-category">期間：</p>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
                     <thead class="text-warning">
-                      <th>RANKING</th>
-                      <th>USER_ID</th>
-                      <th>POINT</th>
-                      <th>RANK</th>
+                      <th>順位</th>
+                      <th>ユーザーID</th>
+                      <th>獲得P</th>
+                      <th>累計P</th>
+                      <th>ランク</th>
                     </thead>
                     <tbody>
+                      <?php $p = 0; ?>
+                      <?php $rank = 0; ?>
+                      <?php $cnt = 0; ?>
+                      <?php foreach ($points as $point): ?>
                       <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>$36,738</td>
-                        <td>Niger</td>
+                      <?php if(!($p == $point['get_point'])): // 同順位じゃない?>
+                        <?php $rank++; ?>
+                        <?php if(!($cnt == 0)): //一つ前までが同順位の場合 ?>
+                          <?php $rank += $cnt; ?>
+                          <?php $cnt = 0; ?>
+                        <?php endif ?>
+                        <td><?php echo $rank; ?></td>
+                        <?php $p = $point['get_point']; ?>
+                      <?php else: // 前と同じポイントの場合 ?>
+                        <td><?php echo $rank; ?></td>
+                        <?php $cnt++; ?>
+                        <?php $p = $point['get_point']; ?>
+                      <?php endif ?>
+                        <td><?php echo $point['user_id']; ?></td>
+                        <td><?php echo $point['get_point']; ?></td>
+                        <td><?php echo $point['point']; ?></td>
+                        <td><?php echo $point['rank']; ?></td>
                       </tr>
+                      <?php endforeach ?>
                     </tbody>
                   </table>
                 </div>
