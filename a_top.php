@@ -137,10 +137,12 @@ $result = mysqli_query($cn, $sql);
 while ($rows = mysqli_fetch_assoc($result)) {
   $points[] = $rows;
 }
-foreach($points as $id => $data){
-  $row[$id] = $data["get_point"];
+if(isset($points)){
+  foreach($points as $id => $data){
+    $row[$id] = $data["get_point"];
+  }
+  array_multisort($row, SORT_DESC, $points);
 }
-array_multisort($row, SORT_DESC, $points);
 
 ?>
 
@@ -195,7 +197,7 @@ array_multisort($row, SORT_DESC, $points);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./p_list.php">
               <i class="material-icons">fastfood</i>
               <p>商品一覧</p>
             </a>
