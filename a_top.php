@@ -22,8 +22,11 @@ for ($i = 0; $i < 7; $i++) {
     $byesterday = $trow['klist'];
     if($btoday == 0){
       $brate = 0;
+    }elseif($byesterday == 0){
+      $brate = $btoday * 100;
+    }else{
+      $brate = $btoday / $byesterday * 100;
     }
-    $brate = $btoday / $byesterday * 100;
   }
 }
 $klists = array_reverse($klists);
@@ -49,8 +52,11 @@ for ($i = 0; $i < 7; $i++) {
     $syesterday = $drow['slist'];
     if($stoday == 0){
       $srate = 0;
+    }elseif($syesterday == 0){
+      $srate = $stoday * 100;
+    }else{
+      $srate = $stoday / $syesterday * 100;
     }
-    $srate = $stoday / $syesterday * 100;
   }
 }
 $slists = array_reverse($slists);
@@ -58,7 +64,7 @@ $slists = array_reverse($slists);
 
 /** 商品数 */
 $now = date('Y-m-d H:i:s');
-$sql = "SELECT COUNT(*) AS pcnt FROM shop_sell_product WHERE close_date >= '$now';";
+$sql = "SELECT COUNT(*) AS pcnt FROM shop_sell_product;";
 $presult = mysqli_query($cn, $sql);
 $prow = mysqli_fetch_assoc($presult);
 
@@ -71,6 +77,19 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $arow[] = $date;
   $plists[] = $arow;
+  if($i == 0){
+    $ptoday = $arow['plist'];
+  }
+  if($i == 1){
+    $pyesterday = $arow['plist'];
+    if($ptoday == 0){
+      $prate = 0;
+    }elseif($pyesterday == 0){
+        $prate = $ptoday * 100;
+    }else{
+      $prate = $ptoday / $pyesterday * 100;
+    }
+  }
 }
 $plists = array_reverse($plists);
 
@@ -88,6 +107,20 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('y/n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $crow[] = $date;
   $llists[] = $crow;
+
+  if($i == 0){
+    $ltoday = $crow['llist'];
+  }
+  if($i == 1){
+    $lyesterday = $crow['llist'];
+    if($ltoday == 0){
+      $lrate = 0;
+    }elseif($lyesterday == 0){
+      $lrate = $ltoday * 100;
+    }else{
+      $lrate = $ltoday / $lyesterday * 100;
+    }
+  }
 }
 $llists = array_reverse($llists);
 
@@ -240,6 +273,7 @@ $llists = array_reverse($llists);
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
+          <p>今日の
           <!-- your content here -->
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -249,15 +283,22 @@ $llists = array_reverse($llists);
                     <i class="material-icons">person</i>
                   </div>
                   <p class="card-category">登録者数</p>
-                  <h3 class="card-title"><?php echo $brow['bcnt']; ?>
+                  <h3 class="card-title"><?php echo $btoday; ?>
                     <small>人</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $brow['bcnt']; ?>人)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
                     <?php if($brate >= 100): ?>
                       <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $brate; ?>%　</span>
                         増加しています(昨日:<?php echo $byesterday; ?>人)
+                    <?php elseif($brate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $brate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $byesterday; ?>人)
+                    <?php elseif($brate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $brate; ?>　</span>
+                      今日はまだ登録がありません
                     <?php elseif($brate < 100): ?>
                       <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?>%　</span>
                         減少しています(昨日:<?php echo $byesterday; ?>人)
@@ -273,15 +314,22 @@ $llists = array_reverse($llists);
                     <i class="material-icons">store</i>
                   </div>
                   <p class="card-category">店舗数</p>
-                  <h3 class="card-title"><?php echo $srow['scnt']; ?>
+                  <h3 class="card-title"><?php echo $stoday; ?>
                     <small>店舗</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $srow['scnt']; ?>店舗)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
                     <?php if($srate >= 100): ?>
                       <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $srate; ?>%　</span>
                         増加しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $srate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $srate; ?>　</span>
+                      今日はまだ登録がありません
                     <?php elseif($srate < 100): ?>
                       <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $srate; ?>%　</span>
                         減少しています(昨日:<?php echo $syesterday; ?>人)
@@ -296,19 +344,26 @@ $llists = array_reverse($llists);
                   <div class="card-icon">
                     <i class="material-icons">fastfood</i>
                   </div>
-                  <p class="card-category">商品数</p>
-                  <h3 class="card-title"><?php echo $prow['pcnt']; ?>
+                  <p class="card-category">現在の出品数</p>
+                  <h3 class="card-title"><?php echo $ptoday; ?>
                     <small>点</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $prow['pcnt']; ?>点)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <?php if($srate >= 100): ?>
-                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $srate; ?>%　</span>
-                        増加しています(昨日:<?php echo $syesterday; ?>人)
-                    <?php elseif($srate < 100): ?>
-                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $srate; ?>%　</span>
-                        減少しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php if($prate > 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $prate; ?>%　</span>
+                        増加しています(昨日:<?php echo $pyesterday; ?>点)
+                    <?php elseif($prate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $prate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $pyesterday; ?>点)
+                    <?php elseif($prate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $prate; ?>　</span>
+                      今日はまだ登録がありません
+                    <?php elseif($prate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $prate; ?>%　</span>
+                        減少しています(昨日:<?php echo $pyesterday; ?>点)
                     <?php endif ?>
                   </div>
                 </div>
@@ -321,13 +376,26 @@ $llists = array_reverse($llists);
                     <i class="material-icons">warning</i>
                   </div>
                   <p class="card-category">売れ残り商品数</p>
-                  <h3 class="card-title"><?php echo $rrow['rcnt']; ?>
+                  <h3 class="card-title"><?php echo $ltoday; ?>
                     <small>点</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $rrow['rcnt']; ?>点)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Just Updated
+                    <?php if($lrate > 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $lrate; ?>%　</span>
+                        増加しています(昨日:<?php echo $lyesterday; ?>点)
+                    <?php elseif($prate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $lrate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $lyesterday; ?>点)
+                    <?php elseif($lrate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $lrate; ?>　</span>
+                      今日はまだ登録がありません
+                    <?php elseif($lrate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $lrate; ?>%　</span>
+                        減少しています(昨日:<?php echo $lyesterday; ?>点)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>

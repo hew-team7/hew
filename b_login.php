@@ -39,7 +39,7 @@ if(isset($_POST['log'])){
       $_SESSION['ln'] = $rows2['l_name'];
       $_SESSION['code'] = $rows2['postal_code'];
       $_SESSION['addr'] = $rows2['address1'] . $rows2['address2'];
-      header("location:./top-page.php");
+      header("location:./map.php");
       exit;
     }else{
       $codes[] = '304';
