@@ -2,33 +2,39 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT * FROM shop_list WHERE delete_time IS NULL;";
+$sql = "SELECT buyer_login.id,buyer_login.user_id,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id GROUP BY user_id;";
 $result = mysqli_query($cn, $sql);
-$slists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
-  $slists[] = $rows;
+  $spoints[] = $rows;
 }
-array_multisort(array_map("strtotime", array_column($slists, "registration_date")), SORT_DESC, $slists);
+if (isset($spoints)) {
+  foreach ($spoints as $id => $data) {
+    $srow[$id] = $data["point"];
+  }
+  array_multisort($srow, SORT_DESC, $spoints);
+}
 
-if(isset($_POST['search'])){
-  if(!($_POST['add1'] == "")){
-    $add1 = $_POST['add1'];
-    $add1 = '%' . $add1 . '%';
-    $sql = "SELECT * FROM shop_list WHERE delete_time IS NULL AND address1 LIKE '$add1'";
-  }
-  if(!($_POST['add2'] == "")){
-    $add2 = $_POST['add2'];
-    $add2 = '%' . $add2 . '%';
-    $sql .= " AND address1 LIKE '$add2';";
-  }
-  $result = mysqli_query($cn, $sql);
-  $slists = array();
-  while ($rows = mysqli_fetch_assoc($result)) {
-    $slists[] = $rows;
+if (isset($_POST['search'])) {
+  if (!($_POST['when'] == '')) {
+    $when = $_POST['when'];
+    $when = '%' . $when . '%';
+    $sql = "SELECT buyer_login.id,buyer_login.user_id,SUM(get_point) AS get_point,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id WHERE date LIKE '$when' GROUP BY user_id;";
+    $result = mysqli_query($cn, $sql);
+    $spoints = array();
+    while ($rows = mysqli_fetch_assoc($result)) {
+      $spoints[] = $rows;
+    }
+    if (isset($spoints)) {
+      foreach ($spoints as $data) {
+        $rank[] = $data["get_point"];
+      }
+      if(is_array($rank)){
+        array_multisort($rank, SORT_DESC, $spoints);
+      }
+    }
   }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -94,13 +100,13 @@ if(isset($_POST['search'])){
               <p>売れ残り商品一覧</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="./s_list.php">
               <i class="material-icons">store_mall_directory</i>
               <p>店舗一覧</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./r_list.php">
               <i class="material-icons">content_paste</i>
               <p>ランキング</p>
@@ -115,7 +121,7 @@ if(isset($_POST['search'])){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
+            <a class="navbar-brand" href="javascript:;">ランキング一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -176,41 +182,35 @@ if(isset($_POST['search'])){
           </div>
         </div>
       </nav>
-
+      <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">店舗一覧</h4>
-                  <p class="card-category"> 登録されている店舗一覧</p>
+                  <h4 class="card-title ">ポイントランキング</h4>
+                  <p class="card-category"> 購入者のポイント獲得ランキング</p>
                 </div>
                 <div class="card-body">
-                  <form action="./s_list.php" method="POST" class="navbar-form">
+                  <form action="./r_list.php" method="POST" class="navbar-form">
                     <div class="row a">
-                      <h5 class="card-title aa">都道府県・市町村で絞る</h5>
+                      <h5 class="card-title aa">月々のポイント獲得ランキングを調べる　<small>(例:2020-02)</small></h5>
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label class="bmd-label-floating">都道府県</label>
-                          <input type="text" name="add1" class="form-control" autocomplete="off">
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">市町村</label>
-                          <input type="text" name="add2" class="form-control" autocomplete="off">
+                          <label class="bmd-label-floating">年-月</label>
+                          <input type="text" name="when" class="form-control" autocomplete="off">
                         </div>
                       </div>
                       <button type="submit" name="search" class="btn btn-primary pull-right">検索</button>
                     </div>
                   </form>
                   <h5>
-                    <?php if((isset($_POST['add1'])) && !($_POST['add1'] == "")): ?>
+                    <?php if ((isset($_POST['add1'])) && !($_POST['add1'] == "")) : ?>
                       検索条件：
                       <?php echo $_POST['add1']; ?>
                     <?php endif ?>
-                    <?php if((isset($_POST['add2'])) && !($_POST['add2'] == "")): ?>
+                    <?php if ((isset($_POST['add2'])) && !($_POST['add2'] == "")) : ?>
                       <?php echo $_POST['add2']; ?>
                     <?php endif ?>
                   </h5>
@@ -218,20 +218,24 @@ if(isset($_POST['search'])){
                     <table class="table">
                       <thead class=" text-primary">
                         <th>ID</th>
-                        <th>店舗名</th>
-                        <th>電話番号</th>
-                        <th>住所</th>
-                        <th>登録日</th>
+                        <th>ユーザー</th>
+                        <?php if(isset($when)): ?>
+                        <th>獲得ポイント</th>
+                        <?php endif ?>
+                        <th>累計ポイント</th>
+                        <th>ランク</th>
                         <th>詳細</th>
                       </thead>
                       <tbody>
-                        <?php foreach ($slists as $slist) : ?>
+                        <?php foreach ($spoints as $spoint) : ?>
                           <tr>
-                            <td><?php echo $slist['id']; ?></td>
-                            <td><?php echo $slist['name']; ?></td>
-                            <td><?php echo $slist['tel']; ?></td>
-                            <td><?php echo $slist['address1'] . $slist['address2']; ?></td>
-                            <td class="text-primary"><?php echo $slist['registration_date']; ?></td>
+                            <td><?php echo $spoint['id']; ?></td>
+                            <td><?php echo $spoint['user_id']; ?></td>
+                            <?php if(isset($when)): ?>
+                            <td><?php echo $spoint['get_point']; ?></td>
+                            <?php endif ?>
+                            <td><?php echo $spoint['point']; ?></td>
+                            <td><?php echo $spoint['rank']; ?></td>
                             <td>詳細</td>
                           </tr>
                         <?php endforeach ?>
@@ -242,6 +246,7 @@ if(isset($_POST['search'])){
               </div>
             </div>
           </div>
+
 
           <footer class="footer">
             <div class="container-fluid">
