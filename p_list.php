@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 // 現在出品されている商品

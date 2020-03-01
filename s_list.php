@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 $sql = "SELECT * FROM shop_list WHERE delete_time IS NULL;";

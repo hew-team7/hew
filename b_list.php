@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE buyer_list.delete_date IS NULL;";
