@@ -16,7 +16,7 @@ session_destroy();
   <meta charset="UTF-8">
   <title>会員登録画面 - 確認</title>
   <link rel="stylesheet" type="text/css" href="./css/">
-  <meta http-equiv="refresh" content="5; url=./top-page.php">
+  <meta http-equiv="refresh" content="5; url=./index.php">
 </head>
 
 <body>
@@ -47,7 +47,7 @@ session_destroy();
       <p>５秒後にTOPページへ遷移します。</p>
 
       <p>自動的に変わらない場合、下のリンク先をクリックしてください。</p>
-      <a href="./top-page.php" class="button d">TOPページへ戻る</a>
+      <a href="./index.php" class="button d">TOPページへ戻る</a>
     </div>
   </div>
 
