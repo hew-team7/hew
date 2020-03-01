@@ -83,7 +83,7 @@ if(isset($_POST['search'])){
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./p_list.php">
               <i class="material-icons">fastfood</i>
               <p>商品一覧</p>
             </a>
@@ -101,7 +101,7 @@ if(isset($_POST['search'])){
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="./r_list.php">
               <i class="material-icons">content_paste</i>
               <p>ランキング</p>
             </a>
@@ -231,8 +231,8 @@ if(isset($_POST['search'])){
                             <td><?php echo $blist['id']; ?></td>
                             <td><?php echo $blist['user_id']; ?></td>
                             <td><?php echo $blist['address1'] . $blist['address2']; ?></td>
-                            <td>0</td>
-                            <td>1</td>
+                            <td><?php echo $blist['point']; ?></td>
+                            <td><?php echo $blist['rank']; ?></td>
                             <td class="text-primary"><?php echo $blist['registration_date']; ?></td>
                             <td>詳細</td>
                           </tr>

@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 /** 会員数 */
@@ -14,16 +14,24 @@ for ($i = 0; $i < 7; $i++) {
   $trow = mysqli_fetch_assoc($tresult);
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $trow[] = $date;
+  $date = date('Y/n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $klists[] = $trow;
   if($i == 0){
-    $today = $trow['klist'];
+    $btoday = $trow['klist'];
+    $ndate = $date;
   }
   if($i == 1){
-    $yesterday = $trow['klist'];
-    if($today == 0){
+    $byesterday = $trow['klist'];
+    if($btoday == 0){
       $brate = 0;
+    }elseif($byesterday == 0){
+      $brate = $btoday * 100;
+    }else{
+      $brate = $btoday / $byesterday * 100;
     }
-    $brate = $today / $yesterday * 100;
+  }
+  if($i == 6){
+    $ldate = $date;
   }
 }
 $klists = array_reverse($klists);
@@ -42,13 +50,26 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $drow[] = $date;
   $slists[] = $drow;
+  if($i == 0){
+    $stoday = $drow['slist'];
+  }
+  if($i == 1){
+    $syesterday = $drow['slist'];
+    if($stoday == 0){
+      $srate = 0;
+    }elseif($syesterday == 0){
+      $srate = $stoday * 100;
+    }else{
+      $srate = $stoday / $syesterday * 100;
+    }
+  }
 }
 $slists = array_reverse($slists);
 
 
 /** 商品数 */
 $now = date('Y-m-d H:i:s');
-$sql = "SELECT COUNT(*) AS pcnt FROM shop_sell_product WHERE close_date >= '$now';";
+$sql = "SELECT COUNT(*) AS pcnt FROM shop_sell_product;";
 $presult = mysqli_query($cn, $sql);
 $prow = mysqli_fetch_assoc($presult);
 
@@ -61,6 +82,19 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $arow[] = $date;
   $plists[] = $arow;
+  if($i == 0){
+    $ptoday = $arow['plist'];
+  }
+  if($i == 1){
+    $pyesterday = $arow['plist'];
+    if($ptoday == 0){
+      $prate = 0;
+    }elseif($pyesterday == 0){
+        $prate = $ptoday * 100;
+    }else{
+      $prate = $ptoday / $pyesterday * 100;
+    }
+  }
 }
 $plists = array_reverse($plists);
 
@@ -78,8 +112,37 @@ for ($i = 0; $i < 7; $i++) {
   $date = date('y/n/j', mktime(0, 0, 0, date('n'), date('j') - $i, date('Y')));
   $crow[] = $date;
   $llists[] = $crow;
+
+  if($i == 0){
+    $ltoday = $crow['llist'];
+  }
+  if($i == 1){
+    $lyesterday = $crow['llist'];
+    if($ltoday == 0){
+      $lrate = 0;
+    }elseif($lyesterday == 0){
+      $lrate = $ltoday * 100;
+    }else{
+      $lrate = $ltoday / $lyesterday * 100;
+    }
+  }
 }
 $llists = array_reverse($llists);
+
+// ランキング(ポイント)
+$n = date('Y-m');
+$n = '%' . $n . '%';
+$sql = "SELECT buyer_login.user_id,SUM(get_point) AS get_point,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id WHERE date LIKE '$n' GROUP BY user_id;";
+$result = mysqli_query($cn, $sql);
+while ($rows = mysqli_fetch_assoc($result)) {
+  $points[] = $rows;
+}
+if(isset($points)){
+  foreach($points as $id => $data){
+    $row[$id] = $data["get_point"];
+  }
+  array_multisort($row, SORT_DESC, $points);
+}
 
 ?>
 
@@ -134,7 +197,7 @@ $llists = array_reverse($llists);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./p_list.php">
               <i class="material-icons">fastfood</i>
               <p>商品一覧</p>
             </a>
@@ -152,7 +215,7 @@ $llists = array_reverse($llists);
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="./r_list.php">
               <i class="material-icons">content_paste</i>
               <p>ランキング</p>
             </a>
@@ -239,17 +302,25 @@ $llists = array_reverse($llists);
                     <i class="material-icons">person</i>
                   </div>
                   <p class="card-category">登録者数</p>
-                  <h3 class="card-title"><?php echo $brow['bcnt']; ?>
+                  <h3 class="card-title"><?php echo $btoday; ?>
                     <small>人</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $brow['bcnt']; ?><small>人</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
                     <?php if($brate >= 100): ?>
                       <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $brate; ?>%　</span>
-                       増加しています(昨日:<?php echo $yesterday;?>人)
+                        増加しています(昨日:<?php echo $byesterday; ?>人)
+                    <?php elseif($brate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $brate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $byesterday; ?>人)
+                    <?php elseif($brate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $brate; ?>　</span>
+                      今日はまだ登録がありません
                     <?php elseif($brate < 100): ?>
-                      <span class="text-danger"><i class="material-icons">assessment</i><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?> </span>          
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $brate; ?>%　</span>
+                        減少しています(昨日:<?php echo $byesterday; ?>人)
                     <?php endif ?>
                   </div>
                 </div>
@@ -262,13 +333,26 @@ $llists = array_reverse($llists);
                     <i class="material-icons">store</i>
                   </div>
                   <p class="card-category">店舗数</p>
-                  <h3 class="card-title"><?php echo $srow['scnt']; ?>
+                  <h3 class="card-title"><?php echo $stoday; ?>
                     <small>店舗</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $srow['scnt']; ?><small>店舗</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Last 24 Hours
+                    <?php if($srate >= 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $srate; ?>%　</span>
+                        増加しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $srate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $syesterday; ?>人)
+                    <?php elseif($srate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $srate; ?>　</span>
+                      今日はまだ登録がありません
+                    <?php elseif($srate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $srate; ?>%　</span>
+                        減少しています(昨日:<?php echo $syesterday; ?>人)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
@@ -279,14 +363,27 @@ $llists = array_reverse($llists);
                   <div class="card-icon">
                     <i class="material-icons">fastfood</i>
                   </div>
-                  <p class="card-category">商品数</p>
-                  <h3 class="card-title"><?php echo $prow['pcnt']; ?>
+                  <p class="card-category">現在の出品数</p>
+                  <h3 class="card-title"><?php echo $ptoday; ?>
                     <small>点</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $prow['pcnt']; ?><small>点</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Tracked from Github
+                    <?php if($prate > 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $prate; ?>%　</span>
+                        増加しています(昨日:<?php echo $pyesterday; ?>点)
+                    <?php elseif($prate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $prate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $pyesterday; ?>点)
+                    <?php elseif($prate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $prate; ?>　</span>
+                      今日はまだ登録がありません
+                    <?php elseif($prate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $prate; ?>%　</span>
+                        減少しています(昨日:<?php echo $pyesterday; ?>点)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
@@ -298,13 +395,26 @@ $llists = array_reverse($llists);
                     <i class="material-icons">warning</i>
                   </div>
                   <p class="card-category">売れ残り商品数</p>
-                  <h3 class="card-title"><?php echo $rrow['rcnt']; ?>
+                  <h3 class="card-title"><?php echo $ltoday; ?>
                     <small>点</small>
                   </h3>
+                  <h4 class="card-title">(合計：<?php echo $rrow['rcnt']; ?><small>点</small>)</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">assessment</i> Just Updated
+                    <?php if($lrate > 100): ?>
+                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?php echo $lrate; ?>%　</span>
+                        増加しています(昨日:<?php echo $lyesterday; ?>点)
+                    <?php elseif($prate == 100): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> <?php echo $lrate; ?>%　</span>
+                        昨日と同じです(昨日:<?php echo $lyesterday; ?>点)
+                    <?php elseif($lrate == 0): ?>
+                      <span class="text-warning"><i class="fa fa-long-arrow-right"></i> ±<?php echo $lrate; ?>　</span>
+                      今日はまだ登録がありません
+                    <?php elseif($lrate < 100): ?>
+                      <span class="text-danger"><i class="fa fa-long-arrow-down"></i> <?php echo $lrate; ?>%　</span>
+                        減少しています(昨日:<?php echo $lyesterday; ?>点)
+                    <?php endif ?>
                   </div>
                 </div>
               </div>
@@ -358,13 +468,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">会員数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">
-                  <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -413,12 +517,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">店舗数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -467,12 +566,7 @@ $llists = array_reverse($llists);
               </div>
               <div class="card-body">
                 <h4 class="card-title">商品数推移(日単位) ※直近1週間</h4>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
+                <p class="card-category">期間：<?php echo $ldate; ?> - <?php echo $ndate; ?></p>
               </div>
             </div>
           </div>
@@ -533,24 +627,43 @@ $llists = array_reverse($llists);
           <div class="col-lg-6 col-md-12">
               <div class="card">
                 <div class="card-header card-header-warning">
-                  <h4 class="card-title">Employees Stats</h4>
-                  <p class="card-category">New employees on 15th September, 2016</p>
+                  <h4 class="card-title">今月のポイントランキング</h4>
+                  <p class="card-category">期間：</p>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
                     <thead class="text-warning">
-                      <th>RANKING</th>
-                      <th>USER_ID</th>
-                      <th>POINT</th>
-                      <th>RANK</th>
+                      <th>順位</th>
+                      <th>ユーザーID</th>
+                      <th>獲得P</th>
+                      <th>累計P</th>
+                      <th>ランク</th>
                     </thead>
                     <tbody>
+                      <?php $p = 0; ?>
+                      <?php $rank = 0; ?>
+                      <?php $cnt = 0; ?>
+                      <?php foreach ($points as $point): ?>
                       <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>$36,738</td>
-                        <td>Niger</td>
+                      <?php if(!($p == $point['get_point'])): // 同順位じゃない?>
+                        <?php $rank++; ?>
+                        <?php if(!($cnt == 0)): //一つ前までが同順位の場合 ?>
+                          <?php $rank += $cnt; ?>
+                          <?php $cnt = 0; ?>
+                        <?php endif ?>
+                        <td><?php echo $rank; ?></td>
+                        <?php $p = $point['get_point']; ?>
+                      <?php else: // 前と同じポイントの場合 ?>
+                        <td><?php echo $rank; ?></td>
+                        <?php $cnt++; ?>
+                        <?php $p = $point['get_point']; ?>
+                      <?php endif ?>
+                        <td><?php echo $point['user_id']; ?></td>
+                        <td><?php echo $point['get_point']; ?></td>
+                        <td><?php echo $point['point']; ?></td>
+                        <td><?php echo $point['rank']; ?></td>
                       </tr>
+                      <?php endforeach ?>
                     </tbody>
                   </table>
                 </div>

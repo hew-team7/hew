@@ -2,19 +2,21 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT * FROM shop_list WHERE delete_time IS NULL;";
+// 現在出品されている商品
+$now = date('Y-m-d');
+$sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now';";
 $result = mysqli_query($cn, $sql);
-$slists = array();
+$nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
-  $slists[] = $rows;
+  $nlists[] = $rows;
 }
-array_multisort(array_map("strtotime", array_column($slists, "registration_date")), SORT_DESC, $slists);
+array_multisort(array_map("strtotime", array_column($nlists, "close_date")), SORT_ASC, $nlists);
 
-if(isset($_POST['search'])){
+if(isset($_POST['search1'])){
   if(!($_POST['add1'] == "")){
     $add1 = $_POST['add1'];
     $add1 = '%' . $add1 . '%';
-    $sql = "SELECT * FROM shop_list WHERE delete_time IS NULL AND address1 LIKE '$add1'";
+    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND address1 LIKE '$add1';";
   }
   if(!($_POST['add2'] == "")){
     $add2 = $_POST['add2'];
@@ -22,13 +24,66 @@ if(isset($_POST['search'])){
     $sql .= " AND address1 LIKE '$add2';";
   }
   $result = mysqli_query($cn, $sql);
-  $slists = array();
+  $nlists = array();
   while ($rows = mysqli_fetch_assoc($result)) {
-    $slists[] = $rows;
+    $nlists[] = $rows;
+  }
+}
+
+if(isset($_POST['search2'])){
+  if(!($_POST['pend'] == "")){
+    $pend = $_POST['pend'];
+    $pend = '%' . $pend . '%';
+    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND close_date LIKE '$pend';";
+  }
+  $result = mysqli_query($cn, $sql);
+  $nlists = array();
+  while ($rows = mysqli_fetch_assoc($result)) {
+    $nlists[] = $rows;
+  }
+}
+
+
+// 掲載終了した商品
+$sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now';";
+$result = mysqli_query($cn, $sql);
+$elists = array();
+while ($rows = mysqli_fetch_assoc($result)) {
+  $elists[] = $rows;
+}
+array_multisort(array_map("strtotime", array_column($elists, "close_date")), SORT_DESC, $elists);
+
+if(isset($_POST['search3'])){
+  if(!($_POST['add3'] == "")){
+    $add3 = $_POST['add1'];
+    $add3 = '%' . $add3 . '%';
+    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now' AND address1 LIKE '$add1';";
+  }
+  if(!($_POST['add4'] == "")){
+    $add4 = $_POST['add4'];
+    $add4 = '%' . $add4 . '%';
+    $sql .= " AND address1 LIKE '$add4';";
+  }
+  $result = mysqli_query($cn, $sql);
+  $elists = array();
+  while ($rows = mysqli_fetch_assoc($result)) {
+    $elists[] = $rows;
+  }
+}
+
+if(isset($_POST['search4'])){
+  if(!($_POST['pend'] == "")){
+    $epend = $_POST['pend'];
+    $epend = '%' . $pend . '%';
+    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now' AND close_date LIKE '$pend';";
+  }
+  $result = mysqli_query($cn, $sql);
+  $elists = array();
+  while ($rows = mysqli_fetch_assoc($result)) {
+    $elists[] = $rows;
   }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -82,7 +137,7 @@ if(isset($_POST['search'])){
               <p>購入者一覧</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./p_list.php">
               <i class="material-icons">fastfood</i>
               <p>商品一覧</p>
@@ -94,7 +149,7 @@ if(isset($_POST['search'])){
               <p>売れ残り商品一覧</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="./s_list.php">
               <i class="material-icons">store_mall_directory</i>
               <p>店舗一覧</p>
@@ -115,7 +170,7 @@ if(isset($_POST['search'])){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
+            <a class="navbar-brand" href="javascript:;">商品一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -176,6 +231,7 @@ if(isset($_POST['search'])){
           </div>
         </div>
       </nav>
+      <!-- End Navbar -->
 
       <div class="content">
         <div class="container-fluid">
@@ -183,11 +239,11 @@ if(isset($_POST['search'])){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">店舗一覧</h4>
-                  <p class="card-category"> 登録されている店舗一覧</p>
+                  <h4 class="card-title ">現在出品中の商品一覧</h4>
+                  <p class="card-category">現在売られている商品の一覧</p>
                 </div>
                 <div class="card-body">
-                  <form action="./s_list.php" method="POST" class="navbar-form">
+                  <form action="./p_list.php" method="POST" class="navbar-form">
                     <div class="row a">
                       <h5 class="card-title aa">都道府県・市町村で絞る</h5>
                       <div class="col-md-3">
@@ -202,7 +258,17 @@ if(isset($_POST['search'])){
                           <input type="text" name="add2" class="form-control" autocomplete="off">
                         </div>
                       </div>
-                      <button type="submit" name="search" class="btn btn-primary pull-right">検索</button>
+                      <button type="submit" name="search1" class="btn btn-primary pull-right">検索</button>
+                    </div>
+                    <div class="row a">
+                      <h5 class="card-title aa">掲載終了日で絞る<small>(※表の掲載終了日と同じ形式で入力してください)</small></h5>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">掲載終了日</label>
+                          <input type="text" name="pend" class="form-control" autocomplete="off">
+                        </div>
+                      </div>
+                      <button type="submit" name="search2" class="btn btn-primary pull-right">検索</button>
                     </div>
                   </form>
                   <h5>
@@ -213,25 +279,107 @@ if(isset($_POST['search'])){
                     <?php if((isset($_POST['add2'])) && !($_POST['add2'] == "")): ?>
                       <?php echo $_POST['add2']; ?>
                     <?php endif ?>
+                    <?php if((isset($_POST['pend'])) && !($_POST['pend'] == "")): ?>
+                      検索条件：<?php echo $_POST['pend']; ?>
+                    <?php endif ?>
                   </h5>
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
-                        <th>ID</th>
                         <th>店舗名</th>
-                        <th>電話番号</th>
-                        <th>住所</th>
-                        <th>登録日</th>
+                        <th>商品名</th>
+                        <th>販売価格</th>
+                        <th>販売数</th>
+                        <th>売上数</th>
+                        <th>掲載終了日</th>
                         <th>詳細</th>
                       </thead>
                       <tbody>
-                        <?php foreach ($slists as $slist) : ?>
+                        <?php foreach ($nlists as $nlist) : ?>
                           <tr>
-                            <td><?php echo $slist['id']; ?></td>
-                            <td><?php echo $slist['name']; ?></td>
-                            <td><?php echo $slist['tel']; ?></td>
-                            <td><?php echo $slist['address1'] . $slist['address2']; ?></td>
-                            <td class="text-primary"><?php echo $slist['registration_date']; ?></td>
+                            <td><?php echo $nlist['sname']; ?></td>
+                            <td><?php echo $nlist['pname']; ?></td>
+                            <td><?php echo $nlist['price_cut']; ?></td>
+                            <td><?php echo $nlist['sell_quantity']; ?></td>
+                            <td><?php echo $nlist['buy_quantity']; ?></td>
+                            <td class="text-primary"><?php echo $nlist['close_date']; ?></td>
+                            <td>詳細</td>
+                          </tr>
+                        <?php endforeach ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">掲載終了の商品一覧</h4>
+                  <p class="card-category">掲載が終了された商品の一覧</p>
+                </div>
+                <div class="card-body">
+                  <form action="./p_list.php" method="POST" class="navbar-form">
+                    <div class="row a">
+                      <h5 class="card-title aa">都道府県・市町村で絞る</h5>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">都道府県</label>
+                          <input type="text" name="add3" class="form-control" autocomplete="off">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">市町村</label>
+                          <input type="text" name="add3" class="form-control" autocomplete="off">
+                        </div>
+                      </div>
+                      <button type="submit" name="search3" class="btn btn-primary pull-right">検索</button>
+                    </div>
+                    <div class="row a">
+                      <h5 class="card-title aa">掲載終了日で絞る<small>(※表の掲載終了日と同じ形式で入力してください)</small></h5>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">掲載終了日</label>
+                          <input type="text" name="epend" class="form-control" autocomplete="off">
+                        </div>
+                      </div>
+                      <button type="submit" name="search4" class="btn btn-primary pull-right">検索</button>
+                    </div>
+                  </form>
+                  <h5>
+                    <?php if((isset($_POST['add3'])) && !($_POST['add3'] == "")): ?>
+                      検索条件：
+                      <?php echo $_POST['add3']; ?>
+                    <?php endif ?>
+                    <?php if((isset($_POST['add4'])) && !($_POST['add4'] == "")): ?>
+                      <?php echo $_POST['add4']; ?>
+                    <?php endif ?>
+                    <?php if((isset($_POST['epend'])) && !($_POST['epend'] == "")): ?>
+                      検索条件：<?php echo $_POST['epend']; ?>
+                    <?php endif ?>
+                  </h5>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>店舗名</th>
+                        <th>商品名</th>
+                        <th>販売価格</th>
+                        <th>販売数</th>
+                        <th>売上数</th>
+                        <th>掲載終了日</th>
+                        <th>詳細</th>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($elists as $elist) : ?>
+                          <tr>
+                            <td><?php echo $elist['sname']; ?></td>
+                            <td><?php echo $elist['pname']; ?></td>
+                            <td><?php echo $elist['price_cut']; ?></td>
+                            <td><?php echo $elist['sell_quantity']; ?></td>
+                            <td><?php echo $elist['buy_quantity']; ?></td>
+                            <td class="text-primary"><?php echo $elist['close_date']; ?></td>
                             <td>詳細</td>
                           </tr>
                         <?php endforeach ?>
