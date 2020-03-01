@@ -42,7 +42,7 @@ $month = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C');
 //*** 入力した内容で登録するを押された場合 */
 if (isset($_POST['ok'])) {
   $code = strval($fcode) . strval($lcode);
-  $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+  $cn = mysqli_connect('localhost', 'root', '', 'hew');
   mysqli_set_charset($cn, 'utf8');
   $sql1 = "SELECT id FROM buyer_login ORDER BY id ASC;";
   $rsl = mysqli_query($cn, $sql1);
