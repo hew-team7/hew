@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 $sql = "SELECT buyer_login.id,buyer_login.user_id,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id GROUP BY user_id;";
