@@ -3,6 +3,7 @@
 require_once "config.php";
 session_start();
 $pr_info = get_pr_inf($_SESSION['shop_id']);
+
 function get_pr_inf($shop_id){
 
   $cn = mysqli_connect('localhost','root','','hew_07');
