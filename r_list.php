@@ -217,6 +217,7 @@ if (isset($_POST['search'])) {
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                        <th>ランキング</th>
                         <th>ID</th>
                         <th>ユーザー</th>
                         <?php if(isset($when)): ?>
@@ -227,8 +228,24 @@ if (isset($_POST['search'])) {
                         <th>詳細</th>
                       </thead>
                       <tbody>
+                        <?php $p = 0; ?>
+                        <?php $rank = 0; ?>
+                        <?php $cnt = 0; ?>
                         <?php foreach ($spoints as $spoint) : ?>
                           <tr>
+                            <?php if(!($p == $spoint['point'])): // 同順位じゃない?>
+                              <?php $rank++; ?>
+                              <?php if(!($cnt == 0)): //一つ前までが同順位の場合 ?>
+                                <?php $rank += $cnt; ?>
+                                <?php $cnt = 0; ?>
+                              <?php endif ?>
+                              <td><?php echo $rank; ?></td>
+                              <?php $p = $spoint['point']; ?>
+                            <?php else: // 前と同じポイントの場合 ?>
+                              <td><?php echo $rank; ?></td>
+                              <?php $cnt++; ?>
+                              <?php $p = $spoint['point']; ?>
+                            <?php endif ?>
                             <td><?php echo $spoint['id']; ?></td>
                             <td><?php echo $spoint['user_id']; ?></td>
                             <?php if(isset($when)): ?>
