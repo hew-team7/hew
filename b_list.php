@@ -234,7 +234,7 @@ if(isset($_POST['search'])){
                             <td><?php echo $blist['point']; ?></td>
                             <td><?php echo $blist['rank']; ?></td>
                             <td class="text-primary"><?php echo $blist['registration_date']; ?></td>
-                            <td>詳細</td>
+                            <td><a href="./b_detail.php?id=<?php echo $blist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>
