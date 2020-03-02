@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE buyer_list.delete_date IS NULL;";
@@ -234,7 +234,7 @@ if(isset($_POST['search'])){
                             <td><?php echo $blist['point']; ?></td>
                             <td><?php echo $blist['rank']; ?></td>
                             <td class="text-primary"><?php echo $blist['registration_date']; ?></td>
-                            <td>詳細</td>
+                            <td><a href="./b_detail.php?id=<?php echo $blist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>

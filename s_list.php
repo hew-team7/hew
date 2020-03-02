@@ -1,5 +1,5 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 $sql = "SELECT * FROM shop_list WHERE delete_time IS NULL;";
@@ -232,7 +232,7 @@ if(isset($_POST['search'])){
                             <td><?php echo $slist['tel']; ?></td>
                             <td><?php echo $slist['address1'] . $slist['address2']; ?></td>
                             <td class="text-primary"><?php echo $slist['registration_date']; ?></td>
-                            <td>詳細</td>
+                            <td><a href="./s_detail.php?id=<?php echo $slist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>

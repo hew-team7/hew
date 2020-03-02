@@ -1,10 +1,10 @@
 <?php
-$cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+$cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 // 現在出品されている商品
 $now = date('Y-m-d');
-$sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now';";
+$sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now';";
 $result = mysqli_query($cn, $sql);
 $nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
@@ -16,7 +16,7 @@ if(isset($_POST['search1'])){
   if(!($_POST['add1'] == "")){
     $add1 = $_POST['add1'];
     $add1 = '%' . $add1 . '%';
-    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND address1 LIKE '$add1';";
+    $sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND address1 LIKE '$add1';";
   }
   if(!($_POST['add2'] == "")){
     $add2 = $_POST['add2'];
@@ -34,7 +34,7 @@ if(isset($_POST['search2'])){
   if(!($_POST['pend'] == "")){
     $pend = $_POST['pend'];
     $pend = '%' . $pend . '%';
-    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND close_date LIKE '$pend';";
+    $sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND close_date LIKE '$pend';";
   }
   $result = mysqli_query($cn, $sql);
   $nlists = array();
@@ -45,7 +45,7 @@ if(isset($_POST['search2'])){
 
 
 // 掲載終了した商品
-$sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now';";
+$sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now';";
 $result = mysqli_query($cn, $sql);
 $elists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
@@ -57,7 +57,7 @@ if(isset($_POST['search3'])){
   if(!($_POST['add3'] == "")){
     $add3 = $_POST['add1'];
     $add3 = '%' . $add3 . '%';
-    $sql = "SELECT c.name AS sname,b.name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now' AND address1 LIKE '$add1';";
+    $sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date < '$now' AND address1 LIKE '$add1';";
   }
   if(!($_POST['add4'] == "")){
     $add4 = $_POST['add4'];

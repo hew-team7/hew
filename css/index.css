@@ -78,9 +78,13 @@ a{
 
 
 #end{
+    height: 30px;
     background-color: #d1aa8c;
     text-align: right;
-    padding: 5px 5px;
     clear: both;
+    color: white;
     font-size: 0.75em;
+}
+#end p{
+    padding-top: 5px;
 }
