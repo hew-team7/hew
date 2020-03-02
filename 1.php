@@ -1,11 +1,35 @@
 <?php
 
 require_once 'config.php';
+
+$cn0 = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
+mysqli_set_charset($cn0,'utf8');
+$sql0 = "SELECT DISTINCT sl.id 
+FROM shop_list sl INNER JOIN shop_sell_product ssp ON sl.id = ssp.shop_id 
+WHERE close_date >= now() AND sell_quantity > 0;";
+
+$result = mysqli_query($cn0,$sql0);
+$table_array0 = array();  // テーブル情報を格納する変数
+while($row = $result->fetch_assoc() ){
+  $table_array0[] = $row;
+}
+mysqli_close($cn0);
+$cnt0 = count($table_array0);
+$ids = "";
+$tmp = $table_array0;
+for($i=0;$i<$cnt0;$i++){
+  $ids .= $table_array0[$i]["id"];
+  if(next($tmp)){
+    $ids .= ",";
+  }
+  
+}
+
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
-$sql = "SELECT sl.id,name,address1,address2,close_date 
-FROM shop_list sl INNER JOIN shop_sell_product ssp ON sl.id = ssp.shop_id 
-WHERE close_date < now() OR sell_quantity = 0;";
+$sql = "SELECT id,name,address1,address2 
+FROM shop_list 
+WHERE id IN($ids);";
 
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
@@ -17,9 +41,9 @@ $cnt = count($table_array);
 
 $cn1 = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn1,'utf8');
-$sql1 = "SELECT sl.id,name,address1,address2 
-FROM shop_list sl INNER JOIN shop_sell_product ssp ON sl.id = ssp.shop_id 
-WHERE close_date >= now() AND sell_quantity > 0;";
+$sql1 = "SELECT id,name,address1,address2 
+FROM shop_list 
+WHERE id NOT IN($ids);;";
 
 $result1 = mysqli_query($cn1,$sql1);
 $table_array1 = array();  // テーブル情報を格納する変数
