@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -5,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Template</title>
-
+    <title></title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="test/Material%20Design%20Bootstrap%20Template_files/font-awesome.css">
 
@@ -81,8 +81,8 @@
             </div>
 
             <!-- Breadcrumb-->
-            <div class="breadcrumb-dn" style="position: relative;left:-90px;">
-                <p>Material Design for Bootstrap</p>
+            <div class="breadcrumb-dn">
+                <p>HELOSS</p>
             </div>
 
         </nav>
@@ -92,8 +92,9 @@
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main class="" style="height: 1000px;">
-       
+    <main id="main" style="height: 1000px;">
+
+
     </main>
     <!--/Main layout-->
 

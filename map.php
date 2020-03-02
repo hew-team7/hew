@@ -238,8 +238,8 @@ for ($i=0; $i<$cnt1; $i++){
             </div>
 
             <!-- Breadcrumb-->
-            <div class="breadcrumb-dn" style="position: relative;left:-90px;">
-                <p>Material Design for Bootstrap</p>
+            <div class="breadcrumb-dn">
+                <p>HELOSS</p>
             </div>
 
         </nav>

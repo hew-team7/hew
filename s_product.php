@@ -1,7 +1,6 @@
 
 <?php
-session_start();
-$shop_id = $_SESSION['sid'];
+$shop_id = 1;
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
@@ -12,13 +11,26 @@ INNER JOIN shop_list sl ON sl.id = ssp.shop_id
 WHERE ssp.shop_id = $shop_id AND close_date > now() AND quantity > 0;";
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
-$cnt = count($table_array);
-if($cnt != 0){
-  while($row = mysqli_fetch_assoc($result) ){
-    $table_array[] = $row;
-  }
+while($row = $result->fetch_assoc() ){
+  $table_array[] = $row;
 }
 mysqli_close($cn);
+$cnt = count($table_array);
+
+$cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
+mysqli_set_charset($cn,'utf8');
+$sql = "SELECT ssp.id,price_cut,quantity,expiration_date,close_date,sp.name AS product_name,sp.list_price,hash_tag,sl.name AS shop_name  
+FROM shop_sell_product ssp 
+INNER JOIN shop_product sp ON sp.id = ssp.product_id 
+INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
+WHERE ssp.shop_id = $shop_id;";
+$result = mysqli_query($cn,$sql);
+$table_array1 = array();  // テーブル情報を格納する変数
+while($row = $result->fetch_assoc() ){
+  $table_array1[] = $row;
+}
+mysqli_close($cn);
+$cnt1 = count($table_array1);
 
 
   
@@ -26,7 +38,7 @@ mysqli_close($cn);
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>店舗　TOPページ</title>
+  <title>自店舗の商品</title>
   <link rel="stylesheet" type="text/css" href="css/list.css">
   <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.1/css/drawer.min.css">
@@ -52,10 +64,8 @@ mysqli_close($cn);
         </button>
       <nav class="zdo_drawer_nav_wrapper">
         <ul class="zdo_drawer_nav">
-          <a href=""><li>店舗情報　編集</li></a>
-          <a href=""><li>商品　登録</li></a>
-          <a href=""><li>商品　掲載</li></a>
-          <a href=""><li>在庫</li></a>
+          <a href=""><li>マイページ</li></a>
+          <a href=""><li>お気に入り</li></a>
           <a href=""><li id="last">履歴</li></a>
         </ul>
       </nav>
@@ -78,7 +88,7 @@ mysqli_close($cn);
     </script>
 <div id="main">
 　<?php if($cnt!=0){ ?>
-    <h1>商品</h1>
+    <h1>掲載中の商品</h1>
       <div class="PRODUCTS">
         <div class="Product1">
         　<?php for($i=0;$i<$cnt;$i++){ ?>
@@ -94,6 +104,25 @@ mysqli_close($cn);
       </div>
   <?php }else{ ?>
        <p id="p1">掲載されている商品ありません。</p>
+  <?php } ?>
+
+  <?php if($cnt1!=0){ ?>
+    <h1>登録中の商品</h1>
+      <div class="PRODUCTS">
+        <div class="Product1">
+        　<?php for($i=0;$i<$cnt1;$i++){ ?>
+            <div class="product">
+              <a href="goods_list.php?product_id=<?php echo $table_array1[$i]["id"]; ?>">
+                <p><img src="./img/product_<?php echo $table_array1[$i]["id"]; ?>.jpg"></p>
+                <p><?php echo $table_array1[$i]["product_name"] ?></p>
+                <p>￥<?php echo $table_array1[$i]['list_price'] ?>　<span style="color: red">→ ￥<?php echo $table_array1[$i]["price_cut"]; ?></p>
+              </a>
+            </div>
+          <?php } ?>  
+        </div>
+      </div>
+  <?php }else{ ?>
+       <p id="p1">登録されている商品ありません。</p>
   <?php } ?>
 </div>
 <div id="end">
