@@ -278,7 +278,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
                         <div class="card-body">
                           <h6 class="card-category text-gray"><?php echo $plist['maker_name']; ?></h6>
                           <h4 class="card-title"><?php echo $plist['product_name']; ?></h4>
-                          <p class="card-description">価格：<?php echo number_format($plist['price']); ?>円<p>
+                          <p class="card-description">価格：<?php echo number_format($plist['price']); ?>円</p>
                         </div>
                         <div class="card-footer" style="border-top: solid 1px #f2f2f2;">
                           <div class="stats">
