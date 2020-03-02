@@ -2,6 +2,7 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
+//  ランキング
 $sql = "SELECT buyer_login.id,buyer_login.user_id,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id GROUP BY user_id;";
 $result = mysqli_query($cn, $sql);
 while ($rows = mysqli_fetch_assoc($result)) {
@@ -14,6 +15,7 @@ if (isset($spoints)) {
   array_multisort($srow, SORT_DESC, $spoints);
 }
 
+// 特定の月のランキング
 if (isset($_POST['search'])) {
   if (!($_POST['when'] == '')) {
     $when = $_POST['when'];
@@ -253,7 +255,7 @@ if (isset($_POST['search'])) {
                             <?php endif ?>
                             <td><?php echo $spoint['point']; ?></td>
                             <td><?php echo $spoint['rank']; ?></td>
-                            <td>詳細</td>
+                            <td><a href="./b_detail.php?yid=<?php echo $spoint['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>
