@@ -1,9 +1,35 @@
 <?php
 
 require_once 'config.php';
+
+$cn0 = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
+mysqli_set_charset($cn0,'utf8');
+$sql0 = "SELECT DISTINCT sl.id 
+FROM shop_list sl INNER JOIN shop_sell_product ssp ON sl.id = ssp.shop_id 
+WHERE close_date >= now() AND sell_quantity > 0;";
+
+$result = mysqli_query($cn0,$sql0);
+$table_array0 = array();  // テーブル情報を格納する変数
+while($row = $result->fetch_assoc() ){
+  $table_array0[] = $row;
+}
+mysqli_close($cn0);
+$cnt0 = count($table_array0);
+$ids = "";
+$tmp = $table_array0;
+for($i=0;$i<$cnt0;$i++){
+  $ids .= $table_array0[$i]["id"];
+  if(next($tmp)){
+    $ids .= ",";
+  }
+  
+}
+
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
-$sql = "SELECT id,name,address1,address2 FROM shop_list;";
+$sql = "SELECT id,name,address1,address2 
+FROM shop_list 
+WHERE id IN($ids);";
 
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
@@ -12,6 +38,20 @@ while($row = $result->fetch_assoc() ){
 }
 mysqli_close($cn);
 $cnt = count($table_array);
+
+$cn1 = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
+mysqli_set_charset($cn1,'utf8');
+$sql1 = "SELECT id,name,address1,address2 
+FROM shop_list 
+WHERE id NOT IN($ids);";
+
+$result1 = mysqli_query($cn1,$sql1);
+$table_array1 = array();  // テーブル情報を格納する変数
+while($row = $result1->fetch_assoc() ){
+  $table_array1[] = $row;
+}
+mysqli_close($cn1);
+$cnt1 = count($table_array1);
 
  
 mb_language("Japanese");//文字コードの設定
@@ -33,10 +73,19 @@ $lat[$i] = $geo[1];
 
 }
 
-
-
-
-
+for ($i=0; $i<$cnt1; $i++){
+    //住所1を入れて緯度経度を求める。
+  $address1[$i] = $table_array1[$i]['address1'] . $table_array1[$i]['address2'];
+  $address1[$i] = urlencode($address1[$i]);
+  $url1 = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address1[$i] ;
+  $contents = file_get_contents($url1);
+  $contents = json_decode($contents);
+  $Coordinates = $contents ->Feature[0]->Geometry->Coordinates;
+  $geo = explode(",", $Coordinates);
+  $lon1[$i] = $geo[0];
+  $lat1[$i] = $geo[1];
+  
+  }
 
  
  
@@ -89,7 +138,13 @@ $lat[$i] = $geo[1];
                   //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
                   <?php for($i=0; $i<$cnt; $i++){?>
                   var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
-                  L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('red')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
+                  L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('blue')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
+                  <?php } ?>
+
+                  //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
+                  <?php for($i=0; $i<$cnt1; $i++){?>
+                  var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array1[$i]['name'];?><br><?php echo $table_array1[$i]['address1'].$table_array1[$i]['address2'];?>');
+                  L.marker([<?php echo $lat1[$i];?>, <?php echo $lon1[$i];?>],{ icon: L.spriteIcon('green')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array1[$i]['name'];?>").addTo(map);
                   <?php } ?>
                 
             },
@@ -114,9 +169,6 @@ $lat[$i] = $geo[1];
         $('#mapcontainer').css('height', H + 'px');// 算出した差分をヘッダーエリアの高さに指定  
         $('#main').css('height', H + 'px');
         $('.fixed-sn main').css('margin-top', headerHeight + 'px');
-        console.log(headerHeight);
-        console.log(H);
-        console.log(windowHeight);
       });
 
 
@@ -138,7 +190,7 @@ $lat[$i] = $geo[1];
 <body class="fixed-sn dark-skin" onload="init()">
 
     <!--Double Navigation-->
-    <header>
+    <header style="position: absolute;z-index:10;">
 
         <!-- Sidebar navigation -->
         <ul id="slide-out" class="side-nav fixed custom-scrollbar ps-container ps-theme-default" style="transform: translateX(-100%);" data-ps-id="96864e62-e306-5383-47b2-9d30422757ea">
@@ -197,8 +249,8 @@ $lat[$i] = $geo[1];
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main id="main">
-    <div id="mapcontainer" style="width: 100%;"></div>
+    <main id="main" style="">
+    <div id="mapcontainer" style="width: 100%;z-index:1;"></div>
     </main>
     <!--/Main layout-->
 
