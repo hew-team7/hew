@@ -3,10 +3,23 @@ $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
 // ユーザー情報
-$id = $_GET['id'];
+if(isset($_GET['id'])){
+  $id = $_GET['id'];
+  $b = 1;
+}
+if(isset($_GET['yid'])){
+  $id = $_GET['yid'];
+  $b = 2;
+}
 $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE buyer_list.id = '$id';";
 $bresult = mysqli_query($cn, $sql);
 $brow = mysqli_fetch_assoc($bresult);
+
+$now = date('Y-m');
+$now = '%' . $now . '%';
+$sql = "SELECT SUM(get_point) AS get_point FROM point INNER JOIN buyer_login ON point.user_id = buyer_login.id WHERE buyer_login.id = '$id' AND date LIKE '$now';";
+$presult = mysqli_query($cn, $sql);
+$prow = mysqli_fetch_assoc($presult);
 
 // 購入履歴
 $sql = "SELECT * FROM buyer_buy_product a 
@@ -66,7 +79,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
               <p>TOP</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item <?php if($b == 1){ echo 'active'; } ?>">
             <a class="nav-link" href="./b_list.php">
               <i class="material-icons">person</i>
               <p>購入者一覧</p>
@@ -90,7 +103,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
               <p>店舗一覧</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item <?php if($b == 2){ echo 'active'; } ?>">
             <a class="nav-link" href="./r_list.php">
               <i class="material-icons">content_paste</i>
               <p>ランキング</p>
@@ -169,7 +182,11 @@ while ($rows = mysqli_fetch_assoc($result)) {
 
       <div class="content">
         <div class="container-fluid">
-        <a href="./b_list.php" class="btn btn-primary btn-round"><i class="material-icons">navigate_before</i>一覧に戻る</a>
+        <?php if($b == 1): ?>
+          <a href="./b_list.php" class="btn btn-primary btn-round"><i class="material-icons">navigate_before</i>一覧に戻る</a>
+        <?php elseif($b == 2): ?>
+          <a href="./r_list.php" class="btn btn-primary btn-round"><i class="material-icons">navigate_before</i>一覧に戻る</a>
+        <?php endif ?>
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -194,8 +211,8 @@ while ($rows = mysqli_fetch_assoc($result)) {
                           <td>〒<?php echo $brow['postal_code']; ?>　<?php echo $brow['address1'] . $brow['address2']; ?></td>
                         </tr>
                         <tr>
-                          <td class="text-primary">ポイント</td>
-                          <td><?php echo $brow['point']; ?></td>
+                          <td class="text-primary">ポイント(今月獲得ポイント)</td>
+                          <td><?php echo $brow['point']; ?>P(<?php echo $prow['get_point']; ?>P)</td>
                         </tr>
                         <tr>
                           <td class="text-primary">ランク</td>
