@@ -57,7 +57,7 @@ $cnt1 = count($table_array1);
 mb_language("Japanese");//文字コードの設定
 mb_internal_encoding("UTF-8");
  
-$apikey = "dj00aiZpPUpiQlVZd3ZoaGc5MiZzPWNvbnN1bWVyc2VjcmV0Jng9NGU-";
+$apikey = "dj00aiZpPTJoc1NXdUlmVFdJaSZzPWNvbnN1bWVyc2VjcmV0Jng9ZDk-";
 
 for ($i=0; $i<$cnt; $i++){
   //住所1を入れて緯度経度を求める。
@@ -90,7 +90,7 @@ for ($i=0; $i<$cnt1; $i++){
  
  
 ?><!DOCTYPE html>
-<html lang="en"><head>
+<html lang="ja"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
@@ -125,8 +125,9 @@ for ($i=0; $i<$cnt1; $i++){
           navigator.geolocation.getCurrentPosition(
             // success callback
             function(position) {
-              var map = L.map('mapcontainer', { zoomControl: false });
+              var map = L.map('mapcontainer').setView([51.505, -0.09], 13);
               var mpoint = [position.coords.latitude, position.coords.longitude];
+              console.log(mpoint);
               map.setView(mpoint, 15);
               L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                   attribution: "<a href='https://www.openstreetmap.org/copyright' target='_blank'>地理院タイル</a>"
@@ -150,9 +151,25 @@ for ($i=0; $i<$cnt1; $i++){
             },
             // error callback
             function(position) {
-            　 var mapcontainer = document.getElementById('mapcontainer');
-            　 var textNode = document.createTextNode('位置情報の取得に失敗しました。');
-            　 mapcontainer.appendChild(textNode);
+                　var map = L.map('mapcontainer').setView([34.699875 , 135.493032], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: "<a href='https://www.openstreetmap.org/copyright' target='_blank'>地理院タイル</a>"
+                    }).addTo(map);
+                    //ポップアップオブジェクトを作成
+                        //var popup1 = L.popup().setContent('<a href="">あ</a>');
+                    //マーカーにポップアップを紐付けする。同時にbindTooltipでツールチップも追加
+                        L.marker([34.699875 , 135.493032], { draggable: true, icon: L.spriteIcon('red')}).bindTooltip("現在地").addTo(map);
+                        //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
+                        <?php for($i=0; $i<$cnt; $i++){?>
+                        var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
+                        L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('blue')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
+                        <?php } ?>
+
+                        //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
+                        <?php for($i=0; $i<$cnt1; $i++){?>
+                        var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array1[$i]['name'];?><br><?php echo $table_array1[$i]['address1'].$table_array1[$i]['address2'];?>');
+                        L.marker([<?php echo $lat1[$i];?>, <?php echo $lon1[$i];?>],{ icon: L.spriteIcon('green')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array1[$i]['name'];?>").addTo(map);
+                        <?php } ?>
             }
           )
         }  

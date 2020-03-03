@@ -2,34 +2,14 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE buyer_list.delete_date IS NULL;";
+$sql = "SELECT a.id,name,title,tel,address1,address2,paste_date FROM news_list a INNER JOIN shop_list b ON a.from_to = b.id WHERE news_type = 3;";
 $result = mysqli_query($cn, $sql);
-$blists = array();
+$nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
-  $blists[] = $rows;
+  $nlists[] = $rows;
 }
-array_multisort(array_map("strtotime", array_column($blists, "registration_date")), SORT_DESC, $blists);
 
-if(isset($_POST['search'])){
-  if(!($_POST['add1'] == "")){
-    $add1 = $_POST['add1'];
-    $add1 = '%' . $add1 . '%';
-    $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE delete_date IS NULL AND address1 LIKE '$add1'";
-  }
-  if(!($_POST['add2'] == "")){
-    $add2 = $_POST['add2'];
-    $add2 = '%' . $add2 . '%';
-    $sql .= " AND address1 LIKE '$add2';";
-  }
-  $result = mysqli_query($cn, $sql);
-  $blists = array();
-  while ($rows = mysqli_fetch_assoc($result)) {
-    $blists[] = $rows;
-  }
-}
 ?>
-
-
 <!DOCTYPE html>
 <html>
 
@@ -76,7 +56,7 @@ if(isset($_POST['search'])){
               <p>TOP</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="./b_list.php">
               <i class="material-icons">person</i>
               <p>購入者一覧</p>
@@ -88,10 +68,10 @@ if(isset($_POST['search'])){
               <p>商品一覧</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./l.list.php">
               <i class="material-icons">emoji_food_beverage</i>
-              <p>売れ残り商品一覧</p>
+              <p>店舗側商品通知一覧</p>
             </a>
           </li>
           <li class="nav-item">
@@ -115,7 +95,7 @@ if(isset($_POST['search'])){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">購入者一覧</a>
+            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -183,11 +163,11 @@ if(isset($_POST['search'])){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">購入者一覧</h4>
-                  <p class="card-category"> 登録されている購入者一覧</p>
+                  <h4 class="card-title ">一括購入希望一覧</h4>
+                  <p class="card-category"> 店舗からの一括購入希望一覧</p>
                 </div>
                 <div class="card-body">
-                  <form action="./b_list.php" method="POST" class="navbar-form">
+                  <form action="./s_list.php" method="POST" class="navbar-form">
                     <div class="row a">
                       <h5 class="card-title aa">都道府県・市町村で絞る</h5>
                       <div class="col-md-3">
@@ -206,11 +186,11 @@ if(isset($_POST['search'])){
                     </div>
                   </form>
                   <h5>
-                    <?php if((isset($_POST['add1'])) && !($_POST['add1'] == "")): ?>
+                    <?php if ((isset($_POST['add1'])) && !($_POST['add1'] == "")) : ?>
                       検索条件：
                       <?php echo $_POST['add1']; ?>
                     <?php endif ?>
-                    <?php if((isset($_POST['add2'])) && !($_POST['add2'] == "")): ?>
+                    <?php if ((isset($_POST['add2'])) && !($_POST['add2'] == "")) : ?>
                       <?php echo $_POST['add2']; ?>
                     <?php endif ?>
                   </h5>
@@ -218,23 +198,23 @@ if(isset($_POST['search'])){
                     <table class="table">
                       <thead class=" text-primary">
                         <th>ID</th>
-                        <th>ユーザーID</th>
+                        <th>店舗名</th>
+                        <th>主題</th>
                         <th>住所</th>
-                        <th>ポイント</th>
-                        <th>ランク</th>
-                        <th>登録日</th>
+                        <th>電話番号</th>
+                        <th>通知日</th>
                         <th>詳細</th>
                       </thead>
                       <tbody>
-                        <?php foreach ($blists as $blist) : ?>
+                        <?php foreach ($nlists as $nlist) : ?>
                           <tr>
-                            <td><?php echo $blist['id']; ?></td>
-                            <td><?php echo $blist['user_id']; ?></td>
-                            <td><?php echo $blist['address1'] . $blist['address2']; ?></td>
-                            <td><?php echo $blist['point']; ?></td>
-                            <td><?php echo $blist['rank']; ?></td>
-                            <td class="text-primary"><?php echo $blist['registration_date']; ?></td>
-                            <td><a href="./b_detail.php?id=<?php echo $blist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
+                            <td><?php echo $nlist['id']; ?></td>
+                            <td><?php echo $nlist['name']; ?></td>
+                            <td><?php echo $nlist['title']; ?></td>
+                            <td><?php echo $nlist['address1'] . $nlist['address2']; ?></td>
+                            <td><?php echo $nlist['tel']; ?></td>
+                            <td class="text-primary"><?php echo $nlist['paste_date']; ?></td>
+                            <td><a href="./s_detail.php?id=<?php echo $nlist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>
