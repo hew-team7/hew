@@ -33,7 +33,7 @@ $cnt1 = count($table_array1);
 mb_language("Japanese");//文字コードの設定
 mb_internal_encoding("UTF-8");
  
-$apikey = "dj00aiZpPUpiQlVZd3ZoaGc5MiZzPWNvbnN1bWVyc2VjcmV0Jng9NGU-";
+$apikey = "dj00aiZpPTJoc1NXdUlmVFdJaSZzPWNvbnN1bWVyc2VjcmV0Jng9ZDk-";
 
 for ($i=0; $i<$cnt; $i++){
   //住所1を入れて緯度経度を求める。
@@ -66,7 +66,7 @@ for ($i=0; $i<$cnt1; $i++){
  
  
 ?><!DOCTYPE html>
-<html lang="en"><head>
+<html lang="ja"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
