@@ -38,10 +38,10 @@ if(isset($_POST['suc'])){
   $nid = $row['id'] + 1;
   $title = $bname."が".$sname."の商品を購入しました";
   $detail = $bname."が".$sname."の商品を購入しました。/商品名：".$prow['product_name']."/数量：".$prow['sell_quantity']."個/金額：￥".number_format($price)."円";
-  $sql = "INSERT INTO news(id,title,detail,news_type,send_to,from_to,sell_id) VALUES($nid,'$title','$detail',5,0,'$sid','$pid');";
+  $sql = "INSERT INTO news(id,title,detail,news_type,send_to,from_to,sell_id) VALUES($nid,'$title','$detail',6,0,'$sid','$pid');";
   $result = mysqli_query($cn, $sql);
-  var_dump($sql);
-  //header("location: ./s_buy_suc.php");
+
+  header("location: ./s_buy_suc.php");
 }
 
 
