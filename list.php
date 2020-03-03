@@ -3,7 +3,7 @@ $shop_id = $_GET['shop_id'];
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
-$sql = "SELECT ssp.id,price_cut,sell_quantity,expiration_date,close_date,sp.product_name,sp.price,file_name,sl.name AS shop_name  
+$sql = "SELECT ssp.id,price_cut,ssp.detail,sell_quantity,expiration_date,close_date,sp.product_name,ssp.sell_price,file_name,sl.name AS shop_name  
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
@@ -39,7 +39,6 @@ mysqli_close($cn);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.1.3/iscroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.1/js/drawer.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/list.css">
   
     <!-- Font Awesome -->
     <link rel="stylesheet" href="test/Material%20Design%20Bootstrap%20Template_files/font-awesome.css">
@@ -57,13 +56,27 @@ mysqli_close($cn);
         var windowHeight = $(window).height();// 表示画面の高さを取得
         var H = windowHeight-headerHeight-30; 
         $('#main').css('min-height', H + 'px');
-        $('.fixed-sn main').css('margin-top', headerHeight+20 + 'px');
-      });
+        $('.fixed-sn main').css('margin-top', headerHeight+5 + 'px');
+     });
+    </script>
+    <script>
+    $(function () {
+        var ua = navigator.userAgent;
+        if ((ua.indexOf('iPhone') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
+            // スマートフォン用処理
+            $('#main .product').css('width', '120px');
+            $('#main .product img').css('width', '110px');
+        } else {
+            // PC用処理
+            $('#main .product').css('width', '180px');
+            $('#main .product img').css('width', '170px');
+        }
+    })
 
     </script>
     <style>
         body {
-            background: url("./images/index.jpg")no-repeat center center fixed;
+            background-color: #fff;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -135,29 +148,70 @@ mysqli_close($cn);
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main id="main" style="margin:30px;widht:80%;background-color: #fff;border-radius:2%;">
+    <main id="main" style="margin:2%;;background-color: #fff;border-radius:2%;">
     　<?php if($cnt!=0){ ?>
-        <h1>商品</h1>
-        <div class="PRODUCTS">
-            <div class="Product1">
-            　<?php for($i=0;$i<$cnt;$i++){ ?>
-                <div class="product">
+        <h1 style="font-size:1.8em;">商品</h1>
+        <div class="row">
+
+            <?php for($i=0;$i<$cnt;$i++){ ?>
                 <a href="goods_list.php?product_id=<?php echo $table_array[$i]["id"]; ?>">
-                    <p><img src="./img/<?php echo $table_array[$i]["file_name"]; ?>"></p>
-                    <p><?php echo $table_array[$i]["product_name"] ?></p>
-                    <p>￥<?php echo $table_array[$i]['price'] ?>　<span style="color: red">→ ￥<?php echo $table_array[$i]["price_cut"]; ?></p>
-                </a>
+                <div class="col-lg-4 col-md-6">
+
+
+                <!--Card-->
+                <div class="card">
+
+                    <!--Card image-->
+                    <div class="view overlay hm-white-slight z-depth-1">
+                        <img src="./img/<?php echo $table_array[$i]["file_name"]; ?>" class="img-fluid">
+                        <a>
+                            <div class="mask waves-effect waves-light"></div>
+                        </a>
+                    </div>
+                    <!--/.Card image-->
+
+                    <!--Card content-->
+                    <div class="card-block text-xs-center">
+                        <!--Category & Title-->
+                        <h4 class="card-title"><strong><a href="goods_list.php?product_id=<?php echo $table_array[$i]["id"]; ?>"><?php echo $table_array[$i]["product_name"] ?></a></strong></h4>
+
+                        <!--Description-->
+                        <p class="card-text"><?php echo $table_array[$i]["detail"]; ?></p>
+
+                        <!--Card footer-->
+                        <div class="card-footer">
+                            <span class="left" style="padding-left:120px;">￥<?php echo $table_array[$i]['sell_price'] ?> <span class="discount">￥<?php echo $table_array[$i]['price_cut'] ?></span></span>
+                        </div>
+
+                    </div>
+                    <!--/.Card content-->
+
                 </div>
-            <?php } ?>  
-            </div>
+                <!--/.Card-->
+                </div></a>
+            <?php } ?>     
+            
         </div>
       <?php }else{ ?>
-        <p id="p1">掲載されている商品ありません。</p>
+        <p style="text-align: center;">掲載されている商品ありません。</p>
       <?php } ?>
       <?php if($row != null){?>
-        <h1>店舗情報</h1>
-        <p>店舗名　：　<?php echo $row["s_name"] ?><br>店舗説明　：　<?php echo $row["introduction"] ?></p>
+        <h1 style="font-size:1.8em;">店舗情報</h1>
+        <p style="text-align: center;">店舗名　：　<?php echo $row["s_name"] ?><br>店舗説明　：　<?php echo $row["introduction"] ?></p>
       <?php } ?>
+
+                
+
+
+
+
+
+
+
+
+
+
+
     </main>
     <!--/Main layout-->
 
