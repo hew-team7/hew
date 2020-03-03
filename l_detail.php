@@ -2,25 +2,44 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
-// 店舗情報
-$id = $_GET['id'];
-$sql = "SELECT * FROM shop_list INNER JOIN shop_login ON shop_list.id = shop_login.id WHERE shop_list.id = '$id';";
-$sresult = mysqli_query($cn, $sql);
-$srow = mysqli_fetch_assoc($sresult);
-
-// 出品商品情報
-$now = date('Y-m-d');
-$sql = "SELECT * FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id WHERE a.shop_id = '$id' AND a.close_date >= '$now';";
+session_start();
+if (isset($_GET['id'])) {
+  $id = $_GET['id'];
+}else{
+  $id = $_SESSION['id'];
+}
+$sql = "SELECT a.id,name,title,tel,address1,address2,postal_code,mail,a.paste_date,a.detail,expiration_date,c.product_id FROM news a 
+INNER JOIN shop_list b ON a.from_to = b.id INNER JOIN shop_sell_product c ON a.sell_id = c.product_id
+WHERE news_type = 3 AND a.id = '$id';";
 $result = mysqli_query($cn, $sql);
-while ($rows = mysqli_fetch_assoc($result)) {
-  $nlists[] = $rows;
+$nrow = mysqli_fetch_assoc($result);
+$detail = explode("/",$nrow['detail']);
+$name = $nrow['name'];
+$_SESSION['id'] = $id;
+
+$address = $nrow['address1'];
+if(!(mb_strpos($address,'都') == false)){
+  $cnt = 2;
+}else if(!(mb_strpos($address,'道') == false)){
+  $cnt = 2;
+}else if(!(mb_strpos($address,'府') == false)){
+  $cnt = 2;
+}else{
+  $cnt = mb_strpos($address,'県');
 }
 
-// 登録商品情報
-$sql = "SELECT * FROM shop_product WHERE shop_id = '$id';";
-$result = mysqli_query($cn, $sql);
-while ($rows = mysqli_fetch_assoc($result)) {
-  $plists[] = $rows;
+$address = mb_substr($address,0,$cnt+1);
+
+// 同地域に通知送る
+if(isset($_POST['send'])){
+  $sql3 = "SELECT MAX(id) AS id FROM news;";
+  $result = mysqli_query($cn, $sql3);
+  $row = mysqli_fetch_assoc($result);
+  $nid = $row['id'] + 1;
+  $title = $name.'からの購入して欲しい旨が届きました';
+  $ndetail = $nrow['detail'];
+  $sql4 = "INSERT INTO news(id,title,detail,news_type,send_to) VALUES($nid,'$title','$ndetail',5,'$address');";
+  $result = mysqli_query($cn, $sql4);
 }
 ?>
 
@@ -82,13 +101,13 @@ while ($rows = mysqli_fetch_assoc($result)) {
               <p>商品一覧</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./l.list.php">
               <i class="material-icons">emoji_food_beverage</i>
-              <p>売れ残り商品一覧</p>
+              <p>店舗側商品通知一覧</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="./s_list.php">
               <i class="material-icons">store_mall_directory</i>
               <p>店舗一覧</p>
@@ -109,7 +128,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
+            <a class="navbar-brand" href="javascript:;">店舗側商品通知一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -173,13 +192,13 @@ while ($rows = mysqli_fetch_assoc($result)) {
 
       <div class="content">
         <div class="container-fluid">
-        <a href="./s_list.php" class="btn btn-primary btn-round"><i class="material-icons">navigate_before</i>一覧に戻る</a>
+          <a href="./l_list.php" class="btn btn-primary btn-round"><i class="material-icons">navigate_before</i>一覧に戻る</a>
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title "><?php echo $srow['shop_id']; ?></h4>
-                  <p class="card-category"> 管理用ID：<?php echo $srow['id']; ?></p>
+                  <h4 class="card-title ">通知内容詳細</h4>
+                  <p class="card-category"> 管理用ID：<?php echo $nrow['id']; ?></p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -187,27 +206,40 @@ while ($rows = mysqli_fetch_assoc($result)) {
                       <tbody>
                         <tr>
                           <td class="text-primary">ID</td>
-                          <td><?php echo $srow['id']; ?></td>
-                        </tr>
-                        <tr>
-                          <td class="text-primary">店舗ID</td>
-                          <td><?php echo $srow['shop_id']; ?></td>
+                          <td><?php echo $nrow['id']; ?></td>
                         </tr>
                         <tr>
                           <td class="text-primary">店舗名</td>
-                          <td><?php echo $srow['name']; ?></td>
+                          <td><?php echo $nrow['name']; ?></td>
+                        </tr>
+                        <tr>
+                          <td class="text-primary">主題</td>
+                          <td><?php echo $nrow['title']; ?></td>
+                        </tr>
+                        <tr>
+                          <td class="text-primary">内容</td>
+                          <td>
+                          <?php foreach ($detail as $details) : ?>
+                            <p class="f"><?php echo $details; ?></p>
+                          <?php endforeach ?>
+                          </td>
                         </tr>
                         <tr>
                           <td class="text-primary">郵便番号・住所</td>
-                          <td>〒<?php echo $srow['postal_code']; ?>　<?php echo $srow['address1'] . $srow['address2']; ?></td>
+                          <td>〒<?php echo $nrow['postal_code']; ?>　<?php echo $nrow['address1'] . $nrow['address2']; ?></td>
                         </tr>
                         <tr>
-                          <td class="text-primary">電話番号・メールアドレス</td>
-                          <td><?php echo $srow['tel']; ?>　<?php echo $srow['mail']; ?></td>
+                          <td class="text-primary">メールアドレス</td>
+                          <td><?php echo $nrow['mail']; ?></td>
                         </tr>
                         <tr>
-                          <td class="text-primary">登録日</td>
-                          <td><?php echo $srow['registration_date']; ?></td>
+                          <td class="text-primary">通知日</td>
+                          <td><?php echo $nrow['paste_date']; ?></td>
+                        </tr>
+                        <tr>
+                          <form action="./l_detail.php" method="post">
+                          <td colspan="2"><button name="send" class="btn btn-primary btn-round">同地域に通知を入れる</button></td>
+                          </form>
                         </tr>
                       </tbody>
                     </table>
@@ -216,87 +248,6 @@ while ($rows = mysqli_fetch_assoc($result)) {
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">出品商品一覧</h4>
-                  <p class="card-category"> 現在出品されている商品一覧</p>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                  <?php if(isset($nlists)): ?>
-                  <?php foreach ($nlists as $nlist) : ?>
-                    <div class="col-md-4 e">
-                      <div class="card card-profile" style="width: 250px;">
-                        <div class="card-avatar card-header-warning card-header">
-                          <i class="material-icons">restaurant</i>
-                        </div>
-                        <div class="card-body">
-                          <h6 class="card-category text-gray"><?php echo $nlist['maker_name']; ?></h6>
-                          <h4 class="card-title"><?php echo $nlist['product_name']; ?></h4>
-                          <p class="card-description">販売価格：<?php echo number_format($nlist['price_cut']); ?>円<br>
-                            販売数：<?php echo $nlist['sell_quantity']; ?>点<br>
-                            売上数：<?php echo $nlist['buy_quantity']; ?>点<br>
-                            賞味期限：<?php echo $nlist['expiration_date']; ?><br>
-                            掲載開始日：<?php echo $nlist['paste_date']; ?></p>
-                        </div>
-                        <div class="card-footer" style="border-top: solid 1px #f2f2f2;">
-                          <div class="stats">
-                            <p>掲載終了日：<?php echo $nlist['close_date']; ?></p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <?php endforeach ?>
-                  <?php else: ?>
-                    <h4 class="card-title aaa">現在、出品されている商品はありません。</h4>
-                  <?php endif ?>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">登録商品一覧</h4>
-                  <p class="card-category"> 現在登録されている商品一覧</p>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                  <?php if(isset($plists)): ?>
-                  <?php foreach ($plists as $plist) : ?>
-                    <div class="col-md-4 e">
-                      <div class="card card-profile" style="width: 250px;">
-                        <div class="card-avatar card-header-success card-header">
-                          <i class="material-icons">restaurant</i>
-                        </div>
-                        <div class="card-body">
-                          <h6 class="card-category text-gray"><?php echo $plist['maker_name']; ?></h6>
-                          <h4 class="card-title"><?php echo $plist['product_name']; ?></h4>
-                          <p class="card-description">価格：<?php echo number_format($plist['price']); ?>円</p>
-                        </div>
-                        <div class="card-footer" style="border-top: solid 1px #f2f2f2;">
-                          <div class="stats">
-                            <p>登録日：<?php echo $plist['create_at']; ?></p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <?php endforeach ?>
-                  <?php else: ?>
-                    <h4 class="card-title aaaa">現在、登録されている商品はありません。</h4>
-                  <?php endif ?>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <footer class="footer">
           <div class="container-fluid">

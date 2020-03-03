@@ -2,7 +2,7 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT a.id,name,title,tel,address1,address2,paste_date FROM news_list a INNER JOIN shop_list b ON a.from_to = b.id WHERE news_type = 3;";
+$sql = "SELECT a.id,name,title,tel,address1,address2,paste_date FROM news a INNER JOIN shop_list b ON a.from_to = b.id WHERE news_type = 3;";
 $result = mysqli_query($cn, $sql);
 $nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
@@ -95,7 +95,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">店舗一覧</a>
+            <a class="navbar-brand" href="javascript:;">店舗側商品通知一覧</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -214,7 +214,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
                             <td><?php echo $nlist['address1'] . $nlist['address2']; ?></td>
                             <td><?php echo $nlist['tel']; ?></td>
                             <td class="text-primary"><?php echo $nlist['paste_date']; ?></td>
-                            <td><a href="./s_detail.php?id=<?php echo $nlist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
+                            <td><a href="./l_detail.php?id=<?php echo $nlist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
                           </tr>
                         <?php endforeach ?>
                       </tbody>
