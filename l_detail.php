@@ -8,13 +8,15 @@ if (isset($_GET['id'])) {
 }else{
   $id = $_SESSION['id'];
 }
-$sql = "SELECT a.id,name,title,tel,address1,address2,postal_code,mail,a.paste_date,a.detail,expiration_date,c.product_id FROM news a 
+$sql = "SELECT a.id,b.id AS sid,name,title,tel,address1,address2,postal_code,mail,a.paste_date,a.detail,expiration_date,c.product_id FROM news a 
 INNER JOIN shop_list b ON a.from_to = b.id INNER JOIN shop_sell_product c ON a.sell_id = c.product_id
 WHERE news_type = 3 AND a.id = '$id';";
 $result = mysqli_query($cn, $sql);
 $nrow = mysqli_fetch_assoc($result);
 $detail = explode("/",$nrow['detail']);
 $name = $nrow['name'];
+$pid = $nrow['product_id'];
+$sid = $nrow['sid'];
 $_SESSION['id'] = $id;
 
 $address = $nrow['address1'];
@@ -38,7 +40,7 @@ if(isset($_POST['send'])){
   $nid = $row['id'] + 1;
   $title = $name.'からの購入して欲しい旨が届きました';
   $ndetail = $nrow['detail'];
-  $sql4 = "INSERT INTO news(id,title,detail,news_type,send_to) VALUES($nid,'$title','$ndetail',5,'$address');";
+  $sql4 = "INSERT INTO news(id,title,detail,news_type,send_to,from_to,sell_id) VALUES($nid,'$title','$ndetail',5,'$address','$sid','$pid');";
   $result = mysqli_query($cn, $sql4);
 }
 ?>
