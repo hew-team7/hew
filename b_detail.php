@@ -92,7 +92,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="./l.list.php">
               <i class="material-icons">emoji_food_beverage</i>
               <p>売れ残り商品一覧</p>
             </a>
