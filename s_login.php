@@ -1,6 +1,7 @@
 <?php
 
 require_once('error.php');
+require_once 'config.php';
 
 $codes = [];
 
@@ -11,7 +12,7 @@ if(isset($_POST['log'])){
   $pass = $_POST['pass'];
 
   $dpass = "";
-  $cn = mysqli_connect('localhost','root','','hew_07');
+  $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 	mysqli_set_charset($cn,'utf8');
   $sql = "SELECT shop_id,pass FROM shop_login WHERE shop_id = '$yid';";
   $result = mysqli_query($cn, $sql);
