@@ -50,7 +50,7 @@ mysqli_close($cn);
     </script>
     <style>
         body {
-            background: url("./images/index.jpg")no-repeat center center fixed;
+            background-color: #fff;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;

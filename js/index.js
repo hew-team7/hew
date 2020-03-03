@@ -5,15 +5,16 @@ $(function(){
     var footerHeight = $('#end').outerHeight();// 高さを取得  
     var windowHeight = $(window).height();// 表示画面の高さを取得
     var H = windowHeight - headerHeight - footerHeight;
-    if ((ua.indexOf('iPhone') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
+    if ((ua.indexOf('iPhone') > 0 || ua.indexOf('Android') > 0)) {
         // 
-        $('#right1,#left1').css('left', windowWidth/3 + 'px');
+        $('#right1,#left1').css('left','20%');
         $('#header').css('height', '100px');
-        $('#right1').css('top', 3*H/10 + 'px');
-        $('#left1').css('top', 6*H/10 + 'px');
-        $('#right1,#left1').css('width','300px');
-        $('#right1,#left1').css('height','230px');
-        $('.p').css('padding-top','30px');
+        $('#right1').css('top', '30%');
+        $('#left1').css('top', '60%');
+        $('#right1,#left1').css('width','60%');
+        $('#right1,#left1').css('height','20%');
+        $('.p').css('padding-top','10%');
+        $('#right1,#left1').css('font-size','2.5em');
     }else {
         // PC用処理
         $('body1').css('width', windowWidth + 'px');
