@@ -1,13 +1,5 @@
 <?php
 
-const HOST = 'localhost';
-const DB_NAME = 'hew_07';
-const DB_USER = 'root';
-const DB_PASS = '';
-session_start();
-$_SESSION['user_id'] = 'hirao0817';
-
-$exp = 9900;
 
 //経験値からレベルを求める関数:引数($経験値)->戻り値($row[0]=レベル ,$row[1]=次のレベルまでに必要な経験値)  
 function status_set($exp){
@@ -79,22 +71,25 @@ function status_set($exp){
 	}
 
 	$row = [$lv,$leave];
+	return $row;
 
 }
 
-function set_status($host,$db_user,$db_pass,$db_name,$user_id,$lv,$ex_exp){
+function set_status($user_id,$lv,$leave,$ex_exp){
 	
-	$cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
+	$cn = mysqli_connect('localhost','root','','hew');
 	mysqli_set_charset($cn,'utf8');	
-	$sql="UPDATE buyer_status SET lv = '".$lv."' leave = '".$leave."' , exp = exp  + ".$ex_exp." , score = score + 1 WHERE user_id = '".$user_id."'";
+	$sql="UPDATE buyer_status SET lv = ".$lv." , exp_leave = ".$leave." , exp = exp  + ".$ex_exp." , score = score + 1 WHERE user_id = '".$user_id."'";
+	echo $sql;
 	mysqli_query($cn,$sql); 
 }
 
-function get_status($host,$db_user,$db_pass,$db_name,$user_id){
+function get_status($user_id){
 
-	$cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
+	$cn = mysqli_connect('localhost','root','','hew');
 	mysqli_set_charset($cn,'utf8');	
 	$sql= "SELECT * FROM buyer_status WHERE user_id = '".$user_id."';";//変える必要あり
+
 	$result = mysqli_query($cn, $sql);
 	$row = mysqli_fetch_assoc($result);
 	return $row;
