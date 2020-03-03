@@ -2,11 +2,22 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
-$sql = "SELECT a.id,name,title,tel,address1,address2,paste_date FROM news a INNER JOIN shop_list b ON a.from_to = b.id WHERE news_type = 3;";
+// 購入希望通知
+$sid = array();
+$sql = "SELECT a.id,name,title,tel,address1,address2,paste_date,sell_id FROM news a INNER JOIN shop_list b ON a.from_to = b.id WHERE news_type = 3;";
 $result = mysqli_query($cn, $sql);
 $nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
   $nlists[] = $rows;
+  $sid = $rows['sell_id'];
+
+}
+
+// 購入希望通知に関する購入通知
+$sql = "SELECT * FROM news WHERE news_type = 6;";
+$result = mysqli_query($cn, $sql);
+while($brow = mysqli_fetch_assoc($result)){
+  $klists[] = $brow;
 }
 
 ?>
@@ -204,6 +215,7 @@ while ($rows = mysqli_fetch_assoc($result)) {
                         <th>電話番号</th>
                         <th>通知日</th>
                         <th>詳細</th>
+                        <th>購入済か否か</th>
                       </thead>
                       <tbody>
                         <?php foreach ($nlists as $nlist) : ?>
@@ -215,6 +227,13 @@ while ($rows = mysqli_fetch_assoc($result)) {
                             <td><?php echo $nlist['tel']; ?></td>
                             <td class="text-primary"><?php echo $nlist['paste_date']; ?></td>
                             <td><a href="./l_detail.php?id=<?php echo $nlist['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
+                            <?php foreach($klists as $klist): ?>
+                              <?php if($klist['sell_id'] == $nlist['sell_id']): ?>
+                                <td>購入済</td>
+                              <?php else: ?>
+                                <td>未購入</td>
+                              <?php endif ?>
+                            <?php endforeach ?>
                           </tr>
                         <?php endforeach ?>
                       </tbody>

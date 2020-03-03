@@ -8,7 +8,8 @@ if (isset($_GET['id'])) {
 }else{
   $id = $_SESSION['id'];
 }
-$sql = "SELECT a.id,b.id AS sid,name,title,tel,address1,address2,postal_code,mail,a.paste_date,a.detail,expiration_date,c.product_id FROM news a 
+$sql = "SELECT a.id,b.id AS sid,name,title,tel,address1,address2,postal_code,mail,a.paste_date,a.detail,expiration_date,c.product_id
+FROM news a 
 INNER JOIN shop_list b ON a.from_to = b.id INNER JOIN shop_sell_product c ON a.sell_id = c.product_id
 WHERE news_type = 3 AND a.id = '$id';";
 $result = mysqli_query($cn, $sql);
@@ -43,6 +44,12 @@ if(isset($_POST['send'])){
   $sql4 = "INSERT INTO news(id,title,detail,news_type,send_to,from_to,sell_id) VALUES($nid,'$title','$ndetail',5,'$address','$sid','$pid');";
   $result = mysqli_query($cn, $sql4);
 }
+
+// 購入済情報
+$sql = "SELECT * FROM news WHERE sell_id = '$pid' AND news_type = 6;";
+$result = mysqli_query($cn, $sql);
+$row = array();
+$row = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -239,9 +246,13 @@ if(isset($_POST['send'])){
                           <td><?php echo $nrow['paste_date']; ?></td>
                         </tr>
                         <tr>
-                          <form action="./l_detail.php" method="post">
-                          <td colspan="2"><button name="send" class="btn btn-primary btn-round">同地域に通知を入れる</button></td>
-                          </form>
+                          <?php if(isset($row)): ?>
+                            <td colspan="2" class="text-primary" style="padding-top: 35px;"><?php echo $row['title']; ?></td>
+                          <?php else: ?>
+                            <form action="./l_detail.php" method="post">
+                            <td colspan="2"><button name="send" class="btn btn-primary btn-round">同地域に通知を入れる</button></td>
+                            </form>
+                          <?php endif ?>
                         </tr>
                       </tbody>
                     </table>
