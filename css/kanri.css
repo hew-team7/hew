@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*初期化*/
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+  background-color: #F2F2F2;
+}
+
+li {
+    list-style-type: none;
+    list-style-position: outside;
+}
+
+.aa{
+  height: 30px;
+  padding-top:20px;
+}
+.a{
+  margin: 10px 0 30px 100px;
+}
+
+.aaa{
+  height: 220px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+.aaaa{
+  height: 220px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+.d{
+  margin-left: 5px;
+}
+
+.e{
+  margin-right: -40px;
+  margin-left: 35px;
+}
+
+.f{
+  margin-bottom: 5px;
+}

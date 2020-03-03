@@ -42,9 +42,9 @@ $month = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C');
 //*** 入力した内容で登録するを押された場合 */
 if (isset($_POST['ok'])) {
   $code = strval($fcode) . strval($lcode);
-  $cn = mysqli_connect('localhost', 'root', '', 'hew_07');
+  $cn = mysqli_connect('localhost', 'root', '', 'hew');
   mysqli_set_charset($cn, 'utf8');
-  $sql1 = "SELECT id FROM buyer_login;";
+  $sql1 = "SELECT id FROM buyer_login ORDER BY id ASC;";
   $rsl = mysqli_query($cn, $sql1);
   $kid = "";
   $dmonth = "";
@@ -70,7 +70,7 @@ if (isset($_POST['ok'])) {
     $mid = sprintf('%05d', $mid); //** 5桁に合わせる */
   }
 
-  var_dump($nid = strval($nmonth) . strval($nyear) . strval($mid));
+  $nid = strval($nmonth) . strval($nyear) . strval($mid);
 
   $sql3 = "INSERT INTO buyer_list(id, mail, f_name, l_name, postal_code, address1, address2, registration_date) VALUES('$nid', '$mail', '$fn', '$ln', '$code', '$paddr', '$addr', '".date('Y-m-d H:i:s')."');";
   mysqli_query($cn,$sql3);
@@ -95,7 +95,13 @@ if (isset($_POST['ng'])) {
 <head>
   <meta charset="UTF-8">
   <title>会員登録画面 - 確認</title>
-  <link rel="stylesheet" type="text/css" href="./css/"">
+  <link rel="stylesheet" type="text/css" href="./css/">
+  <!-- BootstrapのCSS読み込み -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery読み込み -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- BootstrapのJS読み込み -->
+  <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
