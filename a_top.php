@@ -144,6 +144,14 @@ if(isset($points)){
   array_multisort($row, SORT_DESC, $points);
 }
 
+// 通知
+$sql = "SELECT * FROM news WHERE news_type IN(3,6);";
+$result = mysqli_query($cn, $sql);
+while ($rows = mysqli_fetch_assoc($result)) {
+  $nlists[] = $rows;
+}
+array_multisort(array_map("strtotime", array_column($nlists, "paste_date")), SORT_DESC, $nlists);
+
 ?>
 
 <!DOCTYPE html>
@@ -203,7 +211,7 @@ if(isset($points)){
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./l.list.php">
+            <a class="nav-link" href="./l_list.php">
               <i class="material-icons">emoji_food_beverage</i>
               <p>売れ残り商品一覧</p>
             </a>
@@ -595,27 +603,12 @@ if(isset($points)){
                   <div class="tab-pane active" id="profile">
                     <table class="table">
                       <tbody>
+                        <?php foreach($nlists as $nlist): ?>
                         <tr>
-                          <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" checked>
-                                <span class="form-check-sign">
-                                  <span class="check"></span>
-                                </span>
-                              </label>
-                            </div>
-                          </td>
-                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                          <td class="td-actions text-right">
-                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                              <i class="material-icons">close</i>
-                            </button>
-                          </td>
+                          <td class="text-primary"><?php echo $nlist['title']; ?></td>
+                          <td><?php echo $nlist['paste_date']; ?></td>
                         </tr>
+                        <?php endforeach ?>
                       </tbody>
                     </table>
                   </div>

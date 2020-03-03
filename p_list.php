@@ -144,7 +144,7 @@ if(isset($_POST['search4'])){
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./l.list.php">
+            <a class="nav-link" href="./l_list.php">
               <i class="material-icons">emoji_food_beverage</i>
               <p>売れ残り商品一覧</p>
             </a>

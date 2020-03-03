@@ -97,7 +97,7 @@ if (isset($_POST['search'])) {
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./l.list.php">
+            <a class="nav-link" href="./l_list.php">
               <i class="material-icons">emoji_food_beverage</i>
               <p>店舗側商品通知一覧</p>
             </a>
