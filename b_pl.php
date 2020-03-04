@@ -49,7 +49,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
 function get_pt($host,$db_user,$db_pass,$db_name,$user_id){
 
     $cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
-    echo $host.$db_user.$db_pass.$db_name;
+    
     mysqli_set_charset($cn,'utf8'); 
     $sql= "SELECT SUM(get_point) FROM point WHERE user_id = ".$user_id;//変える必要あり
     echo $sql;
@@ -61,7 +61,7 @@ function get_pt($host,$db_user,$db_pass,$db_name,$user_id){
 function get_rk($host,$db_user,$db_pass,$db_name,$user_id){
 
     $cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
-    echo $host.$db_user.$db_pass.$db_name;
+    
     mysqli_set_charset($cn,'utf8'); 
     $sql= "SELECT * FROM buyer_status WHERE user_id = ".$user_id;//変える必要あり
     $result = mysqli_query($cn, $sql);
