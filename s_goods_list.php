@@ -210,9 +210,7 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
       </div>
     
       <form action="" method="post" style="text-align:center;margin-top:50px;">
-        <input class="btn btn-warnig btn-rounded waves-effect waves-light" type="submit" name="submit" id="submit" value="購入する" style="background:orange;">
-        <input type="image" src="images/はーと.png" name="heart" class="ico" style="height: 60px;margin:0 20px;">
-        <input type="image" src="images/60009001106.jpg" name="report"  style="height: 60px;margin:0 20px;">
+        <input class="btn btn-warnig btn-rounded waves-effect waves-light" type="submit" name="submit" id="submit" value="編集する" style="background:orange;">
       </form>
     </main>
     <!--/Main layout-->
