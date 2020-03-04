@@ -18,6 +18,7 @@ $detail = explode("/",$nrow['detail']);
 $name = $nrow['name'];
 $pid = $nrow['product_id'];
 $sid = $nrow['sid'];
+var_dump($sql);
 $_SESSION['id'] = $id;
 
 $address = $nrow['address1'];
