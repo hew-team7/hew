@@ -80,10 +80,10 @@ $lat[$i] = $geo[1];
   $url1 = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address1[$i] ;
   $contents = file_get_contents($url1);
   $contents = json_decode($contents);
-  $Coordinates = $contents ->Feature[0]->Geometry->Coordinates;
+  @$Coordinates = $contents ->Feature[0]->Geometry->Coordinates;
   $geo = explode(",", $Coordinates);
   $lon1[$i] = $geo[0];
-  $lat1[$i] = $geo[1];
+  @$lat1[$i] = $geo[1];
   
   }
 

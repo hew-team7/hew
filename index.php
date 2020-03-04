@@ -21,7 +21,7 @@
 
 <div id="body1">
 <div id="header">
-  <p><a href="index.php"><img src=""></a></p>
+  <p><a href="index.php"><img src="images/logo/698942.png"></a></p>
 </div>
 
 <div id="main">

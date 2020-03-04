@@ -19,10 +19,9 @@ a{
     background-size: cover;
 }
 #header{
-    background-color: rgba(255, 250, 240, 0.7);
+    background-color: rgba(62, 69, 81, 0.7);
 }
 #header img{
-    width: 150px;
     height: 80px;
 }
 #main{
@@ -79,7 +78,7 @@ a{
 
 #end{
     height: 30px;
-    background-color: #d1aa8c;
+    background-color: rgba(0,0,0,.8);
     text-align: right;
     clear: both;
     color: white;
