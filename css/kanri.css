@@ -58,6 +58,11 @@ li {
   font-weight: bold;
 }
 
+.z{
+  color:#A9F5A9;
+  font-weight: bold;
+}
+
 #header{
   height: 80px;
   background-color: #F7BE81;
@@ -65,6 +70,16 @@ li {
   margin-bottom: 40px;
 }
 #header > img{
+  margin-top: 10px;
+}
+
+#header2{
+  height: 80px;
+  background-color: #A9F5A9;
+  text-align: center;
+  margin-bottom: 40px;
+}
+#header2 > img{
   margin-top: 10px;
 }
 
