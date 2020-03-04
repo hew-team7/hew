@@ -24,7 +24,6 @@ for($i=0;$i<$cnt0;$i++){
   }
   
 }
-var_dump($ids);
 
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
