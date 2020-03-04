@@ -13,30 +13,30 @@ if (isset($_POST['check'])) {
   $id = $_POST['id'];
   $pass = $_POST['pass'];
   //** メアド */
-  if($mail == ""){ //** 空白チェック */
+  if ($mail == "") { //** 空白チェック */
     $codes[] = '101';
-  }else if(!(filter_var($mail, FILTER_VALIDATE_EMAIL))){ //** 正しいメアドかどうか */
+  } else if (!(filter_var($mail, FILTER_VALIDATE_EMAIL))) { //** 正しいメアドかどうか */
     $codes[] = '102';
   }
 
   //** ユーザーID */
   if ($id == '') {
     $codes[] = '201'; //*** 空欄の場合、エラーを出す */
-  }else{
+  } else {
     $ilists = shop_id_list();
-    foreach($ilists as $ilist){
-      if($id == $ilist['shop_id']){
+    foreach ($ilists as $ilist) {
+      if ($id == $ilist['shop_id']) {
         $codes[] = '202'; //*** これまでに登録されたログインIDと被っている場合、エラーを出す */
       }
     }
   }
 
   //** パスワード */
-  if($pass == ""){ //** 空白かどうか */
+  if ($pass == "") { //** 空白かどうか */
     $codes[] = '301';
-  }elseif(strlen($pass) < 8){ //** 8文字以上かどうか */
+  } elseif (strlen($pass) < 8) { //** 8文字以上かどうか */
     $codes[] = '302';
-  }elseif(!(preg_match("/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}$/i",$pass))){ //** 正しく設定されているか(英数字) */
+  } elseif (!(preg_match("/^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}$/i", $pass))) { //** 正しく設定されているか(英数字) */
     $codes[] = '303';
   }
 
@@ -45,52 +45,51 @@ if (isset($_POST['check'])) {
   $name = $_POST['name'];
   $kname = $_POST['kname'];
   //** 氏名(漢字) */
-  if($name == ""){ //** 空白かどうか */
+  if ($name == "") { //** 空白かどうか */
     $codes[] = '401';
   }
 
   //** 氏名(カタカナ) */
-  if($kname == ""){ //** 空白かどうか */
+  if ($kname == "") { //** 空白かどうか */
     $codes[] = '501';
   }
 
 
   //** 住所に関するエラーチェック */
   $tel = $_POST['tel'];
-  $fcode = $_POST['zip21'];
-  $lcode = $_POST['zip22'];
+  $code = $_POST['zip21'];
   $paddr = $_POST['addr21'];
   $addr = $_POST['addr'];
   $detail = $_POST['detail'];
   //** 電話番号 */
-  if($tel == ""){
+  if ($tel == "") {
     $codes[] = '901';
   }
 
   //** 郵便番号 */
-  if($fcode == "" || $lcode == ""){ //** 空白かどうか */
+  if ($code == "") { //** 空白かどうか */
     $codes[] = '601';
   }
 
   //** 都道府県,市町村 */
-  if($paddr == ""){ //** 空白かどうか */
+  if ($paddr == "") { //** 空白かどうか */
     $codes[] = '701';
   }
 
   //** 住所 */
-  if($addr == ""){ //** 空白かどうか */
+  if ($addr == "") { //** 空白かどうか */
     $codes[] = '801';
   }
 
   //** 住所 */
-  if($detail == ""){ //** 空白かどうか */
+  if ($detail == "") { //** 空白かどうか */
     $codes[] = '502';
   }
-  
+
 
 
   //** エラーが一つもない場合セッションに値を入れる */
-  if(empty($codes)){
+  if (empty($codes)) {
 
 
     $_SESSION['mail'] = $mail;
@@ -101,26 +100,24 @@ if (isset($_POST['check'])) {
     $_SESSION['kname'] = $kname;
 
     $_SESSION['tel'] = $tel;
-    $_SESSION['fcode'] = $fcode;
-    $_SESSION['lcode'] = $lcode;
+    $_SESSION['code'] = $code;
     $_SESSION['paddr'] = $paddr;
     $_SESSION['addr'] = $addr;
     $_SESSION['detail'] = $detail;
 
     //** 銀行口座 */
-    if(!($_POST['bname'] == "")){
+    if (!($_POST['bname'] == "")) {
       $_SESSION['bname'] = $_POST['bname'];
     }
-    if(!($_POST['branch'] == "")){
+    if (!($_POST['branch'] == "")) {
       $_SESSION['branch'] = $_POST['branch'];
     }
-    if(!($_POST['bnumber'] == "")){
+    if (!($_POST['bnumber'] == "")) {
       $_SESSION['bnumber'] = $_POST['bnumber'];
     }
 
     header('location:s_reg_cf.php');
   }
-
 }
 
 ?>
@@ -128,194 +125,223 @@ if (isset($_POST['check'])) {
 <!DOCTYPE html>
 <html lang="ja">
 
+<!DOCTYPE html>
+<html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <title>会員登録画面</title>
-  <link rel="stylesheet" type="text/css" href="./css/">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>店舗登録</title>
+  <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <link rel="stylesheet" href="./css/kanri.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <!-- Chartist JS -->
+  <script src="js/plugins/chartist.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
   <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 
 <body>
-  <div id="header-top">
-    <h1>会員登録</h1>
-
-    <div id="navi">
-      <ul>
-        <li class="now">会員情報入力</li>
-        <li class="arrow y"></li>
-        <li>入力情報確認</li>
-        <li class="arrow y"></li>
-        <li>登録完了</li>
-      </ul>
-    </div>
+  <div id="header2">
+    <img src="./images/logo/698942.png">
   </div>
-
-  <div id="space"></div>
-  <!--レイアウト調整用 -->
-
-  <p class="border"></p>
 
   <div id="wrapper">
-    <form action="s_reg_in.php" method="POST">
-      <div class="form">
+    <!-- End Navbar -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8 i">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title" style="text-align: center;">店舗登録</h4>
+                <p class="card-category"></p>
+              </div>
+              <div class="card-body">
+                <form action="s_reg_in.php" method="POST">
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">メールアドレス/ユーザーID/パスワード</label>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">メールアドレス<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="mail" autocomplete="off" value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : (isset($_POST['mail']) ? $_POST['mail'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '101') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '102') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '103') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
 
-        <h2 class="pad">会員情報入力</h2>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">店舗ID<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="id" autocomplete="off" value="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_POST['id']) ? $_POST['id'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '201') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '202') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">パスワード <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="pass" autocomplete="off" value="<?php echo isset($_SESSION['pass']) ? $_SESSION['pass'] : (isset($_POST['pass']) ? $_POST['pass'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '301') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '302') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '303') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
 
-        <div class="imp">
-          <h2>メールアドレス/ユーザーID/パスワード</h2>
-          <table>
-            <tr>
-              <td class="title">メールアドレス<span class="red">必須</span></td>
-              <td><input type="text" name="mail" size="50" autocomplete="off" value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail']:( isset($_POST['mail']) ? $_POST['mail'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '101'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '102'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '103'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-            <tr>
-              <td class="title">店舗ID<span class="red">必須</span></td>
-              <td><input type="text" name="id" size="40" autocomplete="off" value="<?php echo isset($_SESSION['id']) ? $_SESSION['id']:( isset($_POST['id']) ? $_POST['id'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '201'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '202'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-            <tr>
-              <td class="title">パスワード <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></td>
-              <td><input type="text" name="pass" size="40" autocomplete="off" value="<?php echo isset($_SESSION['pass']) ? $_SESSION['pass']:( isset($_POST['pass']) ? $_POST['pass'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '301'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '302'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '303'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-          </table>
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">店舗の基本情報</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">店舗名<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="name" autocomplete="off" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : (isset($_POST['name']) ? $_POST['name'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '401') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">店舗名(フリガナ) <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="kname" autocomplete="off" value="<?php echo isset($_SESSION['kname']) ? $_SESSION['kname'] : (isset($_POST['kname']) ? $_POST['kname'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '501') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">店舗説明<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="detail" autocomplete="off" value="<?php echo isset($_SESSION['detail']) ? $_SESSION['detail'] : (isset($_POST['detail']) ? $_POST['detail'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '502') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">店舗の住所</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">電話番号<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="tel"　autocomplete="off" value="<?php echo isset($_SESSION['tel']) ? $_SESSION['tel'] : (isset($_POST['tel']) ? $_POST['tel'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '901') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">郵便番号(ハイフン有)<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="zip21" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','addr21','addr21');" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['code']) ? $_SESSION['code'] : (isset($_POST['zip21']) ? $_POST['zip21'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '601') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">都道府県,市町村<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="addr21" autocomplete="off" value="<?php echo isset($_SESSION['paddr']) ? $_SESSION['paddr'] : (isset($_POST['addr21']) ? $_POST['addr21'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '701') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">番地/号/マンション名<span class="red">必須</span></label>
+                        <input type="text" class="form-control" name="addr" size="36" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr'] : (isset($_POST['addr']) ? $_POST['addr'] : ''); ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '801') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">収入のお振込先の情報</label>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">銀行名</span></label>
+                        <input type="text" class="form-control" name="bname" autocomplete="off" value="<?php echo isset($_SESSION['bcode']) ? $_SESSION['bcode'] : (isset($_POST['bcode']) ? $_POST['bcode'] : ''); ?>">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">支店名/支店コード</label>
+                        <input type="text" class="form-control" name="branch" value="<?php echo isset($_SESSION['branch']) ? $_SESSION['branch'] : (isset($_POST['branch']) ? $_POST['branch'] : ''); ?>">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">口座番号</label>
+                        <input type="text" class="form-control" name="bnumber" value="<?php echo isset($_SESSION['bnumber']) ? $_SESSION['bnumber'] : (isset($_POST['bnumber']) ? $_POST['bnumber'] : ''); ?>">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-2 offset-lg-5">
+                      <input type="submit" value="確認" class="btn btn-success waves-effect waves-light" style="margin: 30px 0;" name="check">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="name">
-          <h2>店舗の基本情報</h2>
-          <table>
-            <tr>
-              <td class="title">店舗名<span class="red">必須</span></span></td>
-              <td><span class="title"></span><input type="text" name="name" autocomplete="off" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name']:( isset($_POST['name']) ? $_POST['name'] : '' ); ?>"></td>
-              <?php foreach ($codes as $code): ?>
-            <tr>
-              <?php if($code == '401'): ?>
-              <td></td>
-              <td>
-                <p class="red2 attention"><?php echo ERROR[$code]; ?></p>
-              </td>
-                <?php endif ?>
-            </tr>
-            <?php endforeach ?>
-            <tr>
-              <td class="title">店舗名(フリガナ)<span class="red">必須</span></td>
-              <td><span class="title"></span><input type="text" name="kname" autocomplete="off" value="<?php echo isset($_SESSION['kname']) ? $_SESSION['kname']:( isset($_POST['kname']) ? $_POST['kname'] : '' ); ?>"></td>
-            </tr>
-            <?php foreach ($codes as $code): ?>
-            <tr>
-              <?php if($code == '501'): ?>
-              <td></td>
-              <td>
-                <p class="red2 attention"><?php echo ERROR[$code]; ?></p>
-              </td>
-                <?php endif ?>
-            </tr>
-            <?php endforeach ?>
-            <tr>
-              <td class="title">店舗説明<span class="red">必須</span></td>
-              <td><span class="title"></span><input type="text" name="detail" autocomplete="off" value="<?php echo isset($_SESSION['detail']) ? $_SESSION['detail']:( isset($_POST['detail']) ? $_POST['detail'] : '' ); ?>"></td>
-            </tr>
-            <?php foreach ($codes as $code): ?>
-            <tr>
-              <?php if($code == '502'): ?>
-              <td></td>
-              <td>
-                <p class="red2 attention"><?php echo ERROR[$code]; ?></p>
-              </td>
-                <?php endif ?>
-            </tr>
-            <?php endforeach ?>
-          </table>
-        </div>
-
-        <div class="address">
-          <h2>店舗の住所</h2>
-          <table>
-            <tr>
-              <td class="title">電話番号<span class="red">必須</span></td>
-              <td><input type="text" name="tel" size="30" autocomplete="off" value="<?php echo isset($_SESSION['tel']) ? $_SESSION['tel']:( isset($_POST['tel']) ? $_POST['tel'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '601'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-            <tr>
-              <td class="title">郵便番号<span class="red">必須</span></td>
-              <td><input type="text" name="zip21" size="4" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['fcode']) ? $_SESSION['fcode']:( isset($_POST['zip21']) ? $_POST['zip21'] : '' ); ?>">
-               － <input type="text" name="zip22" size="5" maxlength="4" autocomplete="off" onKeyUp="AjaxZip3.zip2addr('zip21','zip22','addr21','addr21');" value="<?php echo isset($_SESSION['lcode']) ? $_SESSION['lcode']:( isset($_POST['zip22']) ? $_POST['zip22'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '601'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-            <tr>
-              <td class="title">都道府県,市町村<span class="red">必須</span></td>
-              <td><input type="text" name="addr21" size="30" autocomplete="off" value="<?php echo isset($_SESSION['paddr']) ? $_SESSION['paddr']:( isset($_POST['addr21']) ? $_POST['addr21'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '701'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-            <tr>
-              <td class="title">番地・号<span class="red">必須</span></td>
-              <td><input type="text" name="addr" size="40" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr']:( isset($_POST['addr']) ? $_POST['addr'] : '' ); ?>">
-              <?php foreach ($codes as $code): ?>
-                <?php if($code == '801'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?></td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="bank">
-          <h2>収入のお振込先の情報</h2>
-          <table>
-            <tr>
-              <td class="title">銀行名<span class="red">必須</span></td>
-              <td><input type="text" name="bname" autocomplete="off" size="30" value="<?php echo isset($_SESSION['bcode']) ? $_SESSION['bcode']:( isset($_POST['bcode']) ? $_POST['bcode'] : '' ); ?>"></td>
-            </tr>
-            <tr>
-              <td class="title">支店名/支店コード<span class="red">必須</span></td>
-              <td><input type="text" autocomplete="off" name="branch" value="<?php echo isset($_SESSION['branch']) ? $_SESSION['branch']:( isset($_POST['branch']) ? $_POST['branch'] : '' ); ?>"></td>
-            </tr>
-            <tr>
-              <td class="title">口座番号<span class="red">必須</span></td>
-              <td><input type="text" autocomplete="off" name="bnumber" value="<?php echo isset($_SESSION['bnumber']) ? $_SESSION['bnumber']:( isset($_POST['bnumber']) ? $_POST['bnumber'] : '' ); ?>"></td>
-            </tr>
-          </table>
-        </div>
-
-        <input type="submit" value="確認" class="button" name="check">
-
       </div>
-    </form>
+    </div>
   </div>
 </body>
-
