@@ -314,8 +314,8 @@ $lat[$i] = $geo[1];
 
     <!--Main layout-->
     <main class="">
-        <div class="container-fluid text-xs-center" style="height: 800px;">
-           <div id="mapcontainer" style="width: 100%;z-index:1;height: 800px;"></div>
+        <div class="container-fluid text-xs-center" style="height: 600px;">
+           <div id="mapcontainer" style="width: 100%;z-index:1;height: 600px;"></div>
         </div>
     </main>
     <!--/Main layout-->
