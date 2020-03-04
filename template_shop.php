@@ -26,7 +26,7 @@
             background-size: cover;
         }
         .dark-skin .navbar {
-            background-color: #fb7d22;
+            background-color: #73e6b5;
         }
         .dark-skin .side-nav .logo-wrapper {
             
@@ -38,7 +38,7 @@
         }
         .dark-gradient, .dark-skin .side-nav {
     
-            background: linear-gradient(135deg,#fb7d22 0,#fb7d22 100%);
+            background: linear-gradient(135deg,#73e6b5 0,#73e6b5 100%);
                 
          }
          .dark-skin .side-nav .sn-avatar-wrapper img {
@@ -53,14 +53,10 @@
         }
         .dark-skin .side-nav .collapsible li a:hover {
             background-color: 
-            #f0a773;
+            #17c6ad;
             transition: all .3s linear;
         }
-        .dark-skin .side-nav .collapsible li a:hover {
-            background-color: 
-            #c66017;
-            transition: all .3s linear;
-        }
+        
         
         .side-nav .collapsible > li {
             padding-right: 1rem;
