@@ -311,7 +311,7 @@ if (isset($_POST['check'])) {
                       <input type="submit" value="確認" class="btn btn-warning waves-effect waves-light" style="margin: 30px 0;" name="check">
                     </div>
                   </div>
-                  
+
                 </div>
               </form>
             </div>
