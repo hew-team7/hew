@@ -54,18 +54,18 @@ li {
 }
 
 .p{
-  color:#F7BE81;
+  color:#fb7d22;
   font-weight: bold;
 }
 
 .z{
-  color:#A9F5A9;
+  color:#52dda9;
   font-weight: bold;
 }
 
 #header{
   height: 80px;
-  background-color: #F7BE81;
+  background-color: #fb7d22;
   text-align: center;
   margin-bottom: 40px;
 }
@@ -75,7 +75,7 @@ li {
 
 #header2{
   height: 80px;
-  background-color: #A9F5A9;
+  background-color: #52dda9;
   text-align: center;
   margin-bottom: 40px;
 }
