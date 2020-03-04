@@ -31,10 +31,10 @@ if(isset($_POST['log'])){
 
   if(empty($codes)){
     if(password_verify($pass, $dpass)){
-      $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id;";
+      $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE user_id = '$yid';";
       $result2 = mysqli_query($cn, $sql);
       $row2 = mysqli_fetch_assoc($result2);
-      $_SESSION['yid'] = $yid;
+      $_SESSION['user_id'] = $did;
       $_SESSION['fn'] = $rows2['f_name'];
       $_SESSION['ln'] = $rows2['l_name'];
       $_SESSION['code'] = $rows2['postal_code'];
