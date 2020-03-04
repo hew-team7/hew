@@ -227,9 +227,9 @@ mysqli_close($cn);
                                 <!--Category & Title-->
                                 <h4 class="card-title"><strong><a href="goods_list.php?product_id=<?php echo $table_array[$i]["id"]; ?>"><?php echo $table_array[$i]["product_name"] ?></a></strong></h4>
 
-                                <!--Description-->
+                                <!--Description--><?php if($table_array[$i]["detail"] != null){ ?>
                                 <p class="card-text"><?php echo $table_array[$i]["detail"]; ?></p>
-
+                                <?php } ?>
                                 <!--Card footer-->
                                 <div class="card-footer">
                                     <span class="left" style="margin-left:30%;">￥<?php echo $table_array[$i]['price_cut'] ?> <span class="discount">￥<?php echo $table_array[$i]['sell_price'] ?></span></span>
