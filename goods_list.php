@@ -23,11 +23,11 @@ mysqli_close($cn);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <script src="js/bootstrap.js"></script>
     <title><?php echo $row['p_name'];?></title>
-    <link rel="stylesheet" type="text/css" href="css/goods_list.css">
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/goods_list.css">
-  
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="test/Material%20Design%20Bootstrap%20Template_files/font-awesome.css">
 
@@ -122,36 +122,39 @@ mysqli_close($cn);
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main id="main" style="margin:30px;widht:80%;background-color: #fff;border-radius:2%;">
-      <div id="left">
-        <p><img src="img/<?php echo $row['file_name']; ?>"></p>
-        <p id="money">￥<?php echo $row['price_cut']; ?></p>
+    <main id="main">
+      <div class="container-fluid" style="margin-top:15%;">
+        <div class="row">
+          <div class="col-lg-6">
+            <p style="text-align:center;"><img src="img/<?php echo $row['file_name']; ?>"></p>
+            <p id="money" style="text-align:center;font-size:2em;border-bottom:solid 1px #000;margin:0 20%;">￥<?php echo $row['price_cut']; ?></p>
+          </div>
+          <div class="col-lg-6" style="margin-top:3%;">
+            <table class="table" style="">
+                <tr>
+                  <th class="text-center" style="width: 400px;border:none;" align="left">店舗： <?php echo $row['shop_name']; ?></th>
+                </tr>
+                <tr>
+                  <th class="text-center" style="width: 400px;border:none;" align="left">商品名：<?php echo $row['p_name']; ?></th>
+                </tr>
+                <tr>
+                  <th class="text-center" style="width: 400px;border:none;" align="left" valign="top">メーカー：<?php echo $row['maker_name']; ?></th>
+                </tr>
+                <tr>
+                  <th class="text-center" style="width: 400px;border:none;" align="left">数量：<?php echo $row['sell_quantity']; ?></th>
+                </tr>
+                <tr>
+                  <th class="text-center" style="width: 400px;border:none;" align="left">期限：<?php echo $row['expiration_date']; ?></th>
+                </tr>
+            </table>
+          </div>
+        </div>
       </div>
-      <div id="right">
-        <table>
-          <tr>
-            <th style="width: 400px" align="left">店舗： <?php echo $row['shop_name']; ?></th>
-          </tr>
-          <tr>
-            <th align="left">商品名：<?php echo $row['p_name']; ?></th>
-          </tr>
-          <tr>
-            <th align="left" valign="top">メーカー：<?php echo $row['maker_name']; ?></th>
-          </tr>
-          <tr>
-            <th align="left">数量：<?php echo $row['sell_quantity']; ?></th>
-          </tr>
-          <tr>
-            <th align="left">期限：<?php echo $row['expiration_date']; ?></th>
-          </tr>
-          
-        </table>
-      </div>
-
-      <form action="" method="post">
+    
+      <form action="" method="post" style="text-align:center;margin-top:50px;">
         <input class="buy" type="submit" name="submit" id="submit" value="購入する">
-        <input type="image" src="images/はーと.png" name="heart" class="ico">
-        <input type="image" src="images/60009001106.jpg" name="report"  class="ico" id="ico_n">
+        <input type="image" src="images/はーと.png" name="heart" class="ico" style="height: 60px;margin:0 10px;">
+        <input type="image" src="images/60009001106.jpg" name="report"  style="height: 60px;margin:0 10px;">
       </form>
 
 
