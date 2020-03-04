@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>お問い合せ送信完了　｜　購入者</title>
-</head>
-<body>
-	
-</body>
-</html>
-
-<!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
@@ -98,22 +85,22 @@
             <!-- Side navigation links -->
             <li>
                 <ul class="collapsible collapsible-accordion">
-                    <li><a href="./map.php" class="collapsible-header waves-effect"><i class="fa fa-map"></i> マップ</a>
+                    <li><a href="./pl_rgt_in.php" class="collapsible-header waves-effect"><i class="fa fa-pencil-alt"></i> 商品登録</a>
                         
                     </li>
                     
-                    <li><a href="./ranking.php" class="collapsible-header waves-effect"><i class="fa fa-crown"></i> ランキング</a>
+                    <li><a href="./pl_exh_list.php" class="collapsible-header waves-effect"><i class="fa fa-camera"></i> 出品する</a>
                         
                     </li>
                   
-                    <li><a href="./b_pl.php" class="collapsible-header waves-effect"><i class="fa fa-user"></i> ステータス</a>
+                    <li><a href="./pl_exh_now.php" class="collapsible-header waves-effect"><i class="fa fa-fish"></i> 出品している商品</a>
                         
                     </li>
                     
                     <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-cog"></i> 設定<i class="fa fa-angle-down rotate-icon"></i></a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="./b_pl_stg.php" class="waves-effect">プロフィール編集</a>
+                                <li><a href="./s_pl_stg.php" class="waves-effect">プロフィール編集</a>
                                 </li>
                                 <li><a href="./log_out.php" class="waves-effect">ログアウト</a>
                                 </li>
@@ -121,7 +108,7 @@
                         </div>
                     </li>
 
-                    <li><a href="./b_question.php" class="collapsible-header waves-effect"><i class="fa fa-question"></i> お問い合わせ</a>
+                    <li><a href="./s_question.php" class="collapsible-header waves-effect"><i class="fa fa-question"></i> お問い合わせ</a>
                 </ul>
             </li>
             <!--/. Side navigation links -->
@@ -146,14 +133,14 @@
             <ul class="nav navbar-nav float-xs-right">
 
                 <li class="nav-item ">
-                    <a href="./b_news.php" class="nav-link waves-effect waves-light"><i class="fa fa-bell"></i> <span class="hidden-sm-down">お知らせ</span></a>
+                    <a href="./s_news.php" class="nav-link waves-effect waves-light"><i class="fa fa-bell"></i> <span class="hidden-sm-down">お知らせ</span></a>
                 </li>
                 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i> <span class="hidden-sm-down">プロフィール</span> </a>
                     <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl.php">プロフィール確認</a>
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl_stg.php">プロフィール編集</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl.php">プロフィール確認</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl_stg.php">プロフィール編集</a>
                     </div>
                 </li>
             </ul>
@@ -166,12 +153,9 @@
 
     <!--Main layout-->
     <main class="">
-        <div class="container-fluid text-xs-center" style="height: 700px;">
-        <div class="container">
-        <h2 style="padding-top:20%">お問い合せ</h2>
-	<p>送信完了しました。</p>
-	<p><a href="./map.php"><button type="button" class="btn btn-blue-grey waves-effect waves-light">戻る</button></a></p>
-        </div></div>
+        <div class="container-fluid text-xs-center" style="height: 800px;">
+            
+        </div>
     </main>
     <!--/Main layout-->
 

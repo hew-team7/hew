@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>お問い合せ送信完了　｜　購入者</title>
-</head>
-<body>
-	
-</body>
-</html>
-
-<!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
@@ -166,12 +153,9 @@
 
     <!--Main layout-->
     <main class="">
-        <div class="container-fluid text-xs-center" style="height: 700px;">
-        <div class="container">
-        <h2 style="padding-top:20%">お問い合せ</h2>
-	<p>送信完了しました。</p>
-	<p><a href="./map.php"><button type="button" class="btn btn-blue-grey waves-effect waves-light">戻る</button></a></p>
-        </div></div>
+        <div class="container-fluid text-xs-center" style="height: 800px;">
+            
+        </div>
     </main>
     <!--/Main layout-->
 
