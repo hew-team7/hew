@@ -173,7 +173,7 @@ if (isset($_POST['check'])) {
               </div>
               <div class="card-body">
                 <form action="b_reg_in.php" method="POST">
-                <label style="margin: 20px 0 0 0; font-size: 1.2em;">メールアドレス/ユーザーID/パスワードの設定</label>
+                <label style="margin: 50px 0 10px 0; font-size: 1.2em;">メールアドレス/ユーザーID/パスワード</label>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -223,7 +223,7 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 20px 0 0 0; font-size: 1.2em;">ユーザーの基本情報</label>
+                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの基本情報</label>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -264,7 +264,7 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 20px 0 0 0; font-size: 1.2em;">ユーザーの住所</label>
+                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの住所</label>
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
@@ -301,7 +301,7 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 20px 0 0 0; font-size: 1.2em;">支払い情報(クレジットカード情報)</label>
+                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">支払い情報(クレジットカード情報)</label>
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
