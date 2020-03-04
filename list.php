@@ -3,11 +3,11 @@ $shop_id = $_GET['shop_id'];
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
-$sql = "SELECT ssp.id,price_cut,ssp.detail,sell_quantity,expiration_date,close_date,sp.product_name,ssp.sell_price,file_name,sl.name AS shop_name  
+$sql = "SELECT ssp.id,price_cut,ssp.detail,sell_quantity,buy_quantity,expiration_date,close_date,sp.product_name,ssp.sell_price,file_name,sl.name AS shop_name  
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
-WHERE ssp.shop_id = $shop_id AND close_date > now() AND sell_quantity > 0;";
+WHERE ssp.shop_id = $shop_id AND close_date > now() AND buy_quantity > sell_quantity";
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
 while($row = mysqli_fetch_assoc($result)){
