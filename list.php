@@ -180,7 +180,7 @@ mysqli_close($cn);
 
                         <!--Card footer-->
                         <div class="card-footer">
-                            <span class="left" style="padding-left:120px;">￥<?php echo $table_array[$i]['sell_price'] ?> <span class="discount">￥<?php echo $table_array[$i]['price_cut'] ?></span></span>
+                            <span class="left" style="padding-left:120px;">￥<?php echo $table_array[$i]['price_cut'] ?> <span class="discount">￥<?php echo $table_array[$i]['sell_price'] ?></span></span>
                         </div>
 
                     </div>
