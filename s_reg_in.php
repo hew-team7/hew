@@ -175,7 +175,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="bmd-label-floating">メールアドレス<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="mail" autocomplete="off" value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : (isset($_POST['mail']) ? $_POST['mail'] : ''); ?>">
+                        <input type="text" class="form-control q" name="mail" autocomplete="off" value="<?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : (isset($_POST['mail']) ? $_POST['mail'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '101') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -193,7 +193,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">店舗ID<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="id" autocomplete="off" value="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_POST['id']) ? $_POST['id'] : ''); ?>">
+                        <input type="text" class="form-control q" name="id" autocomplete="off" value="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : (isset($_POST['id']) ? $_POST['id'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '201') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -206,7 +206,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">パスワード <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="pass" autocomplete="off" value="<?php echo isset($_SESSION['pass']) ? $_SESSION['pass'] : (isset($_POST['pass']) ? $_POST['pass'] : ''); ?>">
+                        <input type="text" class="form-control q" name="pass" autocomplete="off" value="<?php echo isset($_SESSION['pass']) ? $_SESSION['pass'] : (isset($_POST['pass']) ? $_POST['pass'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '301') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -225,7 +225,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">店舗名<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="name" autocomplete="off" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : (isset($_POST['name']) ? $_POST['name'] : ''); ?>">
+                        <input type="text" class="form-control q" name="name" autocomplete="off" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : (isset($_POST['name']) ? $_POST['name'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '401') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -236,7 +236,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">店舗名(フリガナ) <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="kname" autocomplete="off" value="<?php echo isset($_SESSION['kname']) ? $_SESSION['kname'] : (isset($_POST['kname']) ? $_POST['kname'] : ''); ?>">
+                        <input type="text" class="form-control q" name="kname" autocomplete="off" value="<?php echo isset($_SESSION['kname']) ? $_SESSION['kname'] : (isset($_POST['kname']) ? $_POST['kname'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '501') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -249,7 +249,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="bmd-label-floating">店舗説明<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="detail" autocomplete="off" value="<?php echo isset($_SESSION['detail']) ? $_SESSION['detail'] : (isset($_POST['detail']) ? $_POST['detail'] : ''); ?>">
+                        <input type="text" class="form-control q" name="detail" autocomplete="off" value="<?php echo isset($_SESSION['detail']) ? $_SESSION['detail'] : (isset($_POST['detail']) ? $_POST['detail'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '502') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -264,7 +264,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">電話番号<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="tel"　autocomplete="off" value="<?php echo isset($_SESSION['tel']) ? $_SESSION['tel'] : (isset($_POST['tel']) ? $_POST['tel'] : ''); ?>">
+                        <input type="text" class="form-control q" name="tel" autocomplete="off" value="<?php echo isset($_SESSION['tel']) ? $_SESSION['tel'] : (isset($_POST['tel']) ? $_POST['tel'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '901') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -277,7 +277,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="bmd-label-floating">郵便番号(ハイフン有)<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="zip21" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','addr21','addr21');" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['code']) ? $_SESSION['code'] : (isset($_POST['zip21']) ? $_POST['zip21'] : ''); ?>">
+                        <input type="text" class="form-control q" name="zip21" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','addr21','addr21');" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['code']) ? $_SESSION['code'] : (isset($_POST['zip21']) ? $_POST['zip21'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '601') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -288,7 +288,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-5">
                       <div class="form-group">
                         <label class="bmd-label-floating">都道府県,市町村<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="addr21" autocomplete="off" value="<?php echo isset($_SESSION['paddr']) ? $_SESSION['paddr'] : (isset($_POST['addr21']) ? $_POST['addr21'] : ''); ?>">
+                        <input type="text" class="form-control q" name="addr21" autocomplete="off" value="<?php echo isset($_SESSION['paddr']) ? $_SESSION['paddr'] : (isset($_POST['addr21']) ? $_POST['addr21'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '701') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -299,7 +299,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="bmd-label-floating">番地/号/マンション名<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="addr" size="36" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr'] : (isset($_POST['addr']) ? $_POST['addr'] : ''); ?>">
+                        <input type="text" class="form-control q" name="addr" size="36" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr'] : (isset($_POST['addr']) ? $_POST['addr'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '801') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -314,19 +314,19 @@ if (isset($_POST['check'])) {
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="bmd-label-floating">銀行名</span></label>
-                        <input type="text" class="form-control" name="bname" autocomplete="off" value="<?php echo isset($_SESSION['bcode']) ? $_SESSION['bcode'] : (isset($_POST['bcode']) ? $_POST['bcode'] : ''); ?>">
+                        <input type="text" class="form-control q" name="bname" autocomplete="off" value="<?php echo isset($_SESSION['bcode']) ? $_SESSION['bcode'] : (isset($_POST['bcode']) ? $_POST['bcode'] : ''); ?>">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="bmd-label-floating">支店名/支店コード</label>
-                        <input type="text" class="form-control" name="branch" value="<?php echo isset($_SESSION['branch']) ? $_SESSION['branch'] : (isset($_POST['branch']) ? $_POST['branch'] : ''); ?>">
+                        <input type="text" class="form-control q" name="branch" autocomplete="off" value="<?php echo isset($_SESSION['branch']) ? $_SESSION['branch'] : (isset($_POST['branch']) ? $_POST['branch'] : ''); ?>">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="bmd-label-floating">口座番号</label>
-                        <input type="text" class="form-control" name="bnumber" value="<?php echo isset($_SESSION['bnumber']) ? $_SESSION['bnumber'] : (isset($_POST['bnumber']) ? $_POST['bnumber'] : ''); ?>">
+                        <input type="text" class="form-control q" name="bnumber" autocomplete="off" value="<?php echo isset($_SESSION['bnumber']) ? $_SESSION['bnumber'] : (isset($_POST['bnumber']) ? $_POST['bnumber'] : ''); ?>">
                       </div>
                     </div>
                   </div>
