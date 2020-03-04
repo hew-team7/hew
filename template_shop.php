@@ -53,8 +53,7 @@
         }
         
         .dark-skin .side-nav .collapsible li a:hover {
-            background-color: 
-            #91eeba;
+            background-color: #91eeba;
             transition: all .3s linear;
         }
         
