@@ -119,7 +119,7 @@ if (isset($_POST['check'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>会員登録画面</title>
+  <title>会員登録</title>
   <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -311,8 +311,8 @@ if (isset($_POST['check'])) {
                       <input type="submit" value="確認" class="btn btn-warning waves-effect waves-light" style="margin: 30px 0;" name="check">
                     </div>
                   </div>
-
-              </div>
+                  
+                </div>
               </form>
             </div>
           </div>
@@ -320,7 +320,6 @@ if (isset($_POST['check'])) {
       </div>
     </div>
   </div>
-</body>
 
 <!--   Core JS Files   -->
 <script src="js/core/jquery.min.js" type="text/javascript"></script>
