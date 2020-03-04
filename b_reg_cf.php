@@ -16,8 +16,7 @@ $ln = $_SESSION['ln'];
 $kfn = $_SESSION['kfn'];
 $kln = $_SESSION['kln'];
 
-$fcode = $_SESSION['fcode'];
-$lcode = $_SESSION['lcode'];
+$code = $_SESSION['code'];
 $paddr = $_SESSION['paddr'];
 $addr = $_SESSION['addr'];
 
@@ -41,7 +40,6 @@ $month = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C');
 
 //*** 入力した内容で登録するを押された場合 */
 if (isset($_POST['ok'])) {
-  $code = strval($fcode) . strval($lcode);
   $cn = mysqli_connect('localhost', 'root', '', 'hew');
   mysqli_set_charset($cn, 'utf8');
   $sql1 = "SELECT id FROM buyer_login ORDER BY id ASC;";
@@ -93,36 +91,30 @@ if (isset($_POST['ng'])) {
 <html lang="ja">
 
 <head>
-  <meta charset="UTF-8">
-  <title>会員登録画面 - 確認</title>
-  <link rel="stylesheet" type="text/css" href="./css/">
-  <!-- BootstrapのCSS読み込み -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- jQuery読み込み -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- BootstrapのJS読み込み -->
-  <script src="js/bootstrap.min.js"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>会員登録画面</title>
+  <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <link rel="stylesheet" href="./css/kanri.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <!-- Chartist JS -->
+  <script src="js/plugins/chartist.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+  <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 
 <body>
-  <div id="header-top">
-    <h1>会員情報確認</h1>
-
-    <div id="navi">
-      <ul>
-        <li>会員情報入力</li>
-        <li class="arrow y"></li>
-        <li class="now">入力情報確認</li>
-        <li class="arrow y"></li>
-        <li>登録完了</li>
-      </ul>
-    </div>
-  </div>
-
-  <div id="space"></div>
-  <!--レイアウト調整用 -->
-
-  <p class="border"></p>
 
   <div id="wrapper3">
     <form action="" method="POST">
@@ -131,7 +123,6 @@ if (isset($_POST['ng'])) {
         <h2 class="pad">会員入力情報確認</h2>
 
         <div class="imp">
-          <h2><img src="./images/saru2.png" width="26px" height="26px">
             <p>メールアドレス/ユーザーID/パスワード</p>
           </h2>
           <table>
@@ -171,7 +162,7 @@ if (isset($_POST['ng'])) {
           <table>
             <tr>
               <td class="title">郵便番号</td>
-              <td><?php echo $fcode; ?> - <?php echo $lcode; ?></td>
+              <td><?php echo $code; ?></td>
             </tr>
             <tr>
               <td class="title">都道府県,市町村</td>
