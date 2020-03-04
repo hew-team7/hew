@@ -11,7 +11,7 @@ if(isset($_POST['log'])){
   $pass = $_POST['pass'];
 
   $dpass = "";
-  $cn = mysqli_connect('localhost','root','','hew_07');
+  $cn = mysqli_connect('localhost','root','','hew');
 	mysqli_set_charset($cn,'utf8');
   $sql = "SELECT user_id,pass FROM buyer_login WHERE user_id = '$yid';";
   $result = mysqli_query($cn, $sql);
