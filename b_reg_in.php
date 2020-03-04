@@ -58,12 +58,11 @@ if (isset($_POST['check'])) {
 
 
   //** 住所に関するエラーチェック */
-  $fcode = $_POST['zip21'];
-  $lcode = $_POST['zip22'];
+  $code = $_POST['zip01'];
   $paddr = $_POST['addr21'];
   $addr = $_POST['addr'];
   //** 郵便番号 */
-  if ($fcode == "" || $lcode == "") { //** 空白かどうか */
+  if ($code == "") { //** 空白かどうか */
     $codes[] = '601';
   }
 
@@ -91,8 +90,7 @@ if (isset($_POST['check'])) {
     $_SESSION['kfn'] = $kfn;
     $_SESSION['kln'] = $kln;
 
-    $_SESSION['fcode'] = $fcode;
-    $_SESSION['lcode'] = $lcode;
+    $_SESSION['code'] = $code;
     $_SESSION['paddr'] = $paddr;
     $_SESSION['addr'] = $addr;
 
@@ -141,24 +139,9 @@ if (isset($_POST['check'])) {
 </head>
 
 <body>
-  <div id="header-top">
-    <h1>会員登録</h1>
-
-    <div id="navi">
-      <ul>
-        <li class="now">会員情報入力</li>
-        <li class="arrow y"></li>
-        <li>入力情報確認</li>
-        <li class="arrow y"></li>
-        <li>登録完了</li>
-      </ul>
-    </div>
+  <div id="header">
+    <img src="./images/logo/698942.png">
   </div>
-
-  <div id="space"></div>
-  <!--レイアウト調整用 -->
-
-  <p class="border"></p>
 
   <div id="wrapper">
     <!-- End Navbar -->
@@ -168,12 +151,12 @@ if (isset($_POST['check'])) {
           <div class="col-md-8 i">
             <div class="card">
               <div class="card-header card-header-warning">
-                <h4 class="card-title">会員登録</h4>
+                <h4 class="card-title" style="text-align: center;">会員登録</h4>
                 <p class="card-category"></p>
               </div>
               <div class="card-body">
                 <form action="b_reg_in.php" method="POST">
-                <label style="margin: 50px 0 10px 0; font-size: 1.2em;">メールアドレス/ユーザーID/パスワード</label>
+                  <label class="p" style="margin: 50px 0 10px 0; font-size: 1.2em;">メールアドレス/ユーザーID/パスワード</label>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -223,7 +206,7 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの基本情報</label>
+                  <label class="p" style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの基本情報</label>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -264,12 +247,12 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの住所</label>
+                  <label class="p" style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーの住所</label>
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="bmd-label-floating">郵便番号(ハイフン有)<span class="red">必須</span></label>
-                        <input type="text" class="form-control" name="zip01" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','pref01','addr01');" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['code']) ? $_SESSION['code'] : (isset($_POST['zip21']) ? $_POST['zip21'] : ''); ?>">
+                        <input type="text" class="form-control" name="zip01" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','addr21','addr21');" maxlength="3" autocomplete="off" value="<?php echo isset($_SESSION['code']) ? $_SESSION['code'] : (isset($_POST['zip21']) ? $_POST['zip21'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '601') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -291,7 +274,7 @@ if (isset($_POST['check'])) {
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="bmd-label-floating">番地/号/マンション名<span class="red">必須</span></label>
-                        <input type="email" class="form-control" name="addr" size="36" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr'] : (isset($_POST['addr']) ? $_POST['addr'] : ''); ?>">
+                        <input type="text" class="form-control" name="addr" size="36" autocomplete="off" value="<?php echo isset($_SESSION['addr']) ? $_SESSION['addr'] : (isset($_POST['addr']) ? $_POST['addr'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '801') : ?>
                             <p class="red2"><?php echo ERROR[$code]; ?></p>
@@ -301,33 +284,42 @@ if (isset($_POST['check'])) {
                     </div>
                   </div>
 
-                  <label style="margin: 50px 0 10px 0; font-size: 1.2em;">支払い情報(クレジットカード情報)</label>
+                  <label class="p" style="margin: 50px 0 10px 0; font-size: 1.2em;">支払い情報(クレジットカード情報)</label>
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="bmd-label-floating">銀行名<span class="red">必須</span></label>
+                        <label class="bmd-label-floating">銀行名</span></label>
                         <input type="text" class="form-control" name="bname" autocomplete="off" value="<?php echo isset($_SESSION['bcode']) ? $_SESSION['bcode'] : (isset($_POST['bcode']) ? $_POST['bcode'] : ''); ?>">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="bmd-label-floating">支店名/支店コード<span class="red">必須</span></label>
+                        <label class="bmd-label-floating">支店名/支店コード</label>
                         <input type="text" class="form-control" name="branch" value="<?php echo isset($_SESSION['branch']) ? $_SESSION['branch'] : (isset($_POST['branch']) ? $_POST['branch'] : ''); ?>">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="bmd-label-floating">口座番号<span class="red">必須</span></label>
+                        <label class="bmd-label-floating">口座番号</label>
                         <input type="text" class="form-control" name="bnumber" value="<?php echo isset($_SESSION['bnumber']) ? $_SESSION['bnumber'] : (isset($_POST['bnumber']) ? $_POST['bnumber'] : ''); ?>">
                       </div>
                     </div>
                   </div>
 
-                  <input type="submit" value="確認" class="button" name="check">
+                  <div class="row">
+                    <div class="col-lg-2 offset-lg-5">
+                      <input type="submit" value="確認" class="btn btn-warning waves-effect waves-light" style="margin: 30px 0;" name="check">
+                    </div>
+                  </div>
 
               </div>
               </form>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 <!--   Core JS Files   -->
