@@ -91,13 +91,13 @@ $lat[$i] = $geo[1];
  
  
 ?><!DOCTYPE html>
-<html lang="ja"><head>
+<html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>map</title>
+    <title>MAP | HELOSS</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="css/map.css">
     <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
@@ -109,42 +109,96 @@ $lat[$i] = $geo[1];
     <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
     <script src="js/leaflet.sprite.js"></script>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="test/Material%20Design%20Bootstrap%20Template_files/font-awesome.css">
 
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
-    <link href="test/Material%20Design%20Bootstrap%20Template_files/bootstrap.css" rel="stylesheet">
+    <link href="Material%20Design%20Bootstrap%20Template_files/bootstrap.css" rel="stylesheet">
 
     <!-- Material Design Bootstrap -->
-    <link href="test/Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
+    <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
 
+
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .dark-skin .navbar {
+            background-color: #fb7d22;
+        }
+        .dark-skin .side-nav .logo-wrapper {
+            
+                background-size: auto;
+            background-size: cover;
+        }
+        .side-nav .logo-wrapper, .side-nav .logo-wrapper a {
+            height: 0px;
+        }
+        .dark-gradient, .dark-skin .side-nav {
+    
+            background: linear-gradient(135deg,#fb7d22 0,#fb7d22 100%);
+                
+         }
+         .dark-skin .side-nav .sn-avatar-wrapper img {
+            border: none;
+            box-shadow: 2px 3px 3px rgba(0,0,0,0.3); 
+        }
+
+        .side-nav .sn-avatar-wrapper img {
+            max-width: 65px;
+            margin-left: -10px;
+            margin-top: 8px;
+        }
+        .dark-skin .side-nav .collapsible li a:hover {
+            background-color: 
+            #f0a773;
+            transition: all .3s linear;
+        }
+        .dark-skin .side-nav .collapsible li a:hover {
+            background-color: 
+            #c66017;
+            transition: all .3s linear;
+        }
+        
+        .side-nav .collapsible > li {
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-top: 10px;
+        }
+
+    </style>
     <script>
 
-      function init() {
+        function init() {
 
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.getCurrentPosition(
             // success callback
             function(position) {
-              var map = L.map('mapcontainer').setView([34.699875 , 135.493032], 13);
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  attribution: "<a href='https://www.openstreetmap.org/copyright' target='_blank'>地理院タイル</a>"
-              }).addTo(map);
-              //ポップアップオブジェクトを作成
-                  //var popup1 = L.popup().setContent('<a href="">あ</a>');
-              //マーカーにポップアップを紐付けする。同時にbindTooltipでツールチップも追加
-                  L.marker([34.699875 , 135.493032], { draggable: true, icon: L.spriteIcon('red')}).bindTooltip("現在地").addTo(map);
-                  //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
-                  <?php for($i=0; $i<$cnt; $i++){?>
-                  var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
-                  L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('blue')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
-                  <?php } ?>
+                var map = L.map('mapcontainer').setView([34.699875 , 135.493032], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: "<a href='https://www.openstreetmap.org/copyright' target='_blank'>地理院タイル</a>"
+                }).addTo(map);
+                //ポップアップオブジェクトを作成
+                    //var popup1 = L.popup().setContent('<a href="">あ</a>');
+                //マーカーにポップアップを紐付けする。同時にbindTooltipでツールチップも追加
+                    L.marker([34.699875 , 135.493032], { draggable: true, icon: L.spriteIcon('red')}).bindTooltip("現在地").addTo(map);
+                    //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
+                    <?php for($i=0; $i<$cnt; $i++){?>
+                    var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array[$i]['name'];?><br><?php echo $table_array[$i]['address1'].$table_array[$i]['address2'];?><br><a href="list.php?shop_id=<?php echo $table_array[$i]['id'];?>">商品はこちら</a>');
+                    L.marker([<?php echo $lat[$i];?>, <?php echo $lon[$i];?>],{ icon: L.spriteIcon('blue')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array[$i]['name'];?>").addTo(map);
+                    <?php } ?>
 
-                  //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
-                  <?php for($i=0; $i<$cnt1; $i++){?>
-                  var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array1[$i]['name'];?><br><?php echo $table_array1[$i]['address1'].$table_array1[$i]['address2'];?>');
-                  L.marker([<?php echo $lat1[$i];?>, <?php echo $lon1[$i];?>],{ icon: L.spriteIcon('green')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array1[$i]['name'];?>").addTo(map);
-                  <?php } ?>
+                    //L.marker([<?php //echo $lat1?>, <?php //echo $lon1?>]).bindPopup(popup1).bindTooltip("<?php //echo $name;?>").addTo(map);
+                    <?php for($i=0; $i<$cnt1; $i++){?>
+                    var popup<?php echo $i;?> = L.popup().setContent('<?php echo $table_array1[$i]['name'];?><br><?php echo $table_array1[$i]['address1'].$table_array1[$i]['address2'];?>');
+                    L.marker([<?php echo $lat1[$i];?>, <?php echo $lon1[$i];?>],{ icon: L.spriteIcon('green')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array1[$i]['name'];?>").addTo(map);
+                    <?php } ?>
                 
             },
             // error callback
@@ -169,74 +223,53 @@ $lat[$i] = $geo[1];
                         L.marker([<?php echo $lat1[$i];?>, <?php echo $lon1[$i];?>],{ icon: L.spriteIcon('green')}).bindPopup(popup<?php echo $i; ?>).bindTooltip("<?php echo $table_array1[$i]['name'];?>").addTo(map);
                         <?php } ?>
             }
-          )
+            )
         }  
 
         
-      }
-
-    </script>
-    <script>
-      $(function(){
-        var headerHeight = $('#nav').outerHeight();// ナビの高さを取得 
-        var windowHeight = $(window).height();// 表示画面の高さを取得
-        var H = windowHeight-headerHeight-30;
-        $('#mapcontainer').css('height', H + 'px');// 算出した差分をヘッダーエリアの高さに指定  
-        $('#main').css('height', H + 'px');
-        $('.fixed-sn main').css('margin-top', headerHeight + 'px');
-      });
-
-
-
-    </script>
-
-    <style>
-        body {
-            background: url("./images/index.jpg")no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
         }
-    </style>
+
+</script>
 
 </head>
 
-<body class="fixed-sn dark-skin" onload="init()">
+<body class="fixed-sn dark-skin" style=""  onload="init()">
 
     <!--Double Navigation-->
-    <header style="position: absolute;z-index:10;">
+    <header>
 
         <!-- Sidebar navigation -->
         <ul id="slide-out" class="side-nav fixed custom-scrollbar ps-container ps-theme-default" style="transform: translateX(-100%);" data-ps-id="96864e62-e306-5383-47b2-9d30422757ea">
 
-            <!-- Logo -->
-            <li>
-                <div class="logo-wrapper waves-light sn-avatar-wrapper waves-effect waves-light">
-                    <a href="#">
-                        <img src="./images/" class="rounded-circle">
-                    </a>
-                </div>
-            </li>
-            <!--/. Logo -->
-
+            
 
             <!-- Side navigation links -->
             <li>
-                <ul class="collapsible collapsible-accordion" style="color: gray;">
-                    <li><a class="collapsible-header waves-effect arrow-r" style="color: gray;">・ マイページ</a>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a href="./map.php" class="collapsible-header waves-effect"><i class="fa fa-map"></i> マップ</a>
+                        
+                    </li>
+                    
+                    <li><a href="./ranking.php" class="collapsible-header waves-effect"><i class="fa fa-crown"></i> ランキング</a>
+                        
+                    </li>
+                  
+                    <li><a href="./b_pl.php" class="collapsible-header waves-effect"><i class="fa fa-user"></i> ステータス</a>
+                        
+                    </li>
+                    
+                    <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-cog"></i> 設定<i class="fa fa-angle-down rotate-icon"></i></a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="#" class="waves-effect" style="color: gray;">　お気に入り</a>
+                                <li><a href="./b_pl_stg.php" class="waves-effect">プロフィール編集</a>
                                 </li>
-                                <li><a href="#" class="waves-effect" style="color: gray;">　購入履歴</a>
-                                </li>
-                                <li><a href="#" class="waves-effect" style="color: gray;">　登録内容の変更</a>
+                                <li><a href="./log_out.php" class="waves-effect">ログアウト</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li><a class="collapsible-header waves-effect arrow-r" style="color: gray;">・ 問い合わせ</a></li>
+
+                    <li><a href="./b_question.php" class="collapsible-header waves-effect"><i class="fa fa-question"></i> お問い合わせ</a>
                 </ul>
             </li>
             <!--/. Side navigation links -->
@@ -245,17 +278,33 @@ $lat[$i] = $geo[1];
         <!--/. Sidebar navigation -->
 
         <!--Navbar-->
-        <nav class="navbar navbar-fixed-top scrolling-navbar double-nav" id="nav">
+        <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
 
             <!-- SideNav slide-out button -->
             <div class="float-xs-left">
-                <a href="#" data-activates="slide-out" class="button-collapse"><img src="./images/icon_23.png" style="width: 5%;"></a>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
             </div>
 
             <!-- Breadcrumb-->
             <div class="breadcrumb-dn">
                 <p>HELOSS</p>
             </div>
+
+
+            <ul class="nav navbar-nav float-xs-right">
+
+                <li class="nav-item ">
+                    <a href="./b_news.php" class="nav-link waves-effect waves-light"><i class="fa fa-bell"></i> <span class="hidden-sm-down">お知らせ</span></a>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i> <span class="hidden-sm-down">プロフィール</span> </a>
+                    <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <a class="dropdown-item waves-effect waves-light" href="./b_pl.php">プロフィール確認</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./b_pl_stg.php">プロフィール編集</a>
+                    </div>
+                </li>
+            </ul>
 
         </nav>
         <!--/.Navbar-->
@@ -264,43 +313,49 @@ $lat[$i] = $geo[1];
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main id="main" style="">
-    <div id="mapcontainer" style="width: 100%;z-index:1;"></div>
+    <main class="">
+        <div class="container-fluid text-xs-center" style="height: 800px;">
+           <div id="mapcontainer" style="width: 100%;z-index:1;height: 800px;"></div>
+        </div>
     </main>
     <!--/Main layout-->
 
     <!--Footer-->
-    <footer class="page-footer" style="height: 30px;" id="foo">
+    <footer class="page-footer center-on-small-only">
+
+        <!--Footer Links-->
+        <div class="container">
+        <p class="container-fluid center-block text-center"><img src="./images/logo/698942.png"></p> 
+        </div>   
+        
+        <!--/.Footer Links-->
+
 
         <!--Copyright-->
         <div class="footer-copyright">
-            <div class="container-fluid" style="padding-top: 8px;">HEW 7team</div>
+            <div class="container-fluid">
+                © 2020 Copyright: HELOSS Entertainment.
+
+            </div>
         </div>
         <!--/.Copyright-->
 
     </footer>
     <!--/.Footer-->
 
-
-
-
-
-
-
-
     <!-- SCRIPTS -->
 
     <!-- JQuery -->
-    <script type="text/javascript" src="test/Material%20Design%20Bootstrap%20Template_files/jquery-3.js"></script>
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/jquery-3.js"></script>
 
     <!-- Tooltips -->
-    <script type="text/javascript" src="tets/Material%20Design%20Bootstrap%20Template_files/tether.js"></script>
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/tether.js"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="test/Material%20Design%20Bootstrap%20Template_files/bootstrap.js"></script>
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/bootstrap.js"></script>
 
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="test/Material%20Design%20Bootstrap%20Template_files/mdb.js"></script>
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/mdb.js"></script>
 
     <script>
         $(".button-collapse").sideNav();
