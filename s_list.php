@@ -38,7 +38,7 @@ if(isset($_POST['search'])){
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>管理者 | トップページ</title>
+  <title>管理者 | 店舗一覧</title>
   <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -65,7 +65,7 @@ if(isset($_POST['search'])){
   -->
       <div class="logo">
         <a href="" class="simple-text logo-normal">
-          Creative Tim
+          HELOSS
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -91,7 +91,7 @@ if(isset($_POST['search'])){
           <li class="nav-item ">
             <a class="nav-link" href="./l_list.php">
               <i class="material-icons">emoji_food_beverage</i>
-              <p>売れ残り商品一覧</p>
+              <p>店舗側商品通知一覧</p>
             </a>
           </li>
           <li class="nav-item active">
@@ -242,28 +242,6 @@ if(isset($_POST['search'])){
               </div>
             </div>
           </div>
-
-          <footer class="footer">
-            <div class="container-fluid">
-              <nav class="float-left">
-                <ul>
-                  <li>
-                    <a href="https://www.creative-tim.com">
-                      Creative Tim
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-              <div class="copyright float-right">
-                &copy;
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="material-icons">favorite</i> by
-                <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-              </div>
-              <!-- your footer here -->
-            </div>
-          </footer>
         </div>
       </div>
 

@@ -187,7 +187,7 @@ array_multisort(array_map("strtotime", array_column($nlists, "paste_date")), SOR
   -->
       <div class="logo">
         <a href="" class="simple-text logo-normal">
-          Creative Tim
+          HELOSS
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -213,7 +213,7 @@ array_multisort(array_map("strtotime", array_column($nlists, "paste_date")), SOR
           <li class="nav-item ">
             <a class="nav-link" href="./l_list.php">
               <i class="material-icons">emoji_food_beverage</i>
-              <p>売れ残り商品一覧</p>
+              <p>店舗側商品通知一覧</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -664,28 +664,6 @@ array_multisort(array_map("strtotime", array_column($nlists, "paste_date")), SOR
             </div>
           </div>
         </div>
-
-        <footer class="footer">
-          <div class="container-fluid">
-            <nav class="float-left">
-              <ul>
-                <li>
-                  <a href="https://www.creative-tim.com">
-                    Creative Tim
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright float-right">
-              &copy;
-              <script>
-                document.write(new Date().getFullYear())
-              </script>, made with <i class="material-icons">favorite</i> by
-              <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-            </div>
-            <!-- your footer here -->
-          </div>
-        </footer>
       </div>
     </div>
 
