@@ -7,7 +7,7 @@ $sql = "SELECT ssp.id,price_cut,ssp.detail,sell_quantity,buy_quantity,expiration
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
-WHERE ssp.shop_id = $shop_id AND close_date > now() AND buy_quantity > sell_quantity";
+WHERE ssp.shop_id = $shop_id AND close_date > now() AND buy_quantity < sell_quantity";
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
 while($row = mysqli_fetch_assoc($result)){
