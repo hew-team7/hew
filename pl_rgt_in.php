@@ -56,6 +56,7 @@ if (isset($_POST['pl_name'])){
         if(isset($_FILES['pl_img'])){
 
             $filename = './images/product/'.$_SESSION['shop_product_id'];
+            var_dump($filename);
 
             if($_FILES['pl_img']['size'] != 0){//画像の有無
 

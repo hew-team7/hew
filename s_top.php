@@ -1,21 +1,25 @@
 <?php
 session_start();
-$shop_id = $_SESSION['sid'];
+$shop_id = $_SESSION['shop_id'];
+$shop_number = $_SESSION['shop_number'];
+var_dump($shop_number);
+var_dump($_SESSION['shop_id']);
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
-$sql1 = "SELECT id 
+$sql1 = "SELECT shop_id 
 FROM shop_login 
 WHERE shop_id = '$shop_id';";
 $result1 = mysqli_query($cn,$sql1);
 $row1 = mysqli_fetch_assoc($result1);
-$sid = $row1["id"];
+$sid = $row1["shop_id"];
 
 $sql = "SELECT ssp.id,price_cut,sell_price,ssp.detail,sell_quantity,buy_quantity,expiration_date,close_date,sp.product_name AS product_name,sp.price,sl.name AS shop_name  
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
-WHERE ssp.shop_id = $sid AND close_date > now() AND sell_quantity > buy_quantity;";
+WHERE ssp.shop_id = $shop_number AND close_date > now() AND sell_quantity > buy_quantity;";
+var_dump($sql);
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
 while($row = mysqli_fetch_assoc($result) ){
@@ -23,11 +27,7 @@ $table_array[] = $row;
 }
 $cnt = count($table_array);
 
-$sql = "SELECT ssp.id,price_cut,sell_price,ssp.detail,maker_name,sell_quantity,buy_quantity,expiration_date,close_date,sp.product_name AS product_name,sp.price,sl.name AS shop_name  
-FROM shop_sell_product ssp 
-INNER JOIN shop_product sp ON sp.id = ssp.product_id 
-INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
-WHERE ssp.shop_id = $sid AND close_date <= now();";
+$sql = "SELECT * FROM shop_product WHERE shop_id = '$shop_number';";
 $result1 = mysqli_query($cn,$sql);
 $table_array1 = array();  // テーブル情報を格納する変数
 while($row1 = mysqli_fetch_assoc($result1) ){
@@ -256,12 +256,11 @@ mysqli_close($cn);
                 <p style="text-align: center;">掲載されている商品ありません。</p>
             <?php } ?>
 
-            <?php if($cnt!=0){ ?>
+            <?php if($cnt1!=0){ ?>
                 <h1 style="font-size:1.5em;margin-top:30px;text-align:left;margin-left:20px;margin-bottom:30px;">登録されている商品</h1>
                 <div class="row">
 
                     <?php for($i=0;$i<$cnt1;$i++){ ?>
-                        <a href="goods_list.php?product_id=<?php echo $table_array1[$i]["id"]; ?>">
                         <div class="col-lg-4 col-md-6">
 
                         <!--Card-->
@@ -270,23 +269,19 @@ mysqli_close($cn);
                             <!--Card image-->
                             <div class="view overlay hm-white-slight z-depth-1">
                                 <img src="./img/<?php echo $table_array1[$i]["file_name"]; ?>" class="img-fluid">
-                                <a>
                                     <div class="mask waves-effect waves-light"></div>
-                                </a>
                             </div>
                             <!--/.Card image-->
 
                             <!--Card content-->
                             <div class="card-block text-xs-center">
                                 <!--Category & Title-->
-                                <h4 class="card-title"><strong><a href="s_goods_list.php?product_id=<?php echo $table_array1[$i]["id"]; ?>"><?php echo $table_array1[$i]["product_name"] ?></a></strong></h4>
+                                <h4 class="card-title"><strong><?php echo $table_array1[$i]["product_name"] ?></strong></h4>
 
-                                <!--Description--><?php if($table_array1[$i]["detail"] != null){ ?>
-                                <p class="card-text"><?php echo $table_array[$i]["detail"]; ?></p>
-                                <?php } ?>
                                 <!--Card footer-->
                                 <div class="card-footer">
-                                    <span class="center"  style=""><span style="font-size:0.5em;">maker : </span><?php echo $table_array1[$i]['maker_name'] ?></span>
+                                    <span class="center"  style=""><span style="font-size:0.5em;">maker : </span><?php echo $table_array1[$i]['maker_name'] ?></span><br>
+                                    <span class="center"  style=""><span style="font-size:0.5em;">価格 : </span>￥<?php echo number_format($table_array1[$i]['price']); ?></span>
                                 </div>
 
                             </div>
@@ -294,7 +289,7 @@ mysqli_close($cn);
 
                         </div>
                         <!--/.Card-->
-                        </div></a>
+                        </div>
                     <?php } ?>     
                     
                 </div>
