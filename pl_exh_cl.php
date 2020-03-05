@@ -107,6 +107,12 @@ if (isset($_SESSION['reason'])) { //2重登録対策
 		.u {
 			margin-bottom: 30px;
 		}
+
+		.g{
+      color: #52dda9;
+      border-bottom: solid 1px #52dda9;
+      padding-bottom: 20px;
+    }
 	</style>
 
 </head>

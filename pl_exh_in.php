@@ -90,73 +90,79 @@ function get_pr($id)
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><?php echo $pr['product_name'] ?>の出品 | HELOSS</title>
 
-        <!-- Font Awesome -->
-        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-        <!-- Bootstrap core CSS -->
-        <link href="Material%20Design%20Bootstrap%20Template_files/bootstrap.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="Material%20Design%20Bootstrap%20Template_files/bootstrap.css" rel="stylesheet">
 
-        <!-- Material Design Bootstrap -->
-        <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
 
 
 
-        <style>
-            body {
-                background-color: #f5f5f5;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            }
+    <style>
+        body {
+            background-color: #f5f5f5;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
 
-            .dark-skin .navbar {
-                background-color: #52dda9;
-            }
+        .dark-skin .navbar {
+            background-color: #52dda9;
+        }
 
-            .dark-skin .side-nav .logo-wrapper {
+        .dark-skin .side-nav .logo-wrapper {
 
-                background-size: auto;
-                background-size: cover;
-            }
+            background-size: auto;
+            background-size: cover;
+        }
 
-            .side-nav .logo-wrapper,
-            .side-nav .logo-wrapper a {
-                height: 0px;
-            }
+        .side-nav .logo-wrapper,
+        .side-nav .logo-wrapper a {
+            height: 0px;
+        }
 
-            .dark-gradient,
-            .dark-skin .side-nav {
+        .dark-gradient,
+        .dark-skin .side-nav {
 
-                background: linear-gradient(135deg, #52dda9 0, #52dda9 100%);
+            background: linear-gradient(135deg, #52dda9 0, #52dda9 100%);
 
-            }
+        }
 
-            .dark-skin .side-nav .sn-avatar-wrapper img {
-                border: none;
-                box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
-            }
+        .dark-skin .side-nav .sn-avatar-wrapper img {
+            border: none;
+            box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
+        }
 
-            .side-nav .sn-avatar-wrapper img {
-                max-width: 65px;
-                margin-left: -10px;
-                margin-top: 8px;
-            }
+        .side-nav .sn-avatar-wrapper img {
+            max-width: 65px;
+            margin-left: -10px;
+            margin-top: 8px;
+        }
 
-            .dark-skin .side-nav .collapsible li a:hover {
-                background-color: #91eeba;
-                transition: all .3s linear;
-            }
+        .dark-skin .side-nav .collapsible li a:hover {
+            background-color: #91eeba;
+            transition: all .3s linear;
+        }
 
-            .side-nav .collapsible>li {
-                padding-right: 1rem;
-                padding-left: 1rem;
-                margin-top: 10px;
-            }
+        .side-nav .collapsible>li {
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-top: 10px;
+        }
 
-            .u{
-                margin-bottom: 30px;
-            }
-        </style>
+        .u {
+            margin-bottom: 30px;
+        }
+
+        .g {
+            color: #52dda9;
+            border-bottom: solid 1px #52dda9;
+            padding-bottom: 20px;
+        }
+    </style>
 
 </head>
 
@@ -247,23 +253,23 @@ function get_pr($id)
     <!--Main layout-->
     <main class="">
         <div class="container-fluid text-xs-center" style="height: 1400px;">
-            <h2>商品出品</h2>
+            <h2 class="g">商品出品</h2>
             <form action="pl_exh_in.php?id=<?php echo $pr['shop_product_id'] ?>" method="post">
-                <div class="row"> 
+                <div class="row">
                     <div class="col-md-12">
-                <p><img src="<?php if (file_exists('./images/product/' . $pr['file_name'])) {
-                                    echo './images/product/' . $pr['file_name'];
-                                } else {
-                                    echo './images/product/no.png';
-                                } ?>" width="200"></p>
-                </div>
+                        <p><img src="<?php if (file_exists('./images/product/' . $pr['file_name'])) {
+                                            echo './images/product/' . $pr['file_name'];
+                                        } else {
+                                            echo './images/product/no.png';
+                                        } ?>" width="200"></p>
+                    </div>
                 </div>
                 <div class="row u">
                     <div class="col-md-4 offset-md-2">
                         <h4>商品名</h4>
                     </div>
                     <div class="col-md-4">
-                    <p><?php echo $pr['product_name'] ?></p>
+                        <p><?php echo $pr['product_name'] ?></p>
                     </div>
                 </div>
                 <div class="row u">
@@ -271,7 +277,7 @@ function get_pr($id)
                         <h4>メーカー</h4>
                     </div>
                     <div class="col-md-4">
-                    <p><?php echo $pr['maker_name'] ?></p>
+                        <p><?php echo $pr['maker_name'] ?></p>
                     </div>
                 </div>
 
@@ -281,8 +287,8 @@ function get_pr($id)
                     </div>
                     <div class="col-md-4">
                         <select id="select1a" class="form-control" name="reason" value='<?php if (isset($_SESSION['reason'])) {
-                                                        echo $_SESSION['reason'];
-                                                    } ?>'>
+                                                                                            echo $_SESSION['reason'];
+                                                                                        } ?>'>
                             <option value="0">消費/賞味期限間近</option>
                             <option value="1">期間限定セール</option>
                             <option value="2">在庫一掃セール</option>
@@ -298,8 +304,8 @@ function get_pr($id)
                     </div>
                     <div class="col-md-4">
                         <textarea name="detail" style="height: 100px;"><?php if (isset($_SESSION['detail'])) {
-                                                echo $_SESSION['detail'];
-                                            } ?></textarea>
+                                                                            echo $_SESSION['detail'];
+                                                                        } ?></textarea>
                     </div>
                 </div>
 
@@ -325,8 +331,8 @@ function get_pr($id)
                     </div>
                     <div class="col-md-4">
                         <input type="date" name="ex_date" value="<?php if (isset($_SESSION['ex_date'])) {
-                                                                    echo $_SESSION['ex_date'];
-                                                                } ?>"> <?php echo $msg3 ?>
+                                                                        echo $_SESSION['ex_date'];
+                                                                    } ?>"> <?php echo $msg3 ?>
                     </div>
                 </div>
 

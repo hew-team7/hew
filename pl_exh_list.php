@@ -94,6 +94,12 @@ function get_pr_inf($shop_id)
             padding-left: 1rem;
             margin-top: 10px;
         }
+
+        .g {
+            color: #52dda9;
+            border-bottom: solid 1px #52dda9;
+            padding-bottom: 20px;
+        }
     </style>
 
 </head>
@@ -188,7 +194,7 @@ function get_pr_inf($shop_id)
             <form action="pl_rgt_cl.php" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h4>商品登録確認</h4>
+                        <h4 class="g">商品登録確認</h4>
                     </div>
                 </div>
                 <br>

@@ -128,6 +128,12 @@ function get_pr($id)
         .u {
             margin-bottom: 30px;
         }
+
+        .g {
+            color: #52dda9;
+            border-bottom: solid 1px #52dda9;
+            padding-bottom: 20px;
+        }
     </style>
 
 </head>
@@ -219,7 +225,7 @@ function get_pr($id)
     <!--Main layout-->
     <main class="">
         <div class="container-fluid text-xs-center">
-            <h2>商品出品</h2>
+            <h2 class="g">商品出品</h2>
 
             <p><img src="<?php if (file_exists('./images/product/' . $pr['file_name'])) {
                                 echo './images/product/' . $pr['file_name'];
@@ -275,14 +281,14 @@ function get_pr($id)
                     <p><?php echo $_SESSION['ex_date']; ?></p>
                 </div>
             </div>
-           <div class="row u">
+            <div class="row u">
                 <div class="col-md-4 offset-md-2">
                     <h4>商品掲載期間</h4>
                 </div>
                 <div class="col-md-4">
                     <p><?php echo $_SESSION['pub_date']; ?></p>
                 </div>
-            </div> 
+            </div>
             <div class="row u">
                 <div class="col-md-4 offset-md-2">
                     <h4>販売価格</h4>
