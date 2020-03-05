@@ -32,13 +32,14 @@ if(isset($_POST['log'])){
 
   if(empty($codes)){
     if(password_verify($pass, $spass)){
-      $sql = "SELECT * FROM shop_list INNER JOIN shop_login ON shop_list.id = shop_login.id;";
+      $sql = "SELECT shop_id,shop_login.id AS id,name,postal_code,address1,address2 FROM shop_list INNER JOIN shop_login ON shop_list.id = shop_login.id WHERE shop_id = '$yid';";
       $result2 = mysqli_query($cn, $sql);
       $row2 = mysqli_fetch_assoc($result2);
-      $_SESSION['sid'] = $yid;
-      $_SESSION['name'] = $rows2['name'];
-      $_SESSION['code'] = $rows2['postal_code'];
-      $_SESSION['addr'] = $rows2['address1'] . $rows2['address2'];
+      $_SESSION['shop_id'] = $row2['shop_id'];
+      $_SESSION['shop_number'] = $row2['id'];
+      $_SESSION['name'] = $row2['name'];
+      $_SESSION['code'] = $row2['postal_code'];
+      $_SESSION['addr'] = $row2['address1'] . $rows2['address2'];
       header("location:./s_top.php");
       exit;
     }else{

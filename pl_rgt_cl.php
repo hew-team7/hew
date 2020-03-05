@@ -34,7 +34,7 @@ if(isset($_SESSION['jan'])){//2重登録対策
 	
 	$cn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB);
 	mysqli_set_charset($cn,'utf8');	
-	$sql="INSERT INTO shop_product(shop_product_id,shop_id,product_id,maker_id,product_name,maker_name,code_class,price) VALUES ('".$_SESSION['shop_product_id']."','".$_SESSION['shop_id']."',".$_SESSION['jan'].",'".$maker_id."','".$_SESSION['pl_name']."','".$_SESSION['mk_name']."','".$_SESSION['class']."','".$_SESSION['price']."')";
+	$sql="INSERT INTO shop_product(shop_product_id,shop_id,product_id,maker_id,product_name,maker_name,code_class,price) VALUES ('".$_SESSION['shop_product_id']."','".$_SESSION['shop_number']."',".$_SESSION['jan'].",'".$maker_id."','".$_SESSION['pl_name']."','".$_SESSION['mk_name']."','".$_SESSION['class']."','".$_SESSION['price']."')";
 	
 	mysqli_query($cn,$sql); 
 	mysqli_close($cn);
