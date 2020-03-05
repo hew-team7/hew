@@ -93,7 +93,7 @@ if(isset($_POST['log'])){
                 <p class="card-category"></p>
               </div>
               <div class="card-body" style="margin: 0 auto;">
-                <form action="b_reg_in.php" method="POST">
+                <form action="" method="POST">
                   <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーID</label>
                   <div class="row">
                     <div class="col-md-12">
