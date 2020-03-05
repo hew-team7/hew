@@ -74,6 +74,10 @@ if (isset($_POST['ok'])) {
   mysqli_query($cn, $sql3);
   $sql2 = "INSERT INTO buyer_login(id, user_id, pass) VALUES('$nid', '$id', '$pass');";
   mysqli_query($cn, $sql2);
+  $sql2 = "INSERT INTO buyer_status(buyer_id) VALUES('$id');";
+  mysqli_query($cn, $sql2);
+  $sql2 = "INSERT INTO buyer_plofile(user_id) VALUES('$id');";
+  mysqli_query($cn, $sql2);
   mysqli_close($cn);
 
   header("location:./b_reg_wt.php");
