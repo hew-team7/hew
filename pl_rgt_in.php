@@ -301,24 +301,24 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
         <div class="container-fluid text-xs-center" style="height: 800px;">
             <form action="pl_rgt_in.php" method="post" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h4>商品登録</h4>
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h5>商品画像</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <input type="file" name="pl_img">
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
 
                     <div class="md-form">
                         <input type="text" id="form1"  name="pl_name" value="<?php if(isset($_SESSION['pl_name'])) echo $_SESSION['pl_name'] ?>"><?php if($msg1 != '') echo $msg1 ?>
@@ -328,7 +328,7 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
 
                     <div class="md-form">
                         <input type="text" id="form1"  name="mk_name" value="<?php if(isset($_SESSION['mk_name'])) echo $_SESSION['mk_name'] ?>"><?php if($msg2 != '') echo $msg2 ?>
@@ -338,12 +338,12 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h5>JANコード/バーコード</h5> 
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="radio-inline">
                         <input type="radio" name="digit" value="13" checked="checked" id='13'>
                         <label for="13">13桁</label>
@@ -361,12 +361,12 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h5>バーコードの分類</h5> 
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="radio-inline">
                         <input type="radio" name="class" value="0" checked="checked" id='uni'>
                         <label for="uni">ユニーク</label>
@@ -380,7 +380,7 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
 
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
 
                     <div class="md-form">
                         <input type="text" id="form2"  name="jan" value="<?php if(isset($_SESSION['jan'])) echo $_SESSION['jan'] ?>"><?php if($msg3 != '') echo $msg3 ?>
@@ -390,7 +390,7 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
 
                     <div class="md-form">
                         <input type="text" name="price" value="<?php if(isset($_SESSION['price'])) echo $_SESSION['price'] ?>">
@@ -403,7 +403,7 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
             
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <button class="btn btn-cyan waves-effect waves-light">保存する</button>
                     <a class="btn btn-elegant waves-effect waves-light" href="./b_pl.php">キャンセル</a>
                 </div>
