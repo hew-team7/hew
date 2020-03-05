@@ -60,7 +60,7 @@ mysqli_close($cn);
     <!-- Material Design Bootstrap -->
     <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
 
-　
+
     <script>
         $(function () {
             var ua = navigator.userAgent;
@@ -77,6 +77,10 @@ mysqli_close($cn);
 
     </script>
     <style>
+        .overlay img, .overlay video {
+            margin: auto;
+        }
+
         body {
             background-color: #f5f5f5;
             -webkit-background-size: cover;
@@ -147,7 +151,7 @@ mysqli_close($cn);
                         
                     </li>
                   
-                    <li><a href="./pl_exh_now.php" class="collapsible-header waves-effect"><i class="fa fa-fish"></i> 出品している商品</a>
+                    <li><a href="./s_top.php" class="collapsible-header waves-effect"><i class="fa fa-fish"></i> 出品している商品</a>
                         
                     </li>
                     
@@ -192,8 +196,8 @@ mysqli_close($cn);
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i> <span class="hidden-sm-down">プロフィール</span> </a>
                     <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl.php">プロフィール確認</a>
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl_stg.php">プロフィール編集</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl.php">プロフィール確認</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl_stg.php">プロフィール編集</a>
                     </div>
                 </li>
             </ul>
@@ -273,7 +277,7 @@ mysqli_close($cn);
                             <!--Card content-->
                             <div class="card-block text-xs-center">
                                 <!--Category & Title-->
-                                <h4 class="card-title"><strong><?php echo $table_array1[$i]["product_name"] ?></strong></h4>
+                                <h4 class="card-title text-xs"><strong><?php echo $table_array1[$i]["product_name"] ?></strong></h4>
 
                                 <!--Card footer-->
                                 <div class="card-footer">
