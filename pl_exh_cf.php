@@ -331,8 +331,8 @@ function get_pr($id)
             </div>
 
             <div class="row">
-                <a href="./pl_exh_in.php?id=<?php echo $pr['shop_product_id'] ?>" class="btn btn-success waves-effect waves-light" style="margin-right: 60px;">変更する</a>
-                <a href="./pl_exh_cl.php?id=<?php echo $pr['shop_product_id'] ?>" class="btn btn-success waves-effect waves-light">出品する</a>
+                <a href="./pl_exh_in.php?id=<?php echo $pr['shop_product_id']; ?>&pid=<?php echo $pr['id']; ?>" class="btn btn-success waves-effect waves-light" style="margin-right: 60px;">変更する</a>
+                <a href="./pl_exh_cl.php?id=<?php echo $pr['shop_product_id']; ?>&pid=<?php echo $pr['id']; ?>" class="btn btn-success waves-effect waves-light">出品する</a>
             </div>
 
         </div>

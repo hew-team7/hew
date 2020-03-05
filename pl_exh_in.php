@@ -62,7 +62,7 @@ if (isset($_POST['reason'])) {
 
     if ($msg1 == '' && $msg2 == '' && $msg3 == '' && $msg4 == '') {
 
-        header('Location:pl_exh_cf.php?id=' . $pr['shop_product_id']);
+        header('Location:pl_exh_cf.php?id=' . $pr['shop_product_id'].'&pid='.$pr['id']);
     }
 }
 
