@@ -39,7 +39,6 @@ if (isset($_POST['search'])) {
   }
 }
 
-$now = 01;
 // ポイント付与
 if($now == '01'){
   $add = 1;

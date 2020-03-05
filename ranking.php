@@ -178,7 +178,7 @@ if (isset($_POST['search'])) {
               <ul>
                 <li><a href="./b_pl_stg.php" class="waves-effect">プロフィール編集</a>
                 </li>
-                <li><a href="./index.php" class="waves-effect">ログアウト</a>
+                <li><a href="./log_out.php" class="waves-effect">ログアウト</a>
                 </li>
               </ul>
             </div>
