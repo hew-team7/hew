@@ -62,23 +62,21 @@ if (isset($_POST['pl_name'])){
 
                 if (file_exists($filename.'.jpg')) {
                     $filename = $filename.'.jpg';
-                    $_SESSION['file_name'] = $_SESSION['shop_product_id'].'.jpg';
                     unlink($filename);
                 } 
                 elseif (file_exists($filename.'.png')) {
                     $filename = $filename.'.png';
-                    $_SESSION['file_name'] = $_SESSION['shop_product_id'].'.png';
                     unlink($filename);
                 }
                 elseif (file_exists($filename.'.gif')){
                     $filename = $filename.'.gif';
-                    $_SESSION['file_name'] = $_SESSION['shop_product_id'].'.gif';
                     unlink($filename);
                 }
 
                 $upload_file = $_FILES['pl_img'];
                 $extension = pathinfo($upload_file['name']);//拡張子を抽出
                 $new_name = $filename.'.'.$extension['extension'];
+                $_SESSION['file_name'] = $_SESSION['shop_product_id'].'.'.$extension['extension'];
                 createThumb($upload_file['tmp_name'],$new_name,300);
                 $_SESSION['new_name'] = $new_name;
 

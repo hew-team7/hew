@@ -2,7 +2,7 @@
 
 require_once "config.php";
 session_start();
-$pr_info = get_pr_inf($_SESSION['shop_id']);
+$pr_info = get_pr_inf($_SESSION['shop_number']);
 
 echo $pr_info[0]['file_name'];
 
@@ -205,9 +205,9 @@ function get_pr_inf($shop_id){
                                 </p>
 
                                 <!--Card footer-->
-                                <div class="card-footer">
-                                    <span class="left">
-                                         <?php echo $rows['price'] ?>円
+                                <div class="card-footer" style="text-align: center;">
+                                    <span style="text-align: center;">
+                                         <?php echo number_format($rows['price']); ?>円
                                     </span>
                                     </div>
 

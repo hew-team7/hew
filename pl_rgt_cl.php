@@ -40,8 +40,7 @@ if(isset($_SESSION['jan'])){//2重登録対策
     unset($_SESSION['price']);
     unset($_SESSION['digit']);
     unset($_SESSION['new_name']);
-
-    var_dump($_SESSION['file_name']);
+    unset($_SESSION['file_name']);
 }
 ?>
 <!DOCTYPE html>
