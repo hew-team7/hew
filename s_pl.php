@@ -39,14 +39,14 @@ function get_spl($host,$db_user,$db_pass,$db_name,$shop_id){
 	
 	$cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
 	mysqli_set_charset($cn,'utf8');	
-	$sql= "SELECT * FROM shop_plofile WHERE shop_id = '".$shop_id."';";//変える必要あり
+	$sql= "SELECT * FROM shop_plofile WHERE shop_id = '".$_SESSION['shop_number']."';";//変える必要あり
 	$sql = "SELECT a.postal_code,a.address1,a.address2,a.tel,a.mail,b.s_name,b.introduction FROM shop_list a INNER JOIN shop_plofile b ON a.id = b.shop_id WHERE b.shop_id = '".$_SESSION['shop_id']."'";
 	$result = mysqli_query($cn, $sql);
 	$row = mysqli_fetch_assoc($result);
 	return $row;
 }
 
-$row = get_spl(HOST,DB_USER,DB_PASS,DB_NAME,$_SESSION['shop_id']);
+$row = get_spl(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['shop_number']);
 
 
 ?>
