@@ -2,8 +2,6 @@
 require_once "config.php";
 session_start();
 
-var_dump($_SESSION['user_id']);
-
 $hfilename = './images/plofile/b_header/'.$_SESSION['user_id'];
 $ifilename = './images/plofile/b_icon/'.$_SESSION['user_id'];
 
@@ -149,11 +147,14 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     mysqli_set_charset($cn,'utf8'); 
     $sql= "SELECT * FROM buyer_plofile WHERE user_id = '$user_id';";//変える必要あり
     $result = mysqli_query($cn, $sql);
-    var_dump($sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
 }
 
+if($row == null){
+    $row['n_name'] = '';
+    $row['introduction'] = '';
+}
 
 ?>
 <!DOCTYPE html>
@@ -164,6 +165,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>プロフィール編集 | HELOSS</title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 
     <!-- Font Awesome -->
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -174,7 +176,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
 
 
-
+    
     <style>
         body {
             background-color: #f5f5f5;
@@ -311,7 +313,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
 
     <!--Main layout-->
     <main class="">
-        <div class="container-fluid text-xs-center" style="height: 800px;">
+        <div id="m" class="container-fluid text-xs-center" style="height: 800px;margin: 0 20%;">
             <form action="b_pl_stg.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
@@ -420,6 +422,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
 
         Ps.initialize(el);
     </script>
+    
 
 
 

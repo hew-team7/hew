@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $shop_id = $_SESSION['shop_id'];
 $shop_number = $_SESSION['shop_number'];
@@ -36,6 +37,7 @@ mysqli_close($cn);
 
 
   
+
 ?><!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -196,8 +198,8 @@ mysqli_close($cn);
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i> <span class="hidden-sm-down">プロフィール</span> </a>
                     <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl.php">プロフィール確認</a>
-                        <a class="dropdown-item waves-effect waves-light" href="./b_pl_stg.php">プロフィール編集</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl.php">プロフィール確認</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./s_pl_stg.php">プロフィール編集</a>
                     </div>
                 </li>
             </ul>
@@ -243,7 +245,6 @@ mysqli_close($cn);
                                 <div class="card-footer">
                                     <span class="left"  style="margin-left:30%;">￥<?php echo $table_array[$i]['price_cut'] ?> <span class="discount">￥<?php echo $table_array[$i]['sell_price'] ?></span></span>
                                 </div>
-
                             </div>
                             <!--/.Card content-->
 
@@ -270,7 +271,7 @@ mysqli_close($cn);
                             <!--Card image-->
                             <div class="view overlay hm-white-slight z-depth-1">
                                 <img src="./images/product/<?php echo $table_array1[$i]["file_name"]; ?>" class="img-fluid">
-                                    <div class="mask waves-effect waves-light"></div>
+                                <div class="mask waves-effect waves-light"></div>
                             </div>
                             <!--/.Card image-->
 
@@ -297,6 +298,7 @@ mysqli_close($cn);
             <?php }else{ ?>
                 <p style="text-align: center;">登録されている商品ありません。</p>
             <?php } ?>
+                                
         </div>
     </main>
     <!--/Main layout-->
