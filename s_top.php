@@ -60,7 +60,7 @@ mysqli_close($cn);
     <!-- Material Design Bootstrap -->
     <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
 
-　
+
     <script>
         $(function () {
             var ua = navigator.userAgent;
@@ -77,6 +77,10 @@ mysqli_close($cn);
 
     </script>
     <style>
+        .overlay img, .overlay video {
+            margin: auto;
+        }
+
         body {
             background-color: #f5f5f5;
             -webkit-background-size: cover;
@@ -273,7 +277,7 @@ mysqli_close($cn);
                             <!--Card content-->
                             <div class="card-block text-xs-center">
                                 <!--Category & Title-->
-                                <h4 class="card-title"><strong><?php echo $table_array1[$i]["product_name"] ?></strong></h4>
+                                <h4 class="card-title text-xs"><strong><?php echo $table_array1[$i]["product_name"] ?></strong></h4>
 
                                 <!--Card footer-->
                                 <div class="card-footer">

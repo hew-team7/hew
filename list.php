@@ -115,6 +115,11 @@ mysqli_close($cn);
             margin-top: 10px;
         }
 
+        .overlay img, .overlay video {
+            margin: auto;
+        }
+
+
     </style>
 
 </head>
