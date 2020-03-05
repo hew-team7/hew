@@ -1,7 +1,6 @@
 <?php
 require_once "config.php";
 session_start();
-$_SESSION['shop_id']='biyonse';
 
 //エラーチェック
 
@@ -150,45 +149,316 @@ function fitCover50($resize, &$w1, &$h1, &$w2, &$h2, &$x, &$y)
 
     
 ?>
-
-
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>商品登録</title>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>商品登録 | HELOSS</title>
+
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="Material%20Design%20Bootstrap%20Template_files/bootstrap.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="Material%20Design%20Bootstrap%20Template_files/mdb.css" rel="stylesheet">
+
+
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .dark-skin .navbar {
+            background-color: #52dda9;
+        }
+        .dark-skin .side-nav .logo-wrapper {
+            
+                background-size: auto;
+            background-size: cover;
+        }
+        .side-nav .logo-wrapper, .side-nav .logo-wrapper a {
+            height: 0px;
+        }
+        .dark-gradient, .dark-skin .side-nav {
+    
+            background: linear-gradient(135deg,#52dda9 0,#52dda9 100%);
+                
+         }
+         .dark-skin .side-nav .sn-avatar-wrapper img {
+            border: none;
+            box-shadow: 2px 3px 3px rgba(0,0,0,0.3); 
+        }
+
+        .side-nav .sn-avatar-wrapper img {
+            max-width: 65px;
+            margin-left: -10px;
+            margin-top: 8px;
+        }
+        
+        .dark-skin .side-nav .collapsible li a:hover {
+            background-color: #91eeba;
+            transition: all .3s linear;
+        }
+        
+        .side-nav .collapsible > li {
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-top: 10px;
+        }
+
+    </style>
+
 </head>
-<body>
-    <h2>商品登録</h2>
-    <form action="pl_rgt_in.php" method="post" enctype="multipart/form-data">
 
-        <h3>商品画像登録</h3>
-        <p><input type="file" name="pl_img"></p>
+<body class="fixed-sn dark-skin" style="">
+
+    <!--Double Navigation-->
+    <header>
+
+        <!-- Sidebar navigation -->
+        <ul id="slide-out" class="side-nav fixed custom-scrollbar ps-container ps-theme-default" style="transform: translateX(-100%);" data-ps-id="96864e62-e306-5383-47b2-9d30422757ea">
+
+            
+
+            <!-- Side navigation links -->
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a href="./pl_rgt_in.php" class="collapsible-header waves-effect"><i class="fa fa-pencil-alt"></i> 商品登録</a>
+                        
+                    </li>
+                    
+                    <li><a href="./pl_exh_list.php" class="collapsible-header waves-effect"><i class="fa fa-camera"></i> 出品する</a>
+                        
+                    </li>
+                  
+                    <li><a href="./pl_exh_now.php" class="collapsible-header waves-effect"><i class="fa fa-fish"></i> 出品している商品</a>
+                        
+                    </li>
+                    
+                    <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-cog"></i> 設定<i class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="./s_pl_stg.php" class="waves-effect">プロフィール編集</a>
+                                </li>
+                                <li><a href="./log_out.php" class="waves-effect">ログアウト</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li><a href="./s_question.php" class="collapsible-header waves-effect"><i class="fa fa-question"></i> お問い合わせ</a>
+                </ul>
+            </li>
+            <!--/. Side navigation links -->
+
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></ul>
+        <!--/. Sidebar navigation -->
+
+        <!--Navbar-->
+        <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+
+            <!-- SideNav slide-out button -->
+            <div class="float-xs-left">
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <!-- Breadcrumb-->
+            <div class="breadcrumb-dn">
+                <p>HELOSS</p>
+            </div>
+
+
+            <ul class="nav navbar-nav float-xs-right">
+
+                <li class="nav-item ">
+                    <a href="./s_news.php" class="nav-link waves-effect waves-light"><i class="fa fa-bell"></i> <span class="hidden-sm-down">お知らせ</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i> <span class="hidden-sm-down">プロフィール</span> </a>
+                    <div class="dropdown-menu dropdown-primary dd-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <a class="dropdown-item waves-effect waves-light" href="./b_pl.php">プロフィール確認</a>
+                        <a class="dropdown-item waves-effect waves-light" href="./b_pl_stg.php">プロフィール編集</a>
+                    </div>
+                </li>
+            </ul>
+
+        </nav>
+        <!--/.Navbar-->
+
+    </header>
+    <!--/Double Navigation-->
+
+    <!--Main layout-->
+    <main class="">
+        <div class="container-fluid text-xs-center" style="height: 800px;">
+            <form action="pl_rgt_in.php" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>商品登録</h4>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>商品画像</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="file" name="pl_img">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="md-form">
+                        <input type="text" id="form1"  name="pl_name" value="<?php if(isset($_SESSION['pl_name'])) echo $_SESSION['pl_name'] ?>"><?php if($msg1 != '') echo $msg1 ?>
+                        <label for="form1" class="">商品名</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="md-form">
+                        <input type="text" id="form1"  name="mk_name" value="<?php if(isset($_SESSION['mk_name'])) echo $_SESSION['mk_name'] ?>"><?php if($msg2 != '') echo $msg2 ?>
+                        <label for="form1" class="">メーカー名</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>JANコード/バーコード</h5> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="radio-inline">
+                        <input type="radio" name="digit" value="13" checked="checked" id='13'>
+                        <label for="13">13桁</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input type="radio" name="digit" value="8" id='8'>
+                        <label for="8">8桁</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input type="radio" name="digit" value="0" id='0'>
+                        <label for="0">その他</label>
+                    </div>
+                    
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>バーコードの分類</h5> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="radio-inline">
+                        <input type="radio" name="class" value="0" checked="checked" id='uni'>
+                        <label for="uni">ユニーク</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input type="radio" name="class" value="1" checked="checked" id='ki'>
+                        <label for="ki">既成</label>
+                    </div>                   
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="md-form">
+                        <input type="text" id="form2"  name="jan" value="<?php if(isset($_SESSION['jan'])) echo $_SESSION['jan'] ?>"><?php if($msg3 != '') echo $msg3 ?>
+                        <label for="form2" class="">バーコード</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="md-form">
+                        <input type="text" name="price" value="<?php if(isset($_SESSION['price'])) echo $_SESSION['price'] ?>">
+                        <label class="">通常販売課価格</label>
+                    </div>
+
+                </div>
+            </div>
+
+            
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-cyan waves-effect waves-light">保存する</button>
+                    <a class="btn btn-elegant waves-effect waves-light" href="./b_pl.php">キャンセル</a>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    <!--/Main layout-->
+
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only">
+
+        <!--Footer Links-->
+        <div class="container">
+        <p class="container-fluid center-block text-center"><img src="./images/logo/698942.png"></p> 
+        </div>   
         
-        <h3>商品名</h3>
-        <p><input type="text" name="pl_name" value="<?php if(isset($_SESSION['pl_name'])) echo $_SESSION['pl_name'] ?>"><?php if($msg1 != '') echo $msg1 ?></p>
+        <!--/.Footer Links-->
 
-        <h3>メーカー名</h3>
-        <p><input type="text" name="mk_name" value="<?php if(isset($_SESSION['mk_name'])) echo $_SESSION['mk_name'] ?>"><?php if($msg2 != '') echo $msg2 ?></p>
 
-        <h3>JANコード/バーコード</h3>
-        <p><input type="radio" name="digit" value="13" checked="checked">13桁
-        <input type="radio" name="digit" value="8">8桁
-        <input type="radio" name="digit" value="0">その他</p>
-        <p><input type="text" name="jan" value="<?php if(isset($_SESSION['jan'])) echo $_SESSION['jan'] ?>"><?php if($msg3 != '') echo $msg3 ?></p>
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2020 Copyright: HELOSS Entertainment.
 
-        <h3>バーコードの分類</h3>
-        <input type="radio" name="class" value="0" checked="checked">ユニーク
-        <input type="radio" name="class" value="1">既成
+            </div>
+        </div>
+        <!--/.Copyright-->
 
-        <h3>通常販売価格</h3>
-        <input type="text" name="price" value="<?php if(isset($_SESSION['price'])) echo $_SESSION['price'] ?>"> 円
-        
-        <br><br>
-        <a href="./s_top.php">キャンセル</a>
-        <button>確認する</button>
-    </form>
-</body>
-</html>
+    </footer>
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/jquery-3.js"></script>
+
+    <!-- Tooltips -->
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/tether.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/bootstrap.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/mdb.js"></script>
+
+    <script>
+        $(".button-collapse").sideNav();
+
+        var el = document.querySelector('.custom-scrollbar');
+
+        Ps.initialize(el);
+    </script>
+
+
+
+
+<div class="hiddendiv common"></div><div class="drag-target" style="touch-action: pan-y; user-select: none; left: 0px;"></div></body></html>
