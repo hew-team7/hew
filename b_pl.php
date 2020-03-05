@@ -40,7 +40,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     
     mysqli_set_charset($cn,'utf8'); 
     $sql= "SELECT * FROM buyer_plofile WHERE user_id = '$user_id';";//変える必要あり
-    
+
     $result = mysqli_query($cn, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
@@ -51,7 +51,8 @@ function get_pt($host,$db_user,$db_pass,$db_name,$user_id){
     $cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
     
     mysqli_set_charset($cn,'utf8'); 
-    $sql= "SELECT SUM(get_point) FROM point WHERE user_id = '32000010';";//変える必要あり
+    $sql= "SELECT SUM(get_point) FROM point WHERE user_id = '$user_id';";//変える必要あり
+    
     $result = mysqli_query($cn, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
@@ -73,6 +74,16 @@ $row = get_bpl(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
 $prow = get_pt(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
 $rrow = get_rk(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
 
+if($row == null){
+    $row['n_name'] = '名無しさん';
+    $row['introduction'] = '登録されていません';
+}
+if($prow['SUM(get_point)'] == NULL){
+    $prow['SUM(get_point)'] = '0';
+}
+if($rrow == NULL){
+    $rrow['lv'] = 'ベーシック';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en"><head>
@@ -81,7 +92,7 @@ $rrow = get_rk(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> | HELOSS</title>
+    <title>プロフィール | HELOSS</title>
 
     <!-- Font Awesome -->
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -101,6 +112,7 @@ $rrow = get_rk(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
             -o-background-size: cover;
             background-size: cover;
         }
+        
         .dark-skin .navbar {
             background-color: #fb7d22;
         }
@@ -228,7 +240,7 @@ $rrow = get_rk(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
     <!--/Double Navigation-->
 
     <!--Main layout-->
-    <main class="">
+    <main class="main">
         <div class="container-fluid text-xs-center" style="height: 800px;">
 
             <div class="row">
@@ -271,9 +283,10 @@ $rrow = get_rk(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
                                     <hr>
                                     <p><?php echo $prow['SUM(get_point)'] ?></p>
                                     <h5>ランク</h5>
+                                    <hr>
                                     <p><?php echo $rrow['lv'] ?></p>
 
-                                    <hr>
+                                 
                                     <p></p>
                                     
 
