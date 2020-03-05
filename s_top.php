@@ -2,8 +2,6 @@
 session_start();
 $shop_id = $_SESSION['shop_id'];
 $shop_number = $_SESSION['shop_number'];
-var_dump($shop_number);
-var_dump($_SESSION['shop_id']);
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 mysqli_set_charset($cn,'utf8');
@@ -14,12 +12,11 @@ $result1 = mysqli_query($cn,$sql1);
 $row1 = mysqli_fetch_assoc($result1);
 $sid = $row1["shop_id"];
 
-$sql = "SELECT ssp.id,price_cut,sell_price,ssp.detail,sell_quantity,buy_quantity,expiration_date,close_date,sp.product_name AS product_name,sp.price,sl.name AS shop_name  
+$sql = "SELECT ssp.id,price_cut,sell_price,ssp.detail,sell_quantity,buy_quantity,expiration_date,close_date,file_name,sp.product_name AS product_name,sp.price,sl.name AS shop_name  
 FROM shop_sell_product ssp 
 INNER JOIN shop_product sp ON sp.id = ssp.product_id 
 INNER JOIN shop_list sl ON sl.id = ssp.shop_id 
 WHERE ssp.shop_id = $shop_number AND close_date > now() AND sell_quantity > buy_quantity;";
-var_dump($sql);
 $result = mysqli_query($cn,$sql);
 $table_array = array();  // テーブル情報を格納する変数
 while($row = mysqli_fetch_assoc($result) ){
@@ -223,7 +220,7 @@ mysqli_close($cn);
 
                             <!--Card image-->
                             <div class="view overlay hm-white-slight z-depth-1">
-                                <img src="./img/<?php echo $table_array[$i]["file_name"]; ?>" class="img-fluid">
+                                <img src="./images/product/<?php echo $table_array[$i]["file_name"]; ?>" class="img-fluid">
                                 <a>
                                     <div class="mask waves-effect waves-light"></div>
                                 </a>
@@ -268,7 +265,7 @@ mysqli_close($cn);
 
                             <!--Card image-->
                             <div class="view overlay hm-white-slight z-depth-1">
-                                <img src="./img/<?php echo $table_array1[$i]["file_name"]; ?>" class="img-fluid">
+                                <img src="./images/product/<?php echo $table_array1[$i]["file_name"]; ?>" class="img-fluid">
                                     <div class="mask waves-effect waves-light"></div>
                             </div>
                             <!--/.Card image-->

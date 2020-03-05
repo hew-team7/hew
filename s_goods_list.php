@@ -184,7 +184,7 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
         <div class="container-fluid text-xs-center" style="min-heght:800px;">
         <div class="row">
           <div class="col-lg-6" style="margin-top:7%;">
-            <p style="text-align:center;"><img src="img/<?php echo $row['file_name']; ?>"></p>
+            <p style="text-align:center;"><img src="images/product/<?php echo $row['file_name']; ?>"></p>
             <p id="money" style="text-align:center;font-size:2em;border-bottom:solid 1px #000;margin:0 20%;">￥<?php echo $row['price_cut']; ?></p>
           </div>
           <div class="col-lg-6" style="margin-top:10%;" id="table">

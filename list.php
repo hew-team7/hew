@@ -215,7 +215,7 @@ mysqli_close($cn);
 
                             <!--Card image-->
                             <div class="view overlay hm-white-slight z-depth-1">
-                                <img src="./img/<?php echo $table_array[$i]["file_name"]; ?>" class="img-fluid">
+                                <img src="./images/product/<?php echo $table_array[$i]["file_name"]; ?>" class="img-fluid">
                                 <a>
                                     <div class="mask waves-effect waves-light"></div>
                                 </a>
