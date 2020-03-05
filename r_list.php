@@ -2,6 +2,8 @@
 $cn = mysqli_connect('localhost', 'root', '', 'hew');
 mysqli_set_charset($cn, 'utf8');
 
+$now = date('d');
+
 //  ランキング
 $sql = "SELECT buyer_login.id,buyer_login.user_id,point,rank FROM point INNER JOIN buyer_list ON point.user_id = buyer_list.id INNER JOIN buyer_login ON point.user_id = buyer_login.id GROUP BY user_id;";
 $result = mysqli_query($cn, $sql);
@@ -36,6 +38,15 @@ if (isset($_POST['search'])) {
     }
   }
 }
+
+$now = 01;
+// ポイント付与
+if($now == '01'){
+  $add = 1;
+}else{
+  $add = 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +145,7 @@ if (isset($_POST['search'])) {
           <div class="collapse navbar-collapse justify-content-end">
             <form class="navbar-form">
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
+                <input type="text" value="" class="form-control w" placeholder="Search...">
                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                   <i class="material-icons">search</i>
                   <div class="ripple-container"></div>
@@ -201,7 +212,7 @@ if (isset($_POST['search'])) {
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">年-月</label>
-                          <input type="text" name="when" class="form-control" autocomplete="off">
+                          <input type="text" name="when" class="form-control w" autocomplete="off">
                         </div>
                       </div>
                       <button type="submit" name="search" class="btn btn-primary pull-right">検索</button>
@@ -228,6 +239,9 @@ if (isset($_POST['search'])) {
                         <th>累計ポイント</th>
                         <th>ランク</th>
                         <th>詳細</th>
+                        <?php if($add == 1): ?>
+                        <th>P付与</th>
+                        <?php endif ?>
                       </thead>
                       <tbody>
                         <?php $p = 0; ?>
@@ -273,6 +287,11 @@ if (isset($_POST['search'])) {
                             <td><?php echo $spoint['point']; ?></td>
                             <td><?php echo $spoint['rank']; ?></td>
                             <td><a href="./b_detail.php?yid=<?php echo $spoint['id']; ?>" class="btn btn-primary btn-round">詳細</a></td>
+                            <?php if($add == 1): ?>
+                              <?php if($rank < 11): ?>
+                              <td><button class="btn btn-primary btn-round">P付与</button></td>
+                              <?php endif ?>
+                            <?php endif ?>
                           </tr>
                         <?php endforeach ?>
                       </tbody>

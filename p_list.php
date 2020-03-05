@@ -181,7 +181,7 @@ if(isset($_POST['search4'])){
           <div class="collapse navbar-collapse justify-content-end">
             <form class="navbar-form">
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
+                <input type="text" value="" class="form-control w" placeholder="Search...">
                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                   <i class="material-icons">search</i>
                   <div class="ripple-container"></div>
@@ -249,13 +249,13 @@ if(isset($_POST['search4'])){
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">都道府県</label>
-                          <input type="text" name="add1" class="form-control" autocomplete="off">
+                          <input type="text" name="add1" class="form-control w" autocomplete="off">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">市町村</label>
-                          <input type="text" name="add2" class="form-control" autocomplete="off">
+                          <input type="text" name="add2" class="form-control w" autocomplete="off">
                         </div>
                       </div>
                       <button type="submit" name="search1" class="btn btn-primary pull-right">検索</button>
@@ -265,7 +265,7 @@ if(isset($_POST['search4'])){
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">掲載終了日</label>
-                          <input type="text" name="pend" class="form-control" autocomplete="off">
+                          <input type="text" name="pend" class="form-control w" autocomplete="off">
                         </div>
                       </div>
                       <button type="submit" name="search2" class="btn btn-primary pull-right">検索</button>

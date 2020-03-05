@@ -12050,6 +12050,10 @@ fieldset[disabled] .is-focused .switch label:focus {
   background-image: linear-gradient(to top, #52dda9 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px) !important; 
 }
 
+.w{
+  background-image: linear-gradient(to top, #9c27b0  2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px) !important; 
+}
+
 .form-control:invalid {
   background-image: linear-gradient(to top, #f44336 2px, rgba(244, 67, 54, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
 }
