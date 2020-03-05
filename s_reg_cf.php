@@ -75,6 +75,8 @@ if (isset($_POST['ok'])) {
   mysqli_query($cn,$sql3);
   $sql2 = "INSERT INTO shop_login(id, shop_id, pass) VALUES('$nid', '$id', '$pass');";
   mysqli_query($cn, $sql2);
+  $sql2 = "INSERT INTO shop_plofile(shop_id) VALUES('$id');";
+  mysqli_query($cn, $sql2);
   mysqli_close($cn);
 
   header("location:./s_reg_wt.php");
