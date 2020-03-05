@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+const IP = '192.168.0.3/';
 $product_id = $_GET['product_id'];
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
@@ -16,8 +19,8 @@ mysqli_close($cn);
 $quantity = $row['sell_quantity'] - $row['buy_quantity'];
 
 
-?><!DOCTYPE html>
-<html lang="en"><head>
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
@@ -25,6 +28,7 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><?php echo $row['p_name'];?> | HELOSS</title>
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="jquery.qrcode.min.js"></script>
 
 
     <!-- Font Awesome -->
@@ -94,6 +98,9 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
             padding-right: 1rem;
             padding-left: 1rem;
             margin-top: 10px;
+        }
+        .card-wrapper .card-up img {
+            min-width: 300px;
         }
 
     </style>
@@ -181,39 +188,63 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
 
     <!--Main layout-->
     <main class="">
-        <div class="container-fluid text-xs-center" style="min-heght:800px;">
-        <div class="row">
-          <div class="col-lg-6" style="margin-top:7%;">
-            <p style="text-align:center;"><img src="images/product/<?php echo $row['file_name']; ?>" width="50%;"></p>
-            <p id="money" style="text-align:center;font-size:2em;border-bottom:solid 1px #000;margin:0 20%;">￥<?php echo $row['price_cut']; ?></p>
-          </div>
-          <div class="col-lg-6" style="margin-top:10%;" id="table">
-            <table class="table" style=";">
-                <tr>
-                  <th class="text-center" style="width: 400px;border:none;" align="left">店舗　　　：　　 <?php echo $row['shop_name']; ?></th>
-                </tr>
-                <tr>
-                  <th class="text-center" style="width: 400px;border:none;" align="left">商品名　　：　　<?php echo $row['p_name']; ?></th>
-                </tr>
-                <tr>
-                  <th class="text-center" style="width: 400px;border:none;" align="left" valign="top">メーカー　：　　<?php echo $row['maker_name']; ?></th>
-                </tr>
-                <tr>
-                  <th class="text-center" style="width: 400px;border:none;" align="left">数量　　　：　　<?php echo $quantity; ?></th>
-                </tr>
-                <tr>
-                  <th class="text-center" style="width: 400px;border:none;" align="left">期限　　　：　　<?php echo $row['expiration_date']; ?></th>
-                </tr>
-            </table>
-          </div>
+        <div class="container-fluid text-xs-center" style="height: 800px;">
+
+            <div class="row">
+
+                    <!--First column-->
+                    <div class="col-lg-4 col-md-6 col-md-offset-3">
+
+                        <!--Rotating card-->
+                        <div class="card-wrapper">
+                            <div id="card-1" class="card-rotating effect__click">
+
+                                <!--Front Side-->
+                                <div class="face front">
+
+                                    <!-- Image-->
+                                    <div class="card-up">
+                                        <img src="images/product/<?php echo $row['file_name']; ?>" width="150px" height="auto">
+                                    </div>
+                                
+                                    <!--Content-->
+                                    <div class="card-block">
+                                        <small><?php echo $row['maker_name']; ?></small>
+
+                                        <h4><?php echo $row['p_name']; ?></h4>
+                                        <h4>￥<?php echo $row['price_cut']; ?></h4>
+                                        <p>店舗　<?php echo $row['shop_name']; ?></p>
+                                        
+                                        <p>賞味期限　<?php echo $row['expiration_date']; ?></p>
+                                        <!--Triggering button-->
+                                        <a class="rotate-btn" data-card="card-1"><i class="fa fa-sync-alt"></i> QRコード</a>
+                                    </div>
+                                </div>
+                                <!--/.Front Side-->
+
+                                <!--Back Side-->
+                                <div class="face back">
+
+                                    <!--Content-->
+                                    <br>
+                                    <br>
+                                    <div id="qrcode"></div>
+
+                                    <br>
+                                    <br>
+                                    <!--Triggering button-->
+                                    <a class="rotate-btn" data-card="card-1"><i class="fa fa-undo"></i> Click here to rotate back</a>
+
+                                </div>
+                                <!--/.Back Side-->
+
+                            </div>
+                        </div>
+                        <!--/.Rotating card-->
+                    </div>
+                    <!--/First column-->
+            </div>
         </div>
-      </div>
-    
-      <form action="" method="post" style="text-align:center;margin-top:50px;">
-        <input class="btn btn-warnig btn-rounded waves-effect waves-light" type="submit" name="submit" id="submit" value="購入する" style="background:orange;">
-        <input type="image" src="images/はーと.png" name="heart" class="ico" style="height: 60px;margin:0 20px;">
-        <input type="image" src="images/60009001106.jpg" name="report"  style="height: 60px;margin:0 20px;">
-      </form>
     </main>
     <!--/Main layout-->
 
@@ -242,8 +273,7 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
 
     <!-- SCRIPTS -->
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/jquery-3.js"></script>
+    
 
     <!-- Tooltips -->
     <script type="text/javascript" src="Material%20Design%20Bootstrap%20Template_files/tether.js"></script>
@@ -260,9 +290,11 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
         var el = document.querySelector('.custom-scrollbar');
 
         Ps.initialize(el);
+
+        $(function(){
+            $('#qrcode').qrcode("http://<?php echo IP.'hew/hew/tr_cp.php?id='.$_GET['product_id'].'?user_id='.$_SESSION['user_id'].'?buy_quantity='.$quantity  ?>");
+        });
+
     </script>
-
-
-
 
 <div class="hiddendiv common"></div><div class="drag-target" style="touch-action: pan-y; user-select: none; left: 0px;"></div></body></html>
