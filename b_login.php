@@ -34,11 +34,11 @@ if (isset($_POST['log'])) {
       $sql = "SELECT * FROM buyer_list INNER JOIN buyer_login ON buyer_list.id = buyer_login.id WHERE user_id = '$yid';";
       $result2 = mysqli_query($cn, $sql);
       $row2 = mysqli_fetch_assoc($result2);
-      $_SESSION['user_id'] = $did;
-      $_SESSION['fn'] = $rows2['f_name'];
-      $_SESSION['ln'] = $rows2['l_name'];
-      $_SESSION['code'] = $rows2['postal_code'];
-      $_SESSION['addr'] = $rows2['address1'] . $rows2['address2'];
+      $_SESSION['user_id'] = $row2['user_id'];
+      $_SESSION['fn'] = $row2['f_name'];
+      $_SESSION['ln'] = $row2['l_name'];
+      $_SESSION['code'] = $row2['postal_code'];
+      $_SESSION['addr'] = $row2['address1'] . $row2['address2'];
       header("location:./map.php");
       exit;
     } else {
@@ -93,7 +93,7 @@ if (isset($_POST['log'])) {
                 <p class="card-category"></p>
               </div>
               <div class="card-body" style="margin: 0 auto;">
-                <form action="./map.php" method="POST">
+                <form action="" method="POST">
                   <label class="p" style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーID</label>
                   <div class="row">
                     <div class="col-md-12">

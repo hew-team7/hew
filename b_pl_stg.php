@@ -1,7 +1,8 @@
 <?php
 require_once "config.php";
 session_start();
-$_SESSION['user_id'] = 32000001;
+
+var_dump($_SESSION['user_id']);
 
 $hfilename = './images/plofile/b_header/'.$_SESSION['user_id'];
 $ifilename = './images/plofile/b_icon/'.$_SESSION['user_id'];
@@ -70,6 +71,7 @@ if (isset($_POST['n_name'])) {
 }
 
 $row = get_bpl(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['user_id']);
+
 
 
 //画像トリミング保存(正方形)
@@ -145,8 +147,9 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     
     $cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
     mysqli_set_charset($cn,'utf8'); 
-    $sql= "SELECT * FROM buyer_plofile WHERE user_id = '".$user_id."';";//変える必要あり
+    $sql= "SELECT * FROM buyer_plofile WHERE user_id = '$user_id';";//変える必要あり
     $result = mysqli_query($cn, $sql);
+    var_dump($sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
 }
@@ -309,7 +312,7 @@ function get_bpl($host,$db_user,$db_pass,$db_name,$user_id){
     <!--Main layout-->
     <main class="">
         <div class="container-fluid text-xs-center" style="height: 800px;">
-            <form action="b_pl_stg_2.php" method="post" enctype="multipart/form-data">
+            <form action="b_pl_stg.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
                     <h4>プロフィール編集</h4>
