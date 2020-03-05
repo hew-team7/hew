@@ -53,57 +53,90 @@ if(isset($_POST['log'])){
 <html lang="ja">
 
 <head>
-  <meta charset="UTF-8">
-  <title>ログイン画面</title>
-  <link rel="stylesheet" type="text/css" href="./css/">
-  <!-- BootstrapのCSS読み込み -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- jQuery読み込み -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- BootstrapのJS読み込み -->
-  <script src="js/bootstrap.min.js"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>ログイン</title>
+  <link href="css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <link rel="stylesheet" href="./css/kanri.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <!-- Chartist JS -->
+  <script src="js/plugins/chartist.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+  <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 
 <body>
-  <div id="header-top">
-    <h1>ログイン</h1>
+  <div id="header2">
+    <img src="./images/logo/698942.png">
   </div>
-
-  <div id="space"></div>
-  <!--レイアウト調整用 -->
-
-  <p class="border"></p>
 
   <div id="wrapper">
-    <form action="s_login.php" method="POST">
-      <div class="login">
-        <div class="id">
-          <p>店ID</p>
-          <input type="text" name="yid" autocomplete="off" class="id2" size="40" value="<?php echo isset($_POST['yid']) ? $_POST['yid']: '' ; ?>">
-          <?php foreach ($codes as $code): ?>
-                <?php if($code == '201'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '203'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?>
+    <!-- End Navbar -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-5 i">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title" style="text-align: center;">ログイン</h4>
+                <p class="card-category"></p>
+              </div>
+              <div class="card-body" style="margin: 0 auto;">
+                <form action="b_reg_in.php" method="POST">
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">ユーザーID</label>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control q" name="yid" autocomplete="off" class="id2" size="50" value="<?php echo isset($_POST['yid']) ? $_POST['yid'] : ''; ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '201') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '203') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="z" style="margin: 50px 0 10px 0; font-size: 1.2em;">パスワード</label>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="password" class="form-control q" name="pass" class="pass2" size="40" value="<?php echo isset($_POST['pass']) ? $_POST['pass'] : ''; ?>">
+                        <?php foreach ($codes as $code) : ?>
+                          <?php if ($code == '301') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php elseif ($code == '304') : ?>
+                            <p class="red2"><?php echo ERROR[$code]; ?></p>
+                          <?php endif ?>
+                        <?php endforeach ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-1 offset-lg-4">
+                      <input type="submit" value="ログイン" class="btn btn-success waves-effect waves-light" style="margin: 30px 0;" name="log">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <p>
       </div>
-      <div class="pass">
-        <p>パスワード</p>
-        <input type="password" name="pass" class="pass2" size="40" value="<?php echo isset($_POST['pass']) ? $_POST['pass']: '' ; ?>">
-        <?php foreach ($codes as $code): ?>
-                <?php if($code == '301'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php elseif($code == '304'): ?>
-                  <p class="red2"><?php echo ERROR[$code]; ?></p>
-                <?php endif ?>
-              <?php endforeach ?>
-      </div>
-
-      <input type="submit" value="ログイン" class="button red log" name="log">
-    </form>
+    </div>
   </div>
 </body>
+
 </html>
