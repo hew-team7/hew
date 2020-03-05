@@ -302,4 +302,3 @@ if ($row['sell_quantity'] < $row['buy_quantity']) {
     </script>
 
 <div class="hiddendiv common"></div><div class="drag-target" style="touch-action: pan-y; user-select: none; left: 0px;"></div></body></html>
-<?php echo IP.'hew/hew/tr_cp.php?id='.$_GET['product_id'].'&user_id='.$_SESSION['user_id'].'&buy_quantity='.$quantity ?>

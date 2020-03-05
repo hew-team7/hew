@@ -4,7 +4,6 @@ require_once "config.php";
 session_start();
 $pr_info = get_pr_inf($_SESSION['shop_number']);
 
-echo $pr_info[0]['file_name'];
 
 function get_pr_inf($shop_id)
 {
