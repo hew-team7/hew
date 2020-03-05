@@ -18,6 +18,10 @@ $row = mysqli_fetch_assoc($result);
 mysqli_close($cn);
 $quantity = $row['sell_quantity'] - $row['buy_quantity'];
 
+if ($row['sell_quantity'] < $row['buy_quantity']) {
+    header('location:./map.php');
+}
+
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
@@ -298,3 +302,4 @@ $quantity = $row['sell_quantity'] - $row['buy_quantity'];
     </script>
 
 <div class="hiddendiv common"></div><div class="drag-target" style="touch-action: pan-y; user-select: none; left: 0px;"></div></body></html>
+<?php echo IP.'hew/hew/tr_cp.php?id='.$_GET['product_id'].'&user_id='.$_SESSION['user_id'].'&buy_quantity='.$quantity ?>

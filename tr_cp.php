@@ -5,19 +5,30 @@ require_once './lv.php';
 
 session_start();
 
+	$cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
+	mysqli_set_charset($cn,'utf8');
+	$sql = "SELECT id FROM buyer_login WHERE user_id = '".$_GET['user_id']."'";
+	
+	$result = mysqli_query($cn,$sql);
+	$row = mysqli_fetch_assoc($result);
+	mysqli_close($cn);
+
 	$pr = get_pr($_GET['id']);
 	
 	$cn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB);
 	mysqli_set_charset($cn,'utf8');	
 	$sql="UPDATE shop_sell_product SET buy_quantity = buy_quantity + ".$_GET['buy_quantity']." WHERE id = ".$_GET['id'];
+	
 	mysqli_query($cn,$sql); 
 	mysqli_close($cn);
 
 	$point = $pr['sell_point']*$_GET['buy_quantity'];
+	
 
 	$cn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB);
 	mysqli_set_charset($cn,'utf8');	
-	$sql="INSERT INTO point(user_id, get_point) VALUES (".$_GET['user_id'].",".$point.")";
+	$sql="INSERT INTO point(user_id, get_point) VALUES (".$row['id'].",".$point.")";
+	
 
 	mysqli_query($cn,$sql); 
 	mysqli_close($cn);
@@ -32,7 +43,7 @@ session_start();
 
 	set_status($st['user_id'],$exp[0],$exp[1],$ex_exp);
 
-	//header('Location:./s_top.php');
+	header('Location:./s_login.php');
 
 	function get_pr($id){
 

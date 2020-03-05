@@ -79,7 +79,7 @@ function set_status($user_id,$lv,$leave,$ex_exp){
 	$cn = mysqli_connect('localhost','root','','hew');
 	mysqli_set_charset($cn,'utf8');	
 	$sql="UPDATE buyer_status SET lv = ".$lv." , exp_leave = ".$leave." , exp = exp  + ".$ex_exp." , score = score + 1 WHERE user_id = '".$user_id."'";
-	echo $sql;
+	
 	mysqli_query($cn,$sql); 
 }
 
