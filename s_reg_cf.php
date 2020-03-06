@@ -75,7 +75,12 @@ if (isset($_POST['ok'])) {
   mysqli_query($cn,$sql3);
   $sql2 = "INSERT INTO shop_login(id, shop_id, pass) VALUES('$nid', '$id', '$pass');";
   mysqli_query($cn, $sql2);
-  $sql2 = "INSERT INTO shop_plofile(shop_id) VALUES('$id');";
+  $sql = "SELECT MAX(id) AS id FROM shop_plofile;";
+	$rsl = mysqli_query($cn, $sql);
+	$row = mysqli_fetch_assoc($rsl);
+	$kid = $row['id'];
+	$kid++;
+  $sql2 = "INSERT INTO shop_plofile(shop_id) VALUES($kid,'$id');";
   mysqli_query($cn, $sql2);
   mysqli_close($cn);
 
