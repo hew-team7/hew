@@ -246,7 +246,7 @@ if($rrow == NULL){
             <div class="row">
 
                     <!--First column-->
-                    <div class="col-lg-4 col-md-6 col-md-offset-3">
+                    <div class="col-lg-4 offset-lg-4">
 
                         <!--Rotating card-->
                         <div class="card-wrapper">

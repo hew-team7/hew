@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-const IP = '192.168.0.3/';
+const IP = '172.20.10.2/';
 $product_id = $_GET['product_id'];
 require_once 'config.php';
 $cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);

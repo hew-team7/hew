@@ -8,7 +8,7 @@ $ifilename = './images/plofile/s_icon/'.$_SESSION['shop_id'];
 if (isset($_POST['s_name']) || isset($_POST['intro'])) {
 	
 	if($_POST['s_name'] != ''){
-		set_spl(HOST,DB_USER,DB_PASS,DB_NAME,$_POST['s_name'],$_POST['intro'],$_SESSION['shop_id']);
+		set_spl(DB_HOST,DB_USER,DB_PASS,DB,$_POST['s_name'],$_POST['intro'],$_SESSION['shop_id']);
 	
 //アイコン画像保存
 		if(isset($_FILES['sicon'])){
@@ -69,7 +69,6 @@ if (isset($_POST['s_name']) || isset($_POST['intro'])) {
 }
 
 $row = get_spl(DB_HOST,DB_USER,DB_PASS,DB,$_SESSION['shop_id']);
-
 
 //画像トリミング保存(正方形)
 function createThumb($filename1, $filename2, $resize)//createThumb（アップロードするファイルのパス , アップロード後のパス , アップロード後の縦横のサイズ);
@@ -307,15 +306,15 @@ if($row == null){
 
     <!--Main layout-->
     <main class="">
-        <div id="m" class="container-fluid text-xs-center" style="height: 800px;margin: 0 20%;">
-            <form action="b_pl_stg.php" method="post" enctype="multipart/form-data">
+        <div id="m" class="container-fluid text-xs-center" style="height: 800px;margin: 0 auto;">
+            <form action="s_pl_stg.php" method="post" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <h4 style="margin-top:50px;">プロフィール編集</h4>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
 
                     <div class="md-form">
                         <input type="text" id="form1" name="s_name" value="<?= $row['s_name']; ?>">
@@ -325,7 +324,7 @@ if($row == null){
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
 
                     <div class="md-form">
                         <input name="intro"  type="text" id="form2"  value="<?php echo $row['introduction'] ?>">
@@ -335,29 +334,29 @@ if($row == null){
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <h5>アイコンを変更</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <input type="file" name="sicon">
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <h5>ヘッダー画像を変更</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <input type="file" name="sheader">
                 </div>
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 offset-md-4">
                     <button class="btn btn-amber waves-effect waves-light">保存する</button>
                     <a class="btn btn-elegant waves-effect waves-light" href="./s_pl.php">キャンセル</a>
                 </div>
