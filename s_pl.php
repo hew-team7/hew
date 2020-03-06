@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once 'config.php';
 $shop_id = $_SESSION['shop_id'];
 $hfilename = './images/plofile/s_header/'.$_SESSION['shop_id'];
@@ -49,9 +50,10 @@ WHERE id = $sid;";
 $result = mysqli_query($cn,$sql);
 $row = mysqli_fetch_assoc($result);
 
+$shop_id = $_SESSION['shop_id'];
 $sql = "SELECT * 
 FROM shop_plofile 
-WHERE shop_id = $sid;";
+WHERE shop_id = '$shop_id';";
 $result = mysqli_query($cn,$sql);
 $row1 = mysqli_fetch_assoc($result);
 
@@ -216,7 +218,7 @@ if($row1 == null){
             <div class="row">
 
                     <!--First column-->
-                    <div class="col-lg-4 col-md-6 col-md-offset-3">
+                    <div class="col-lg-4 offset-lg-4">
 
                         <!--Rotating card-->
                         <div class="card-wrapper">
@@ -234,7 +236,7 @@ if($row1 == null){
                                     </div>
                                     <!--Content-->
                                     <div class="card-block">
-                                        <h4><?php echo $row1['n_name'] ?></h4>
+                                        <h4><?php echo $row1['s_name'] ?></h4>
                                         
                                         <!--Triggering button-->
                                         <a class="rotate-btn" data-card="card-1"><i class="fa fa-sync-alt"></i> Click here</a>
