@@ -52,8 +52,7 @@ function get_pt($host,$db_user,$db_pass,$db_name,$user_id){
     
     $uid = $_SESSION['uid'];
     mysqli_set_charset($cn,'utf8'); 
-    $sql= "SELECT point FROM buyer_list WHERE user_id = $uid;";//変える必要あり
-    var_dump($sql);
+    $sql= "SELECT point FROM buyer_list WHERE id = $uid;";//変える必要あり
     $result = mysqli_query($cn, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
@@ -79,8 +78,8 @@ if($row == null){
     $row['n_name'] = '名無しさん';
     $row['introduction'] = '登録されていません';
 }
-if($prow['SUM(get_point)'] == NULL){
-    $prow['SUM(get_point)'] = '0';
+if($prow['point'] == NULL){
+    $prow['point'] = '0';
 }
 if($rrow == NULL){
     $rrow['lv'] = 'ベーシック';
@@ -282,7 +281,7 @@ if($rrow == NULL){
                                     <p><?php echo $row['introduction'] ?></p>
                                     <h5>ポイント</h5>
                                     <hr>
-                                    <p><?php echo $prow['SUM(get_point)'] ?></p>
+                                    <p><?php echo $prow['point'] ?></p>
                                     <h5>ランク</h5>
                                     <hr>
                                     <p><?php echo $rrow['lv'] ?></p>
