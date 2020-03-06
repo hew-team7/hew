@@ -82,7 +82,7 @@ if($prow['point'] == NULL){
     $prow['point'] = '0';
 }
 if($rrow == NULL){
-    $rrow['lv'] = 'ベーシック';
+    $rrow['lv'] = '0';
 }
 ?>
 <!DOCTYPE html>
