@@ -29,10 +29,20 @@ session_start();
 	mysqli_set_charset($cn,'utf8');	
 	$sql = "SELECT MAX(id) AS id FROM point;";
 	$rsl = mysqli_query($cn, $sql);
-	$row = mysqli_fetch_assoc($rsl);
-	$id = $row['id'];
+	$rows = mysqli_fetch_assoc($rsl);
+	$id = $rows['id'];
+	$uid = $row['id'];
 	$id++;
-	$sql="INSERT INTO point(id,user_id, get_point) VALUES ($id,".$row['id'].",".$point.")";
+	$sql="INSERT INTO point(id,user_id, get_point) VALUES ($id,'$uid',$point)";
+	$rsl = mysqli_query($cn, $sql);
+	$sql = "SELECT point FROM buyer_list WHERE id = $uid;";
+	$rsl = mysqli_query($cn, $sql);
+	$rows = mysqli_fetch_assoc($rsl);
+	$mpoint =  $rows['point'];
+	$mpoint = $mpoint + $point;
+	$sql="UPDATE buyer_list SET point = $mpoint WHERE id = $uid;";
+	$rsl = mysqli_query($cn, $sql);
+
 	var_dump($sql);
 	
 
@@ -49,7 +59,7 @@ session_start();
 
 	set_status($st['user_id'],$exp[0],$exp[1],$ex_exp);
 
-	//header('Location:./s_login.php');
+	header('Location:./s_login.php');
 
 	function get_pr($id){
 

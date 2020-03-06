@@ -87,7 +87,7 @@ function get_status($user_id){
 
 	$cn = mysqli_connect('localhost','root','','hew');
 	mysqli_set_charset($cn,'utf8');	
-	$sql= "SELECT * FROM buyer_status WHERE user_id = '".$user_id."';";//変える必要あり
+	$sql= "SELECT * FROM buyer_status WHERE buyer_id = '".$user_id."';";//変える必要あり
 
 	$result = mysqli_query($cn, $sql);
 	$row = mysqli_fetch_assoc($result);
