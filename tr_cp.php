@@ -18,7 +18,8 @@ session_start();
 	$cn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB);
 	mysqli_set_charset($cn,'utf8');	
 	$sql="UPDATE shop_sell_product SET buy_quantity = buy_quantity + ".$_GET['buy_quantity']." WHERE id = ".$_GET['id'];
-	
+	$rsl = mysqli_query($cn, $sql);
+
 	$sid = $_GET['id'];
 	$sql = "SELECT * FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id WHERE a.product_id = $sid;";
 	$rsl = mysqli_query($cn, $sql);
@@ -29,7 +30,7 @@ session_start();
 	$shop = $row['shop_id'];
 
 	$sql = "INSERT INTO buyer_buy_product(product_id,shop_id,user_id,quantity,buy_price) VALUES('$sid','$shop','$uid','$quantity','$price');";
-	
+	$rsl = mysqli_query($cn, $sql);
 
 	mysqli_query($cn,$sql); 
 	mysqli_close($cn);
