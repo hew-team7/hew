@@ -35,6 +35,7 @@ if (isset($_POST['log'])) {
       $result2 = mysqli_query($cn, $sql);
       $row2 = mysqli_fetch_assoc($result2);
       $_SESSION['user_id'] = $row2['user_id'];
+      $_SESSION['uid'] = $rows['id'];
       $_SESSION['fn'] = $row2['f_name'];
       $_SESSION['ln'] = $row2['l_name'];
       $_SESSION['code'] = $row2['postal_code'];
