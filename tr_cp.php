@@ -27,7 +27,13 @@ session_start();
 
 	$cn = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB);
 	mysqli_set_charset($cn,'utf8');	
-	$sql="INSERT INTO point(user_id, get_point) VALUES (".$row['id'].",".$point.")";
+	$sql = "SELECT MAX(id) AS id FROM point;";
+	$rsl = mysqli_query($cn, $sql);
+	$row = mysqli_fetch_assoc($rsl);
+	$id = $row['id'];
+	$id++;
+	$sql="INSERT INTO point(id,user_id, get_point) VALUES ($id,".$row['id'].",".$point.")";
+	var_dump($sql);
 	
 
 	mysqli_query($cn,$sql); 
@@ -43,13 +49,13 @@ session_start();
 
 	set_status($st['user_id'],$exp[0],$exp[1],$ex_exp);
 
-	header('Location:./s_login.php');
+	//header('Location:./s_login.php');
 
 	function get_pr($id){
 
 	  $cn = mysqli_connect('localhost','root','','hew');
 	    mysqli_set_charset($cn,'utf8');
-	  $sql = "SELECT * from shop_sell_product WHERE id = ".$id;
+	  $sql = "SELECT * from shop_sell_product WHERE id = $id;";
 	  
 	  $result = mysqli_query($cn, $sql);
 	  $row = mysqli_fetch_assoc($result);

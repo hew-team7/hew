@@ -73,10 +73,20 @@ if (isset($_POST['ok'])) {
   $sql3 = "INSERT INTO buyer_list(id, mail, f_name, l_name, postal_code, address1, address2, registration_date) VALUES('$nid', '$mail', '$fn', '$ln', '$code', '$paddr', '$addr', '" . date('Y-m-d H:i:s') . "');";
   mysqli_query($cn, $sql3);
   $sql2 = "INSERT INTO buyer_login(id, user_id, pass) VALUES('$nid', '$id', '$pass');";
+  $sql = "SELECT MAX(id) AS id FROM buyer_status;";
+	$rsl = mysqli_query($cn, $sql);
+	$row = mysqli_fetch_assoc($rsl);
+	$kid = $row['id'];
+	$kid++;
   mysqli_query($cn, $sql2);
-  $sql2 = "INSERT INTO buyer_status(buyer_id) VALUES('$id');";
+  $sql2 = "INSERT INTO buyer_status(id,buyer_id) VALUES($kid,'$id');";
   mysqli_query($cn, $sql2);
-  $sql2 = "INSERT INTO buyer_plofile(user_id) VALUES('$id');";
+  $sql = "SELECT MAX(id) AS id FROM buyer_plofile;";
+	$rsl = mysqli_query($cn, $sql);
+	$row = mysqli_fetch_assoc($rsl);
+	$kid = $row['id'];
+	$kid++;
+  $sql2 = "INSERT INTO buyer_plofile(id,user_id) VALUES($kid,'$id');";
   mysqli_query($cn, $sql2);
   mysqli_close($cn);
 
