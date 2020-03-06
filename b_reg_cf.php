@@ -76,7 +76,7 @@ if (isset($_POST['ok'])) {
   mysqli_query($cn, $sql2);
   $sql = "SELECT MAX(id) AS id FROM buyer_status;";
 	$rsl = mysqli_query($cn, $sql);
-  $sql2 = "INSERT INTO buyer_status(buyer_id) VALUES($kid,'$id');";
+  $sql2 = "INSERT INTO buyer_status(buyer_id) VALUES('$id');";
   mysqli_query($cn, $sql2);
   $sql = "SELECT MAX(id) AS id FROM buyer_plofile;";
 	$rsl = mysqli_query($cn, $sql);
