@@ -19,6 +19,18 @@ session_start();
 	mysqli_set_charset($cn,'utf8');	
 	$sql="UPDATE shop_sell_product SET buy_quantity = buy_quantity + ".$_GET['buy_quantity']." WHERE id = ".$_GET['id'];
 	
+	$sid = $_GET['id'];
+	$sql = "SELECT * FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id WHERE a.product_id = $sid;";
+	$rsl = mysqli_query($cn, $sql);
+	$srow = mysqli_fetch_assoc($rsl);
+	$price = $srow['price_cut'];
+	$quantity = $_GET['buy_quantity'];
+	$uid = $row['id'];
+	$shop = $row['shop_id'];
+
+	$sql = "INSERT INTO buyer_buy_product(product_id,shop_id,user_id,quantity,buy_price) VALUES('$sid','$shop','$uid','$quantity','$price');";
+	
+
 	mysqli_query($cn,$sql); 
 	mysqli_close($cn);
 
@@ -50,7 +62,6 @@ session_start();
 	$mrank++;
 	$sql="UPDATE buyer_list SET rank = $mrank WHERE id = $uid;";
 	$rsl = mysqli_query($cn, $sql);
-	
 
 	
 
