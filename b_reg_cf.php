@@ -83,7 +83,7 @@ if (isset($_POST['ok'])) {
 	$row = mysqli_fetch_assoc($rsl);
 	$kid = $row['id'];
 	$kid++;
-  $sql2 = "INSERT INTO buyer_plofile(id,user_id) VALUES($kid,'$id');";
+  $sql2 = "INSERT INTO buyer_plofile(id,n_name,user_id) VALUES($kid,'$id','$id');";
   mysqli_query($cn, $sql2);
   mysqli_close($cn);
 
