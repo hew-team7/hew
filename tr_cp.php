@@ -43,7 +43,15 @@ session_start();
 	$sql="UPDATE buyer_list SET point = $mpoint WHERE id = $uid;";
 	$rsl = mysqli_query($cn, $sql);
 
-	var_dump($sql);
+	$sql = "SELECT rank FROM buyer_list WHERE id = $uid";
+	$rsl = mysqli_query($cn, $sql);
+	$rows = mysqli_fetch_assoc($rsl);
+	$mrank =  $rows['rank'];
+	$mrank++;
+	$sql="UPDATE buyer_list SET rank = $mrank WHERE id = $uid;";
+	$rsl = mysqli_query($cn, $sql);
+	
+
 	
 
 	mysqli_query($cn,$sql); 
