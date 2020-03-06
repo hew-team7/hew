@@ -235,7 +235,7 @@ if (isset($_POST['check'])) {
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label class="bmd-label-floating">店舗名(フリガナ) <span class="red2">※8文字以上の英数字</span><span class="red">必須</span></label>
+                        <label class="bmd-label-floating">店舗名(フリガナ) <span class="red">必須</span></label>
                         <input type="text" class="form-control q" name="kname" autocomplete="off" value="<?php echo isset($_SESSION['kname']) ? $_SESSION['kname'] : (isset($_POST['kname']) ? $_POST['kname'] : ''); ?>">
                         <?php foreach ($codes as $code) : ?>
                           <?php if ($code == '501') : ?>
