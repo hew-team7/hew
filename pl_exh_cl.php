@@ -6,9 +6,13 @@ if (isset($_SESSION['reason'])) { //2重登録対策
 
 	$cn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB);
 	mysqli_set_charset($cn, 'utf8');
-	$sql = "INSERT INTO shop_sell_product(shop_id, product_id, detail, reason, sell_price, price_cut, sales_comission, sell_quantity, expiration_date,  close_date,discount,sell_point) VALUES ('" . $_SESSION['shop_number'] . "','" . $_GET['pid'] . "','" . $_SESSION['detail'] . "','" . $_SESSION['a_reason'] . "'," . $_SESSION['price'] . "," . $_SESSION['dis_price'] . "," . $_SESSION['sale_com'] . "," . $_SESSION['quantity'] . ",'" . $_SESSION['ex_date'] . "','" . $_SESSION['pub_date'] . "'," . $_SESSION['discount'] . "," . $_SESSION['point'] . ")";
-
-
+	$sql = "SELECT MAX(id) AS id FROM shop_sell_product;";
+	$rsl = mysqli_query($cn, $sql);
+	$row = mysqli_fetch_assoc($rsl);
+	$id = $row['id'];
+	$id++;
+	$sql = "INSERT INTO shop_sell_product(id,shop_id, product_id, detail, reason, sell_price, price_cut, sales_comission, sell_quantity, expiration_date,  close_date,discount,sell_point) VALUES ('" . $id . "','" . $_SESSION['shop_number'] . "','" . $_GET['pid'] . "','" . $_SESSION['detail'] . "','" . $_SESSION['a_reason'] . "'," . $_SESSION['price'] . "," . $_SESSION['dis_price'] . "," . $_SESSION['sale_com'] . "," . $_SESSION['quantity'] . ",'" . $_SESSION['ex_date'] . "','" . $_SESSION['pub_date'] . "'," . $_SESSION['discount'] . "," . $_SESSION['point'] . ")";
+	var_dump($sql);
 	mysqli_query($cn, $sql);
 	mysqli_close($cn);
 
