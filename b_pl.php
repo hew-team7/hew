@@ -51,8 +51,8 @@ function get_pt($host,$db_user,$db_pass,$db_name,$user_id){
     $cn = mysqli_connect($host,$db_user,$db_pass,$db_name);
     
     mysqli_set_charset($cn,'utf8'); 
-    $sql= "SELECT SUM(get_point) FROM point WHERE user_id = '$user_id';";//変える必要あり
-    
+    $sql= "SELECT point FROM buyer_list WHERE user_id = '$_SESSION['uid']';";//変える必要あり
+    var_dump($sql);
     $result = mysqli_query($cn, $sql);
     $row = mysqli_fetch_assoc($result);
     return $row;
