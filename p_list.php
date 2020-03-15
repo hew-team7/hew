@@ -4,7 +4,7 @@ mysqli_set_charset($cn, 'utf8');
 
 // 現在出品されている商品
 $now = date('Y-m-d');
-$sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now';";
+$sql = "SELECT c.name AS sname,b.product_name AS pname,price_cut,sell_quantity,buy_quantity,close_date,address1,address2 FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id INNER JOIN shop_list c ON a.shop_id = c.id WHERE close_date >= '$now' AND sell_quantity > buy_quantity;";
 $result = mysqli_query($cn, $sql);
 $nlists = array();
 while ($rows = mysqli_fetch_assoc($result)) {
