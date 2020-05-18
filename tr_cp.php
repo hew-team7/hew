@@ -21,13 +21,13 @@ session_start();
 	$rsl = mysqli_query($cn, $sql);
 
 	$sid = $_GET['id'];
-	$sql = "SELECT * FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id WHERE a.product_id = $sid;";
+	$sql = "SELECT price_cut,buy_quantity,a.shop_id AS shop_id FROM shop_sell_product a INNER JOIN shop_product b ON a.product_id = b.id WHERE a.product_id = $sid;";
 	$rsl = mysqli_query($cn, $sql);
 	$srow = mysqli_fetch_assoc($rsl);
 	$price = $srow['price_cut'];
 	$quantity = $_GET['buy_quantity'];
 	$uid = $row['id'];
-	$shop = $row['shop_id'];
+	$shop = $srow['shop_id'];
 
 	$sql = "INSERT INTO buyer_buy_product(product_id,shop_id,user_id,quantity,buy_price) VALUES('$sid','$shop','$uid','$quantity','$price');";
 	$rsl = mysqli_query($cn, $sql);
